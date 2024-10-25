@@ -102,7 +102,7 @@ contract EventManager {
     }
 
     //TODO: ADD CURRENCY CONVERSION + CHECK
-    function buyTicket(uint256 _eventId) public payable {
+    function buyTicket(uint256 _eventId) public payable returns (uint256 _ticketId) {
         require(_eventId < eventCounter, "Invalid event ID");
         require(events[_eventId].eventDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
@@ -122,6 +122,8 @@ contract EventManager {
         // Transfer FLR to event host
         (bool sent, ) = events[_eventId].eventHost.call{value: msg.value}("");
         require(sent, "Failed to send FLR to event host");
+
+        return ticketCounter - 1;
     }
 
     function transferTicketForce(uint256 _ticketId, address _to) private {
