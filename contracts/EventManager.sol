@@ -2,14 +2,30 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 
+import {ContractRegistry} from "@flarenetwork/flare-periphery-contracts/coston2/ContractRegistry.sol";
+/* THIS IS A TEST IMPORT, in production use: import {FtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/coston2/FtsoV2Interface.sol"; */
+import {TestFtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/coston2/TestFtsoV2Interface.sol";
+
 contract EventManager {
     
+    TestFtsoV2Interface internal ftsoV2;
+    bytes21[] public feedIds = [
+        bytes21(0x01464c522f55534400000000000000000000000000) // FLR/USD
+        // bytes21(0x014254432f55534400000000000000000000000000), // BTC/USD
+        // bytes21(0x014554482f55534400000000000000000000000000) // ETH/USD
+    ];
+
+    constructor() {
+        /* THIS IS A TEST METHOD, in production use: ftsoV2 = ContractRegistry.getFtsoV2(); */
+        ftsoV2 = ContractRegistry.getTestFtsoV2();
+    }
+
     struct Event {
         string name;
         string description;
         uint256 capacity;
         uint256 ticketsSold;
-        uint256 ticketPrice; // in USD
+        uint256 ticketPrice; // in USD cents
         uint256 eventDate;
         string[] images; // array of image URLs
         uint256[] tickets;
@@ -32,8 +48,41 @@ contract EventManager {
     uint256 public eventCounter;
     uint256 public ticketCounter;
 
-    function getTicketPrice() public view returns (uint256) {
-        // TODO: to be implemented
+    function getFtsoV2CurrentFeedValues() public view returns (
+        uint256[] memory _feedValues,
+        int8[] memory _decimals,
+        uint64 _timestamp
+    ) {
+        return ftsoV2.getFeedsById(feedIds);
+    }
+
+    function getFlareFeed() public view returns (uint256 _feedValue, int8 _decimals, uint64 _timestamp) {
+        uint256[] memory feedValues;
+        int8[] memory decimals;
+        uint64 timestamp;
+        (feedValues, decimals, timestamp) = ftsoV2.getFeedsById(feedIds);
+        return (feedValues[0], decimals[0], timestamp);
+    }
+
+    function centsToFlare(uint256 _cents) public view returns (uint256 _flr) {
+        uint256 feedValue;
+        int8 decimals;
+        (feedValue, decimals, ) = getFlareFeed();
+        return _cents * power(10, decimals) * 1 ether / 100 / feedValue;
+    }
+
+    function power(uint base, int8 exponent) public pure returns (uint) {
+        require(exponent >= 0, "Exponent must be non-negative");
+        uint result = 1;
+        for (int8 i = 0; i < exponent; i++) {
+            result *= base;
+        }
+        return result;
+    }
+
+    function getEventPriceFlare(uint256 _eventId) public view returns (uint256 _flr) {
+        require(_eventId < eventCounter, "Invalid event ID");
+        return centsToFlare(events[_eventId].ticketPrice);
     }
 
     function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public {
@@ -42,10 +91,12 @@ contract EventManager {
     }
 
     function getEventImages(uint256 _eventId) public view returns (string[] memory) {
+        require(_eventId < eventCounter, "Invalid event ID");
         return events[_eventId].images;
     }
 
     function getEventTickets(uint256 _eventId) public view returns (uint256[] memory) {
+        require(_eventId < eventCounter, "Invalid event ID");
         return events[_eventId].tickets;
     }
 

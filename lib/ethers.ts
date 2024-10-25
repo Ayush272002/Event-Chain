@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 
 const FLARE_TESTNET_RPC_URL = 'https://coston2.enosys.global/ext/C/rpc';
 
-const CONTRACT_ADDRESS = '0xc84C08D4BAd1f43FF053ba590d990E495A64FCd8';
+const CONTRACT_ADDRESS = '0x0B236423274D36C32fb2362cc177756a21A025A3';
 
 export function getFlareProvider() {
   const flareRpcUrl = FLARE_TESTNET_RPC_URL;
@@ -108,6 +108,30 @@ export function getContract() {
     },
     {
       inputs: [],
+      stateMutability: 'nonpayable',
+      type: 'constructor',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: '_cents',
+          type: 'uint256',
+        },
+      ],
+      name: 'centsToFlare',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '_flr',
+          type: 'uint256',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
       name: 'eventCounter',
       outputs: [
         {
@@ -172,6 +196,25 @@ export function getContract() {
       inputs: [
         {
           internalType: 'uint256',
+          name: '',
+          type: 'uint256',
+        },
+      ],
+      name: 'feedIds',
+      outputs: [
+        {
+          internalType: 'bytes21',
+          name: '',
+          type: 'bytes21',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
           name: '_eventId',
           type: 'uint256',
         },
@@ -182,6 +225,25 @@ export function getContract() {
           internalType: 'string[]',
           name: '',
           type: 'string[]',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: '_eventId',
+          type: 'uint256',
+        },
+      ],
+      name: 'getEventPriceFlare',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '_flr',
+          type: 'uint256',
         },
       ],
       stateMutability: 'view',
@@ -208,7 +270,64 @@ export function getContract() {
     },
     {
       inputs: [],
-      name: 'getTicketPrice',
+      name: 'getFlareFeed',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '_feedValue',
+          type: 'uint256',
+        },
+        {
+          internalType: 'int8',
+          name: '_decimals',
+          type: 'int8',
+        },
+        {
+          internalType: 'uint64',
+          name: '_timestamp',
+          type: 'uint64',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [],
+      name: 'getFtsoV2CurrentFeedValues',
+      outputs: [
+        {
+          internalType: 'uint256[]',
+          name: '_feedValues',
+          type: 'uint256[]',
+        },
+        {
+          internalType: 'int8[]',
+          name: '_decimals',
+          type: 'int8[]',
+        },
+        {
+          internalType: 'uint64',
+          name: '_timestamp',
+          type: 'uint64',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    {
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: 'base',
+          type: 'uint256',
+        },
+        {
+          internalType: 'int8',
+          name: 'exponent',
+          type: 'int8',
+        },
+      ],
+      name: 'power',
       outputs: [
         {
           internalType: 'uint256',
@@ -216,7 +335,7 @@ export function getContract() {
           type: 'uint256',
         },
       ],
-      stateMutability: 'view',
+      stateMutability: 'pure',
       type: 'function',
     },
     {

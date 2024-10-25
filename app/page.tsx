@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import EventCounter from '@/components/sc/eventCounter';
 import CreateEvent from '@/components/sc/createEvent';
+import GetEventPrice from '@/components/sc/getEventPrice';
 
 export default function Home() {
   return (
@@ -28,6 +29,8 @@ export default function Home() {
         <EventCounter />
 
         <CreateEvent />
+
+        <GetEventPrice />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
