@@ -38,6 +38,11 @@ contract EventManager {
         uint256 eventId;
     }
 
+    event EventCreated(uint256 eventId, string name, uint256 eventDate);
+    event TicketPurchased(uint256 ticketId, uint256 eventId, address buyer, uint256 price);
+    event TicketTransferred(uint256 ticketId, address from, address to);
+    event TicketTransferApproved(uint256 ticketId, address owner, address trustee);
+
     mapping(uint256 => Event) public events;
     mapping(uint256 => Ticket) public tickets;
 
@@ -88,6 +93,7 @@ contract EventManager {
     function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
         events[eventCounter] = Event(_name, _description, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), payable(msg.sender));
         eventCounter++;
+        emit EventCreated(eventCounter - 1, _name, _eventDate);
         return eventCounter - 1;
     }
 
@@ -129,6 +135,7 @@ contract EventManager {
         (bool sentToHost, ) = events[_eventId].eventHost.call{value: ticketCost}("");
         require(sentToHost, "Failed to send FLR to event host");
 
+        emit TicketPurchased(ticketCounter - 1, _eventId, msg.sender, ticketCost);
         return ticketCounter - 1;
     }
 
@@ -159,19 +166,27 @@ contract EventManager {
         userTickets[_to].push(_ticketId);
 
         tickets[_ticketId].holder = _to;
+
+        emit TicketTransferred(_ticketId, prevHolder, _to);
     }
 
     function approveTicket(uint256 _ticketId, address _to, bool _allowed) public {
         require(_ticketId < ticketCounter, "Invalid ticket ID");
         require(tickets[_ticketId].holder == msg.sender, "You do not own this ticket");
         ticketAllowance[_ticketId][_to] = _allowed;
+
+        emit TicketTransferApproved(_ticketId, msg.sender, _to);
+    }
+
+    function transferTicketFrom(uint256 _ticketId, address _to) public {
+        require(ticketAllowance[_ticketId][msg.sender], "You are not allowed to transfer this ticket");
+        ticketAllowance[_ticketId][msg.sender] = false;
+        transferTicketForce(_ticketId, _to);
     }
 
     function transferTicket(uint256 _ticketId, address _to) public {
         require(_ticketId < ticketCounter, "Invalid ticket ID");
-        require(tickets[_ticketId].holder == msg.sender || tickets[_ticketId].holder == msg.sender, "You do not own this ticket");
-        require(ticketAllowance[_ticketId][msg.sender], "You are not allowed to transfer this ticket");
-        ticketAllowance[_ticketId][msg.sender] = false;
+        require(tickets[_ticketId].holder == msg.sender, "You do not own this ticket");
         transferTicketForce(_ticketId, _to);
     }
 
