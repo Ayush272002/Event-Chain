@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0
-import {TestFtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/coston2/TestFtsoV2Interface.sol";
 
 pragma solidity >=0.8.2 <0.9.0;
 
@@ -18,6 +17,7 @@ contract EventManager {
     }
 
     mapping(uint256 => Event) public events;
+    mapping(address => Event) public userEvents;
     uint256 public eventCounter;
 
     function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public {
@@ -31,6 +31,20 @@ contract EventManager {
 
     function getEventPartipicants(uint256 eventId) public view returns (address[] memory) {
         return events[eventId].participants;
+    }
+
+    //TODO: ADD CURRENCY CONVERSION + CHECK
+    function buyTicket(uint256 eventId) public payable {
+        require(eventId < eventCounter, "Invalid event ID");
+        require(events[eventId].eventDate > block.timestamp, "Event has already passed");
+        require(events[eventId].participants.length < events[eventId].capacity, "Event is full");
+        require(msg.value == events[eventId].ticketPrice, "Invalid ticket price");
+        events[eventId].participants.push(msg.sender);
+        events[eventId].ticketsSold++;
+
+        // Transfer FLR to event host
+        (bool sent, ) = events[eventId].eventHost.call{value: msg.value}("");
+        require(sent, "Failed to send FLR to event host");
     }
 
 }
