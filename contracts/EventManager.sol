@@ -27,7 +27,7 @@ contract EventManager {
 
     mapping(uint256 => mapping(address => bool)) ticketAllowance;
 
-    mapping(address => Event) public userEvents;
+    mapping(address => uint256[]) public userTickets;
 
     uint256 public eventCounter;
     uint256 public ticketCounter;
@@ -50,7 +50,7 @@ contract EventManager {
     }
 
     //TODO: ADD CURRENCY CONVERSION + CHECK
-    function buyTicket(uint256 _eventId) public payable returns (uint256) {
+    function buyTicket(uint256 _eventId) public payable {
         require(_eventId < eventCounter, "Invalid event ID");
         require(events[_eventId].eventDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
@@ -58,6 +58,10 @@ contract EventManager {
 
         // Create new ticket
         tickets[ticketCounter] = Ticket(msg.sender, block.timestamp, _eventId);
+
+        // Add ticket to user
+        userTickets[msg.sender].push(ticketCounter);
+
         ticketCounter++;
 
         // Update number of tickets sold
@@ -71,6 +75,29 @@ contract EventManager {
     function transferTicketForce(uint256 _ticketId, address _to) private {
         require(_ticketId < ticketCounter, "Invalid ticket ID");
         require(events[tickets[_ticketId].eventId].eventDate > block.timestamp, "Event has already passed");
+
+        address prevHolder = tickets[_ticketId].holder;
+
+        // Get index of ticket in holder's array
+        bool found = false;
+        uint256 i = 0;
+        for (; i < userTickets[prevHolder].length; i++) {
+            if (userTickets[prevHolder][i] == _ticketId) {
+                found = true;
+                break;
+            }
+        }
+
+        require(found, "Ticket not found in sender's inventory");
+
+        // Remove ticket from holder's array
+        for (; i < userTickets[prevHolder].length; i++) {
+            userTickets[prevHolder][i] = userTickets[prevHolder][i+1];
+        }
+
+        // Add ticket to _to's array
+        userTickets[_to].push(_ticketId);
+
         tickets[_ticketId].holder = _to;
     }
 
@@ -84,6 +111,7 @@ contract EventManager {
         require(_ticketId < ticketCounter, "Invalid ticket ID");
         require(tickets[_ticketId].holder == msg.sender || tickets[_ticketId].holder == msg.sender, "You do not own this ticket");
         require(ticketAllowance[_ticketId][msg.sender], "You are not allowed to transfer this ticket");
+        ticketAllowance[_ticketId][msg.sender] = false;
         transferTicketForce(_ticketId, _to);
     }
 
