@@ -1,11 +1,23 @@
 'use client';
-import React from 'react';
-import Header from '../../components/custom/header'; // Adjust the import path as needed
-import Footer from '../../components/custom/footer'; // Assuming you have a footer component
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/custom/header';
+import Footer from '../../components/custom/footer';
+
+// Define the Event interface including new fields
+interface Event {
+  EventID: number;
+  name: string;
+  date: string;
+  location: string;
+  ticketPrice: string;
+  description: string;
+  capacity: number;
+  ticketsSold: number;
+  imageUrl: string;
+}
 
 // Dummy function to fetch events
-const fetchEvents = () => {
+const fetchEvents = (): Event[] => {
   return [
     {
       EventID: 1,
@@ -13,6 +25,9 @@ const fetchEvents = () => {
       date: '2023-12-01',
       location: 'New York City',
       ticketPrice: '$99',
+      description: 'An exhilarating rock concert featuring famous bands.',
+      capacity: 5000,
+      ticketsSold: 4500,
       imageUrl: 'https://via.placeholder.com/150',
     },
     {
@@ -21,6 +36,9 @@ const fetchEvents = () => {
       date: '2023-11-15',
       location: 'San Francisco',
       ticketPrice: '$55',
+      description: 'A showcase of modern art from around the world.',
+      capacity: 300,
+      ticketsSold: 260,
       imageUrl: 'https://via.placeholder.com/150',
     },
     {
@@ -29,33 +47,41 @@ const fetchEvents = () => {
       date: '2023-12-10',
       location: 'Chicago',
       ticketPrice: '$250',
+      description: 'The leading tech summit with top industry speakers.',
+      capacity: 2000,
+      ticketsSold: 1800,
       imageUrl: 'https://via.placeholder.com/150',
     },
   ];
 };
 
-interface Event {
-  EventID: number;
-  name: string;
-  date: string;
-  location: string;
-  ticketPrice: string;
-  imageUrl: string;
-}
-
 const TicketListing: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [hoveredEventId, setHoveredEventId] = useState<number | null>(null);
 
   useEffect(() => {
-    // Simulate fetching the events
     const eventsData = fetchEvents();
     setEvents(eventsData);
   }, []);
 
   return (
-    <div className="bg-gradient-to-b from-blue-900 to-gray-900 min-h-screen">
+    <div className="relative min-h-screen overflow-hidden">
       <Header />
-      <div className="container mx-auto p-4 pt-16">
+      {/* Video Background */}
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute inset-0 w-full h-full object-cover z-0"
+        src="BGVid1.mp4"
+      >
+        Your browser does not support the video tag.
+      </video>
+      {/* Overlay for Readability */}
+      <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+
+      {/* Main Content */}
+      <div className="relative z-20 container mx-auto p-4 pt-16">
         <div className="mb-6">
           <input
             type="text"
@@ -80,20 +106,34 @@ const TicketListing: React.FC = () => {
               {events.map((event) => (
                 <div
                   key={event.EventID}
-                  className="flex bg-white p-4 rounded-lg shadow-lg"
+                  className="relative flex bg-white p-4 rounded-lg shadow-lg"
+                  onMouseEnter={() => setHoveredEventId(event.EventID)}
+                  onMouseLeave={() => setHoveredEventId(null)}
                 >
                   <img
                     src={event.imageUrl}
                     alt={event.name}
                     className="w-1/4 rounded-lg"
                   />
-                  <div className="ml-4">
+                  <div className="ml-4 relative">
                     <h3 className="text-xl font-bold">{event.name}</h3>
                     <p className="text-gray-600">{event.date}</p>
                     <p className="text-gray-600">{event.location}</p>
                     <p className="text-gray-800 font-semibold">
                       {event.ticketPrice}
                     </p>
+                    {event.ticketsSold / event.capacity >= 0.9 && (
+                      <div className="mt-2 p-2 bg-yellow-300 text-black rounded">
+                        Limited Tickets Remaining!
+                      </div>
+                    )}
+                  </div>
+                  <div className="absolute top-0 right-0 flex items-center space-x-2">
+                    {hoveredEventId === event.EventID && (
+                      <div className="top-0 left-4 w-full bg-white p-4 shadow-lg rounded-lg z-10">
+                        <p>{event.description}</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
