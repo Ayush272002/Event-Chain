@@ -85,9 +85,10 @@ contract EventManager {
         return centsToFlare(events[_eventId].ticketPrice);
     }
 
-    function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public {
+    function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
         events[eventCounter] = Event(_name, _description, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), msg.sender);
         eventCounter++;
+        return eventCounter - 1;
     }
 
     function getEventImages(uint256 _eventId) public view returns (string[] memory) {
