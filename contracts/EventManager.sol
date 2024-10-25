@@ -71,7 +71,7 @@ contract EventManager {
         return _cents * power(10, decimals) * 1 ether / 100 / feedValue;
     }
 
-    function power(uint base, int8 exponent) public pure returns (uint) {
+    function power(uint base, int8 exponent) private pure returns (uint) {
         require(exponent >= 0, "Exponent must be non-negative");
         uint result = 1;
         for (int8 i = 0; i < exponent; i++) {
