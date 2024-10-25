@@ -42,11 +42,13 @@ const MetaMask = () => {
   };
 
   return (
-    <div className="text-center p-4">
+    <div className="">
       {metaMaskInstalled ? (
         <div>
           {account ? (
-            <p className="text-green-500">Connected: {account}</p>
+            <p className="text-green-500">
+              Connected: 0x{account.slice(2, 5)}...{account.slice(-3)}
+            </p>
           ) : (
             <button
               onClick={handleConnectWallet}
