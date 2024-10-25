@@ -1,33 +1,12 @@
+import Header from '../components/custom/header';
+
 export default function Home() {
   return (
     <div className="container mx-auto p-4">
-      <header className="header text-center mb-8">
-        <h1 className="text-4xl font-bold text-blue-700">Ticket Chain</h1>
-        <nav className="nav mt-4">
-          <ul className="flex justify-center space-x-4">
-            <li>
-              <a href="/" className="text-blue-500 hover:text-blue-700">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="/events" className="text-blue-500 hover:text-blue-700">
-                Events
-              </a>
-            </li>
-            <li>
-              <a href="/contact" className="text-blue-500 hover:text-blue-700">
-                Contact
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <input
-          type="text"
-          placeholder="Search events..."
-          className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md mx-auto"
-        />
-      </header>
+      <div>
+        <Header />
+        {/* Other page content */}
+      </div>
       <main>
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">Featured Events</h2>
