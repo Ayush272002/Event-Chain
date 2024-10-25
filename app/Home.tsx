@@ -1,4 +1,5 @@
 import Header from '../components/custom/header';
+import Footer from '../components/custom/footer';
 
 export default function Home() {
   return (
@@ -20,12 +21,8 @@ export default function Home() {
             <li>Event 3 - Date</li>
           </ul>
         </section>
+        <Footer />
       </main>
-      <footer className="text-center mt-8">
-        <p className="text-gray-500">
-          &copy; 2024 Ticket Chain. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 }
