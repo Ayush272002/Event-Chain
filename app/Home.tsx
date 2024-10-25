@@ -3,7 +3,7 @@ export default function Home() {
     <div className="container">
       <header className="header">
         <title>Event Chain</title>
-        <h1 className="text-8xl text-center" >Ticket Chain</h1>
+        <h1 className="text-8xl text-center text-blue-700" >Ticket Chain</h1>
         <nav className="nav">
           <ul>
             <li>
