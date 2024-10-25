@@ -1,0 +1,2462 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\contracts\\Escrow.sol": {
+      "lastModificationDate": 1729874629025,
+      "contentHash": "8017bf5de650f4131e761b0ee65e80a5",
+      "sourceName": "contracts/Escrow.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.2 <0.9.0"
+      ],
+      "artifacts": [
+        "Escrow"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\contracts\\EventManager.sol": {
+      "lastModificationDate": 1729875219986,
+      "contentHash": "ff95b2d27884dfd22b371a5d274da7ae",
+      "sourceName": "contracts/EventManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.2 <0.9.0"
+      ],
+      "artifacts": [
+        "EventManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\contracts\\FlareOracle.sol": {
+      "lastModificationDate": 1729874629025,
+      "contentHash": "2526038a459bb55e7396817deb473f64",
+      "sourceName": "contracts/FlareOracle.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@flarenetwork/flare-periphery-contracts/coston2/ContractRegistry.sol",
+        "@flarenetwork/flare-periphery-contracts/coston2/TestFtsoV2Interface.sol"
+      ],
+      "versionPragmas": [
+        ">=0.8.0 <0.9.0"
+      ],
+      "artifacts": [
+        "FtsoV2FeedConsumer"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\TestFtsoV2Interface.sol": {
+      "lastModificationDate": 1729874182659,
+      "contentHash": "e37208d8b92a76ab014c03df2ab34dca",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/TestFtsoV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "TestFtsoV2Interface"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\ContractRegistry.sol": {
+      "lastModificationDate": 1729874157291,
+      "contentHash": "6786a5d4608433fbb81492dbdc4814df",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/ContractRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IFlareContractRegistry.sol",
+        "./IPriceSubmitter.sol",
+        "./IGovernanceSettings.sol",
+        "./IFtsoRewardManager.sol",
+        "./IFtsoRegistry.sol",
+        "./IVoterWhitelister.sol",
+        "./IDistributionToDelegators.sol",
+        "./IFtsoManager.sol",
+        "./IWNat.sol",
+        "./IGovernanceVotePower.sol",
+        "./IClaimSetupManager.sol",
+        "./IGenericRewardManager.sol",
+        "./IFlareAssetRegistry.sol",
+        "./IValidatorRegistry.sol",
+        "./IFlareContractRegistry.sol",
+        "./IPollingFtso.sol",
+        "./IAddressBinder.sol",
+        "./IPChainStakeMirror.sol",
+        "./IPChainStakeMirrorVerifier.sol",
+        "./IPChainStakeMirrorMultiSigVoting.sol",
+        "./ISubmission.sol",
+        "./IEntityManager.sol",
+        "./IVoterRegistry.sol",
+        "./IFlareSystemsCalculator.sol",
+        "./IFlareSystemsManager.sol",
+        "./IRewardManager.sol",
+        "./IRelay.sol",
+        "./IWNatDelegationFee.sol",
+        "./IFtsoInflationConfigurations.sol",
+        "./IFtsoRewardOffersManager.sol",
+        "./IFtsoFeedDecimals.sol",
+        "./IFtsoFeedPublisher.sol",
+        "./IFtsoFeedIdConverter.sol",
+        "./IFastUpdateIncentiveManager.sol",
+        "./IFastUpdater.sol",
+        "./IFastUpdatesConfiguration.sol",
+        "./IRNat.sol",
+        "./IFeeCalculator.sol",
+        "./FtsoV2Interface.sol",
+        "./TestFtsoV2Interface.sol",
+        "./ProtocolsV2Interface.sol",
+        "./RandomNumberV2Interface.sol",
+        "./RewardsV2Interface.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ContractRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IVoterWhitelister.sol": {
+      "lastModificationDate": 1729874181861,
+      "contentHash": "666aa099ca75ac30e0d4b4246a0e9b1c",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IVoterWhitelister.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IVoterWhitelister"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPriceSubmitter.sol": {
+      "lastModificationDate": 1729874180090,
+      "contentHash": "d333aeddfe65d8c22265935d873d6f3b",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPriceSubmitter.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./genesis/interface/IFtsoGenesis.sol",
+        "./genesis/interface/IFtsoRegistryGenesis.sol",
+        "./genesis/interface/IFtsoManagerGenesis.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPriceSubmitter"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFlareContractRegistry.sol": {
+      "lastModificationDate": 1729874165501,
+      "contentHash": "66432d995c94bdef8a57349adab18a69",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFlareContractRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFlareContractRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IGovernanceSettings.sol": {
+      "lastModificationDate": 1729874174371,
+      "contentHash": "3d6422a752bb9b572fc5f6b129523d77",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IGovernanceSettings.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IGovernanceSettings"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IWNat.sol": {
+      "lastModificationDate": 1729874182123,
+      "contentHash": "86c55906a9470e83551c7ab7af1b9858",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IWNat.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IVPToken.sol",
+        "./token/interface/IICleanable.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IWNat"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IDistributionToDelegators.sol": {
+      "lastModificationDate": 1729874162002,
+      "contentHash": "824c7bc04dbd13517d09e1a481906c83",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IDistributionToDelegators.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IDistributionToDelegators"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoRegistry.sol": {
+      "lastModificationDate": 1729874172905,
+      "contentHash": "1f025414a37439832a1cc1cedaef1883",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ftso/interface/IIFtso.sol",
+        "./genesis/interface/IFtsoRegistryGenesis.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoManager.sol": {
+      "lastModificationDate": 1729874171536,
+      "contentHash": "b54321d7fc578d90929c89e937932dd9",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ftso/interface/IIFtso.sol",
+        "./genesis/interface/IFtsoManagerGenesis.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IClaimSetupManager.sol": {
+      "lastModificationDate": 1729874161229,
+      "contentHash": "8f99f83895a9da4a2d401f6b41e0d972",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IClaimSetupManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDelegationAccount.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IClaimSetupManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IGovernanceVotePower.sol": {
+      "lastModificationDate": 1729874174868,
+      "contentHash": "908cbc6470c161e05605ad556bb7144d",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IGovernanceVotePower.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IGovernanceVotePower"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IValidatorRegistry.sol": {
+      "lastModificationDate": 1729874181571,
+      "contentHash": "481536991812748c9995b34e25d87108",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IValidatorRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IValidatorRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFlareAssetRegistry.sol": {
+      "lastModificationDate": 1729874164724,
+      "contentHash": "9c158fd42b512d4ecfb4fbfb1ca06139",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFlareAssetRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFlareAssetRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IGenericRewardManager.sol": {
+      "lastModificationDate": 1729874174197,
+      "contentHash": "0a90708b5aa1514571d14baf66095e1a",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IGenericRewardManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IGenericRewardManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoRewardManager.sol": {
+      "lastModificationDate": 1729874173793,
+      "contentHash": "9ad327d33e6a9cfe08bd1d8b7563bf3e",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoRewardManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoRewardManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPChainStakeMirrorVerifier.sol": {
+      "lastModificationDate": 1729874179627,
+      "contentHash": "aeafcd3d0b8d62fda77e619b56d0fbc6",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPChainStakeMirrorVerifier.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPChainStakeMirrorVerifier"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPollingFtso.sol": {
+      "lastModificationDate": 1729874179957,
+      "contentHash": "f304295d2213a79de1f43a2e205ae877",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPollingFtso.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPollingFtso"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPChainStakeMirror.sol": {
+      "lastModificationDate": 1729874179488,
+      "contentHash": "86af52806017fbf2efda037720260911",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPChainStakeMirror.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IPChainVotePower.sol",
+        "./IPChainStakeMirrorVerifier.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPChainStakeMirror"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IAddressBinder.sol": {
+      "lastModificationDate": 1729874159189,
+      "contentHash": "14ea3812e349acc9629446bb1e1864c9",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IAddressBinder.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IAddressBinder"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFlareSystemsCalculator.sol": {
+      "lastModificationDate": 1729874167431,
+      "contentHash": "368352479e77210f7040c7b0b528aaf6",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFlareSystemsCalculator.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFlareSystemsCalculator"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPChainStakeMirrorMultiSigVoting.sol": {
+      "lastModificationDate": 1729874179543,
+      "contentHash": "5f0d56228ade72cddb2ca3dd6ad28da0",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPChainStakeMirrorMultiSigVoting.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPChainStakeMirrorMultiSigVoting"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IEntityManager.sol": {
+      "lastModificationDate": 1729874162252,
+      "contentHash": "6a4668e991c53b185442f136cb5ba14f",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IEntityManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IEntityManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IRewardManager.sol": {
+      "lastModificationDate": 1729874180804,
+      "contentHash": "be6dd50a8e4830bb5eac08653c396bcf",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IRewardManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./RewardsV2Interface.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IRewardManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFlareSystemsManager.sol": {
+      "lastModificationDate": 1729874167995,
+      "contentHash": "ba1a4f3491d2a58b798740b58f8769fe",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFlareSystemsManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ProtocolsV2Interface.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFlareSystemsManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IVoterRegistry.sol": {
+      "lastModificationDate": 1729874181733,
+      "contentHash": "a393fd22c141b5b314c844e2830d92fe",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IVoterRegistry.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IVoterRegistry"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\ISubmission.sol": {
+      "lastModificationDate": 1729874181496,
+      "contentHash": "df8351f9e3232e8df6f6e80cc1b1e2c9",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/ISubmission.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IRandomProvider.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "ISubmission"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IWNatDelegationFee.sol": {
+      "lastModificationDate": 1729874182203,
+      "contentHash": "d485dbec165b37f45c70a550df3d3d2f",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IWNatDelegationFee.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IWNatDelegationFee"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoInflationConfigurations.sol": {
+      "lastModificationDate": 1729874170831,
+      "contentHash": "3a193e07233cf50b6daadf75a54764ec",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoInflationConfigurations.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoInflationConfigurations"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoRewardOffersManager.sol": {
+      "lastModificationDate": 1729874174009,
+      "contentHash": "530127323c60b18028a3c21a0fcabf0e",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoRewardOffersManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoRewardOffersManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoFeedPublisher.sol": {
+      "lastModificationDate": 1729874170068,
+      "contentHash": "954e2dc14cba44616f7573956355829e",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoFeedPublisher.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoFeedPublisher"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IRelay.sol": {
+      "lastModificationDate": 1729874180668,
+      "contentHash": "991b86ed9f48fa9b234539a2e253ae50",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IRelay.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./RandomNumberV2Interface.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IRelay"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFeeCalculator.sol": {
+      "lastModificationDate": 1729874164040,
+      "contentHash": "5cbc28938421fe04f818796746c34267",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFeeCalculator.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFeeCalculator"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFastUpdater.sol": {
+      "lastModificationDate": 1729874163337,
+      "contentHash": "be1143be7ec4b588283baa5f745f1d0a",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFastUpdater.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISortition.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFastUpdater"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFastUpdateIncentiveManager.sol": {
+      "lastModificationDate": 1729874163014,
+      "contentHash": "34eb7a4a41076dfb068ede3adcac6178",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFastUpdateIncentiveManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IFixedPointArithmetic.sol",
+        "./IFastUpdatesConfiguration.sol",
+        "./IIncreaseManager.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFastUpdateIncentiveManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFastUpdatesConfiguration.sol": {
+      "lastModificationDate": 1729874163747,
+      "contentHash": "317bcbe67b102043af13be5b722dec20",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFastUpdatesConfiguration.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFastUpdatesConfiguration"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\RandomNumberV2Interface.sol": {
+      "lastModificationDate": 1729874182399,
+      "contentHash": "7a59e6d96dfb250e513dd3bed5d26225",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/RandomNumberV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "RandomNumberV2Interface"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoFeedIdConverter.sol": {
+      "lastModificationDate": 1729874169738,
+      "contentHash": "a848e72b6b0013ee3ac79f0d7ce5129c",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoFeedIdConverter.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoFeedIdConverter"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IRNat.sol": {
+      "lastModificationDate": 1729874180954,
+      "contentHash": "a8643b068ed0a7610011cd856cd6397b",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IRNat.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IRNatAccount.sol",
+        "./IWNat.sol",
+        "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IRNat"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtsoFeedDecimals.sol": {
+      "lastModificationDate": 1729874169207,
+      "contentHash": "83c66613e0cb473d3a7f99ddc2ab6860",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtsoFeedDecimals.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoFeedDecimals"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\ProtocolsV2Interface.sol": {
+      "lastModificationDate": 1729874182303,
+      "contentHash": "e69a09fd86c1f0026b081be7d0ed92d8",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/ProtocolsV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "ProtocolsV2Interface"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\RewardsV2Interface.sol": {
+      "lastModificationDate": 1729874182576,
+      "contentHash": "e437ec05d4f23ceb1b72454d4d87356a",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/RewardsV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "RewardsV2Interface"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\FtsoV2Interface.sol": {
+      "lastModificationDate": 1729874158780,
+      "contentHash": "200d81a8bcff0c592fdcc261dbf4c43c",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/FtsoV2Interface.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "FtsoV2Interface"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\genesis\\interface\\IFtsoManagerGenesis.sol": {
+      "lastModificationDate": 1729874172326,
+      "contentHash": "01516c640f70ae764a5a53db33f17257",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/genesis/interface/IFtsoManagerGenesis.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoManagerGenesis"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\genesis\\interface\\IFtsoGenesis.sol": {
+      "lastModificationDate": 1729874170436,
+      "contentHash": "1281e01bbe1cdfb4970a20deceeadba7",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/genesis/interface/IFtsoGenesis.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoGenesis"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\genesis\\interface\\IFtsoRegistryGenesis.sol": {
+      "lastModificationDate": 1729874173461,
+      "contentHash": "daf0fdff2cd698a1e95f75d8202626c0",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/genesis/interface/IFtsoRegistryGenesis.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IFtsoGenesis.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtsoRegistryGenesis"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IVPToken.sol": {
+      "lastModificationDate": 1729874182036,
+      "contentHash": "bc9bcb45c382244b3f286d3150f7b14d",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IVPToken.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./IGovernanceVotePower.sol",
+        "./IVPContractEvents.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IVPToken"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\token\\interface\\IICleanable.sol": {
+      "lastModificationDate": 1729874175479,
+      "contentHash": "cb560dd0b1683c03c1e2abddf166dfed",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/token/interface/IICleanable.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IICleanable"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1729874181485,
+      "contentHash": "df36f7051335cd1e748b1b6463b7fdd3",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IVPContractEvents.sol": {
+      "lastModificationDate": 1729874181961,
+      "contentHash": "45b7fa7ca08b377cbfe56b63cd9fe1fc",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IVPContractEvents.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IVPContractEvents"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\ftso\\interface\\IIFtso.sol": {
+      "lastModificationDate": 1729874176440,
+      "contentHash": "b015284e21fdc943e6e98969d6f1921f",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/ftso/interface/IIFtso.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../genesis/interface/IFtsoGenesis.sol",
+        "../../IFtso.sol",
+        "../../token/interface/IIVPToken.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IIFtso"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFtso.sol": {
+      "lastModificationDate": 1729874168548,
+      "contentHash": "4c2c2cad5921e38ccbd787547ac02e19",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFtso.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IFtso"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\token\\interface\\IIVPToken.sol": {
+      "lastModificationDate": 1729874179143,
+      "contentHash": "1312f76c993e6368044c2e8129c1f9eb",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/token/interface/IIVPToken.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../IVPToken.sol",
+        "../../IGovernanceVotePower.sol",
+        "./IIVPContract.sol",
+        "./IIGovernanceVotePower.sol",
+        "./IICleanable.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IIVPToken"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\token\\interface\\IIVPContract.sol": {
+      "lastModificationDate": 1729874179008,
+      "contentHash": "baf077d9ad6a34c0ad6f3ed167cafcb2",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/token/interface/IIVPContract.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../IVPToken.sol",
+        "../../IVPContractEvents.sol",
+        "./IICleanable.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IIVPContract"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\token\\interface\\IIGovernanceVotePower.sol": {
+      "lastModificationDate": 1729874176674,
+      "contentHash": "9821f6ced2f0e4e185f9702fda50a736",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/token/interface/IIGovernanceVotePower.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../IVPToken.sol",
+        "../../IPChainStakeMirror.sol",
+        "../../IGovernanceVotePower.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IIGovernanceVotePower"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IPChainVotePower.sol": {
+      "lastModificationDate": 1729874179770,
+      "contentHash": "fa3b7e12958a56a0033111d50871d2d3",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IPChainVotePower.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IPChainVotePower"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IDelegationAccount.sol": {
+      "lastModificationDate": 1729874161800,
+      "contentHash": "27416a0bee8c858e1c987131f3406559",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IDelegationAccount.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IClaimSetupManager.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IDelegationAccount"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IRandomProvider.sol": {
+      "lastModificationDate": 1729874180346,
+      "contentHash": "149e1936b7fe8dc470542410f3a980c2",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IRandomProvider.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IRandomProvider"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\ISortition.sol": {
+      "lastModificationDate": 1729874181274,
+      "contentHash": "81fe09c0ff335e32e8f95dc1764c72fc",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/ISortition.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IBn256.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": []
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IBn256.sol": {
+      "lastModificationDate": 1729874159960,
+      "contentHash": "f3307d9c5538a6de467dbf367a46e3b1",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IBn256.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": []
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IIncreaseManager.sol": {
+      "lastModificationDate": 1729874176970,
+      "contentHash": "47af84282709dcad4ba3c29102ce7e4d",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IIncreaseManager.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IIncreaseManager"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IFixedPointArithmetic.sol": {
+      "lastModificationDate": 1729874164333,
+      "contentHash": "bf49ebebf5d9e9bc486b5555c482bbe7",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IFixedPointArithmetic.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": []
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@flarenetwork\\flare-periphery-contracts\\coston2\\IRNatAccount.sol": {
+      "lastModificationDate": 1729874181138,
+      "contentHash": "c7f1c6d9a925305340a5c0b379afab58",
+      "sourceName": "@flarenetwork/flare-periphery-contracts/coston2/IRNatAccount.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IRNat.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.6 <0.9"
+      ],
+      "artifacts": [
+        "IRNatAccount"
+      ]
+    },
+    "C:\\Users\\ayush\\OneDrive\\Desktop\\encode\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
+      "lastModificationDate": 1729874181523,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.19",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    }
+  }
+}
