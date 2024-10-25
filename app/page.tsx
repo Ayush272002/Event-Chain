@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import EventCounter from '@/components/sc/eventCounter';
+import CreateEvent from '@/components/sc/createEvent';
 
 export default function Home() {
   return (
@@ -22,6 +24,10 @@ export default function Home() {
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
+
+        <EventCounter />
+
+        <CreateEvent />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
