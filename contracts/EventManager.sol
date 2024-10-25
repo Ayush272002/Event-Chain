@@ -106,7 +106,10 @@ contract EventManager {
         require(_eventId < eventCounter, "Invalid event ID");
         require(events[_eventId].eventDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
-        require(msg.value == events[_eventId].ticketPrice, "Invalid ticket price");
+
+        uint256 ticketCost = getEventPriceFlare(_eventId); // Get ticket price in FLR
+        require(msg.value >= ticketCost, "Invalid ticket price"); // Ensure user has paid >= ticket price
+        if (msg.value > ticketCost) payable(msg.sender).transfer(msg.value - ticketCost); // Pay any excess the user paid
 
         // Create new ticket
         tickets[ticketCounter] = Ticket(msg.sender, block.timestamp, _eventId);
