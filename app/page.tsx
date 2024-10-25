@@ -3,6 +3,8 @@ import EventCounter from '@/components/sc/eventCounter';
 import CreateEvent from '@/components/sc/createEvent';
 import GetEventPrice from '@/components/sc/getEventPrice';
 import FlareFeed from '@/components/sc/getFlareFeed';
+import GetEventImages from '@/components/sc/getEventImages';
+import GetEventTickets from '@/components/sc/getEventTickets';
 
 export default function Home() {
   return (
@@ -34,6 +36,10 @@ export default function Home() {
         <GetEventPrice />
 
         <FlareFeed />
+
+        <GetEventImages />
+
+        <GetEventTickets />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
