@@ -27,7 +27,8 @@ contract EventManager {
         uint256 capacity;
         uint256 ticketsSold;
         uint256 ticketPrice; // in USD cents
-        uint256 eventDate;
+        uint256 eventStartDate;
+        uint256 eventEndDate;
         string[] images; // array of image URLs
         uint256[] tickets;
         address payable eventHost;
@@ -39,7 +40,7 @@ contract EventManager {
         uint256 eventId;
     }
 
-    event EventCreated(uint256 eventId, string name, uint256 eventDate);
+    event EventCreated(uint256 eventId, string name, uint256 eventStartDate);
     event TicketPurchased(uint256 ticketId, uint256 eventId, address buyer, uint256 price);
     event TicketTransferred(uint256 ticketId, address from, address to);
     event TicketTransferApproved(uint256 ticketId, address owner, address trustee);
@@ -91,10 +92,10 @@ contract EventManager {
         return centsToFlare(events[_eventId].ticketPrice);
     }
 
-    function createEvent(string memory _name, string memory _description, string memory _location, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
-        events[eventCounter] = Event(_name, _description, _location, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), payable(msg.sender));
+    function createEvent(string memory _name, string memory _description, string memory _location, uint256 _capacity, uint256 _ticketPrice, uint256 _eventStartDate, uint256 _eventEndDate, string[] memory _images) public returns (uint256 _eventId) {
+        events[eventCounter] = Event(_name, _description, _location, _capacity, 0, _ticketPrice, _eventStartDate, _eventEndDate, _images, new uint256[](0), payable(msg.sender));
         eventCounter++;
-        emit EventCreated(eventCounter - 1, _name, _eventDate);
+        emit EventCreated(eventCounter - 1, _name, _eventStartDate);
         return eventCounter - 1;
     }
 
@@ -110,7 +111,7 @@ contract EventManager {
 
     function buyTicket(uint256 _eventId) public payable returns (uint256 _ticketId) {
         require(_eventId < eventCounter, "Invalid event ID");
-        require(events[_eventId].eventDate > block.timestamp, "Event has already passed");
+        require(events[_eventId].eventStartDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
 
         uint256 ticketCost = getEventPriceFlare(_eventId); // Get ticket price in FLR
@@ -143,7 +144,7 @@ contract EventManager {
 
     function transferTicketForce(uint256 _ticketId, address _to) private {
         require(_ticketId < ticketCounter, "Invalid ticket ID");
-        require(events[tickets[_ticketId].eventId].eventDate > block.timestamp, "Event has already passed");
+        require(events[tickets[_ticketId].eventId].eventStartDate > block.timestamp, "Event has already passed");
 
         address prevHolder = tickets[_ticketId].holder;
 

@@ -14,7 +14,8 @@ describe('EventManager', function () {
   const EVENT_LOCATION = 'London, UK';
   const EVENT_CAPACITY = 100;
   const EVENT_TICKET_PRICE = 1000; // 10 USD in cents
-  const EVENT_DATE = Math.floor(Date.now() / 1000) + 86400; // 1 day from now
+  const EVENT_START_DATE = Math.floor(Date.now() / 1000) + 86400; // 1 day from now
+  const EVENT_END_DATE = Math.floor(Date.now() / 1000) + 172800; // 2 days from now
   const EVENT_IMAGES = ['image1.jpg', 'image2.jpg'];
 
   beforeEach(async function () {
@@ -32,7 +33,8 @@ describe('EventManager', function () {
       EVENT_LOCATION,
       EVENT_CAPACITY,
       EVENT_TICKET_PRICE,
-      EVENT_DATE,
+      EVENT_START_DATE,
+      EVENT_END_DATE,
       EVENT_IMAGES
     );
   }
@@ -47,7 +49,8 @@ describe('EventManager', function () {
       expect(event.location).to.equal(EVENT_LOCATION);
       expect(event.capacity).to.equal(EVENT_CAPACITY);
       expect(event.ticketPrice).to.equal(EVENT_TICKET_PRICE);
-      expect(event.eventDate).to.equal(EVENT_DATE);
+      expect(event.eventStartDate).to.equal(EVENT_START_DATE);
+      expect(event.eventEndDate).to.equal(EVENT_END_DATE);
       expect(event.eventHost).to.equal(owner.address);
     });
 

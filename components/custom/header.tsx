@@ -35,26 +35,39 @@ const Header = () => {
         }}
       ></div>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-white">TicketChain</h1>
+        <Link href="/" legacyBehavior>
+          <a className="text-2xl font-semibold text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300">
+            TicketChain
+          </a>
+        </Link>
         <nav className="nav">
           <ul className="flex space-x-6">
             <li>
               <Link href="/" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Home
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/events" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Events
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/contact" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Contact
                 </a>
               </Link>
