@@ -20,7 +20,9 @@ const NumberPicker: React.FC<NumberPickerProps> = ({
     if (count < max) {
       const newCount = count + 1;
       setCount(newCount);
-      onChange && onChange(newCount);
+      if (onChange) {
+        onChange(newCount);
+      }
     }
   };
 
@@ -28,7 +30,9 @@ const NumberPicker: React.FC<NumberPickerProps> = ({
     if (count > min) {
       const newCount = count - 1;
       setCount(newCount);
-      onChange && onChange(newCount);
+      if (onChange) {
+        onChange(newCount);
+      }
     }
   };
 
