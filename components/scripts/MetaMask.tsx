@@ -106,7 +106,7 @@ export default function MetaMaskConnectWrapper() {
       debug={false}
       sdkOptions={{
         dappMetadata: {
-          name: 'My App',
+          name: 'My dApp',
           url: typeof window !== 'undefined' ? window.location.href : '',
         },
       }}
