@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import {
   Card,
@@ -11,8 +10,15 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import ImageCarousel from './ImageCarousel';
 import TicketButton from './TicketButton';
+import { buyHandler } from '@/lib/buyHandler';
+import { useToast } from '@/hooks/use-toast';
 
-const EventDescription = () => {
+const EventDescription = ({ eventId }: { eventId: string }) => {
+  const { toast } = useToast();
+  const handleBuyNow = () => {
+    buyHandler(Number(eventId), toast);
+  };
+
   return (
     <Card className="pt-10 pb-16 px-6 bg-gradient-to-r from-blue-50 to-gray-50 rounded-xl shadow-lg max-w-4xl mx-auto">
       <CardHeader className="flex flex-col items-start space-y-4">
@@ -47,6 +53,7 @@ const EventDescription = () => {
         <Button
           variant="default"
           className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-700"
+          onClick={handleBuyNow}
         >
           Buy now Using MetaMask
         </Button>

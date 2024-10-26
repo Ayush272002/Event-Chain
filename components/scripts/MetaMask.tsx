@@ -64,7 +64,9 @@ function MetaMaskConnect() {
       {isConnected ? (
         <Popover>
           <PopoverTrigger asChild>
-            <Button>{formatAddress(account)}</Button>
+            <Button variant="link" className="text-white">
+              {formatAddress(account)}
+            </Button>
           </PopoverTrigger>
           <PopoverContent className="w-44">
             <Button
@@ -77,7 +79,11 @@ function MetaMaskConnect() {
           </PopoverContent>
         </Popover>
       ) : (
-        <Button disabled={connecting} onClick={connect}>
+        <Button
+          disabled={connecting}
+          onClick={connect}
+          className="bg-light-purple bg-opacity-75 hover:bg-purple border-0 hover:border-0"
+        >
           <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
         </Button>
       )}

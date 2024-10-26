@@ -1,21 +1,21 @@
 'use client';
 import React, { useEffect, useState, useRef, Suspense } from 'react';
+import { useRouter } from 'next/navigation'; // Import useRouter for routing
 import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
 import { useSearchParams } from 'next/navigation';
 
-// Define the Event interface including new fields
 interface Event {
   EventID: number;
   name: string;
-  date: string; // Should ideally be a Date object for better handling
+  date: string;
   location: string;
-  ticketPrice: number; // Changed to number for sorting
+  ticketPrice: number;
   description: string;
   capacity: number;
   ticketsSold: number;
   imageUrl: string;
-  host: string; // New field for host
+  host: string;
 }
 
 // Dummy function to fetch events
@@ -65,14 +65,15 @@ const EventsPage: React.FC = () => {
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [hoveredEventId, setHoveredEventId] = useState<number | null>(null);
-  const [sortOption, setSortOption] = useState<string>(''); // Track sorting option
-  const [filterOptions, setFilterOptions] = useState<string[]>([]); // Track applied filters
-  const [selectedHost, setSelectedHost] = useState<string>(''); // For host filtering
+  const [sortOption, setSortOption] = useState<string>('');
+  const [filterOptions, setFilterOptions] = useState<string[]>([]);
+  const [selectedHost, setSelectedHost] = useState<string>('');
   const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
 
   const sortRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const eventsData = fetchEvents();
@@ -156,6 +157,10 @@ const EventsPage: React.FC = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleEventClick = (eventID: number) => {
+    router.push(`/events/${eventID}`); // You may replace this with a Link from Next.js
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -314,9 +319,10 @@ const EventsPage: React.FC = () => {
             </h2>
             <div className="grid grid-cols-1 gap-6">
               {filteredEvents.map((event) => (
-                <div
+                <button
                   key={event.EventID}
-                  className="relative flex bg-white p-4 rounded-lg shadow-lg"
+                  className="relative flex bg-white p-4 rounded-lg shadow-lg text-left"
+                  onClick={() => handleEventClick(event.EventID)}
                   onMouseEnter={() => setHoveredEventId(event.EventID)}
                   onMouseLeave={() => setHoveredEventId(null)}
                 >
@@ -346,7 +352,7 @@ const EventsPage: React.FC = () => {
                       </div>
                     )}
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </section>
