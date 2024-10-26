@@ -60,6 +60,14 @@ const config: Config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      typography: {
+        wrap: {
+          '*': {
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
+          },
+        },
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
