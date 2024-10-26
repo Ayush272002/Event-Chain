@@ -57,11 +57,11 @@ export default function Home() {
         <div className="relative z-20 min-h-screen bg-gradient-to-b from-transparent to-gray-900 pt-20">
           <div className="container mx-auto p-4">
             <div className="container mx-auto justify-center items-center p-4">
-              <div className="text-4xl font-bold text-white text-shadow-lg">
+              <div className="text-6xl font-bold text-white text-center text-shadow-lg">
                 Book your next
                 <FlipWords
                   words={words}
-                  className="text-light-purple text-opacity-75"
+                  className="text-pink-500 text-opacity-75 pl-3.5"
                 />
                 on the Flare blockchain.
               </div>

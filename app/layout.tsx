@@ -20,8 +20,8 @@ const inter = Inter({ subsets: ['latin'] });
 // });
 
 export const metadata: Metadata = {
-  title: 'Ticket Chain',
-  description: 'A blockchain-based ticketing system.',
+  title: 'TicketChain',
+  description: 'A verifiable and immutable ticketing platform.',
 };
 
 export default function RootLayout({
