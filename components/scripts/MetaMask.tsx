@@ -1,102 +1,114 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useSDK, MetaMaskProvider } from '@metamask/sdk-react';
-import { Button } from '@/components/ui/button';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
 
-function WalletIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-    </svg>
-  );
-}
-
-function formatAddress(address: string | undefined): string {
-  if (!address) return '';
-  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+declare global {
+  interface Window {
+    ethereum?: {
+      isMetaMask?: boolean;
+      request: (request: {
+        method: string;
+        params?: Array<unknown>; // Use `unknown` instead of `any`
+      }) => Promise<unknown>; // Specify a more accurate return type if possible
+    };
+  }
 }
 
 function MetaMaskConnect() {
-  const { sdk, connected, connecting, account } = useSDK();
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState<boolean>(false);
+  const [account, setAccount] = useState<string | null>(null);
 
+  // Initial check on load
   useEffect(() => {
-    setIsConnected(connected);
-  }, [connected]);
+    const checkConnection = async () => {
+      if (typeof window !== 'undefined' && window.ethereum) {
+        try {
+          // Check if there are any accounts already connected
+          const accounts = (await window.ethereum.request({
+            method: 'eth_accounts',
+          })) as string[];
+          if (accounts && accounts.length > 0) {
+            setIsConnected(true);
+            setAccount(accounts[0]);
+            localStorage.setItem('isConnected', JSON.stringify(true));
+            localStorage.setItem('account', accounts[0]);
+          } else {
+            // No connected accounts found; check `localStorage`
+            const storedIsConnected = JSON.parse(
+              localStorage.getItem('isConnected') || 'false'
+            );
+            const storedAccount = localStorage.getItem('account') || null;
+            setIsConnected(storedIsConnected);
+            setAccount(storedAccount);
+          }
+        } catch (error) {
+          console.error('Error checking MetaMask connection:', error);
+        }
+      }
+    };
+
+    checkConnection();
+  }, []);
+
+  // Update localStorage whenever connection state changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('isConnected', JSON.stringify(isConnected));
+      localStorage.setItem('account', account || '');
+    }
+  }, [isConnected, account]);
 
   const connect = async () => {
     try {
-      await sdk?.connect();
-      setIsConnected(true);
-    } catch (err) {
-      console.warn(`No accounts found`, err);
+      const accounts = (await window.ethereum?.request({
+        method: 'eth_requestAccounts',
+      })) as string[];
+      if (accounts && accounts.length > 0) {
+        setIsConnected(true);
+        setAccount(accounts[0]);
+        localStorage.setItem('isConnected', JSON.stringify(true));
+        localStorage.setItem('account', accounts[0]);
+      }
+    } catch (error) {
+      console.error('MetaMask connection failed:', error);
     }
   };
 
-  const disconnect = () => {
-    if (sdk) {
-      sdk.terminate();
-      setIsConnected(false);
-    }
+  const disconnect = async () => {
+    setIsConnected(false);
+    setAccount(null);
+    localStorage.setItem('isConnected', JSON.stringify(false));
+    localStorage.removeItem('account');
+    await window.ethereum?.request({
+      method: 'wallet_revokePermissions',
+      params: [{ eth_accounts: {} }],
+    });
   };
 
   return (
     <div className="relative">
       {isConnected ? (
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button>{formatAddress(account)}</Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-44">
-            <Button
-              variant="destructive"
-              onClick={disconnect}
-              className="w-full px-4 py-2 text-left hover:bg-muted hover:text-destructive"
-            >
-              Disconnect
-            </Button>
-          </PopoverContent>
-        </Popover>
+        <div>
+          <button
+            onClick={disconnect}
+            className="bg-red-500 text-white px-4 py-2 rounded"
+          >
+            Disconnect
+          </button>
+          <span>
+            {account && `${account.slice(0, 6)}...${account.slice(-4)}`}
+          </span>
+        </div>
       ) : (
-        <Button disabled={connecting} onClick={connect}>
-          <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
-        </Button>
+        <button
+          onClick={connect}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Connect Wallet
+        </button>
       )}
     </div>
   );
 }
 
-export default function MetaMaskConnectWrapper() {
-  return (
-    <MetaMaskProvider
-      debug={false}
-      sdkOptions={{
-        dappMetadata: {
-          name: 'My dApp',
-          url: typeof window !== 'undefined' ? window.location.href : '',
-        },
-      }}
-    >
-      <MetaMaskConnect />
-    </MetaMaskProvider>
-  );
-}
+export default MetaMaskConnect;
