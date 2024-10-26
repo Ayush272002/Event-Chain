@@ -46,7 +46,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/TicketListings" legacyBehavior>
+              <Link href="/events" legacyBehavior>
                 <a className="text-white hover:text-blue-500 transition-colors duration-300">
                   Events
                 </a>

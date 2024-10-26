@@ -59,7 +59,7 @@ const fetchEvents = (): Event[] => {
   ];
 };
 
-const TicketListing: React.FC = () => {
+const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -340,4 +340,4 @@ const TicketListing: React.FC = () => {
   );
 };
 
-export default TicketListing;
+export default EventsPage;
