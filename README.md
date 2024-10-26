@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TicketChain
 
-## Getting Started
+## Problem
+Many popular ticket sites exist, that allow customers to browse different upcoming events in their area and book tickets, however we identified several issues with these centralised service model:
+- Tickets cannot be easily transferred
+  - Many existing platforms make it difficult if not impossible to transfer tickets between different users. This means people don't have *true* ownership over their purchased tickets.
+- Complex user interfaces
+  - User interfaces on many of these websites can be quite complex and complicated, which can make it hard to book the right ticket and can often lead to customers making costly mistakes.
+- Scalability issues
+  - When popular events are released, many of these websites can slow down or sometimes even crash, worsening the experience for the end user.
+- Single point of failure
+  - These central services consolidate all of the data and compute for their services in one spot. One possible risk to consider is a cyberattack - if the central organisation is compromised, all customer data is at risk of being stolen and leaked. Another possible risk is the central server going down, meaning ticket services would go down, which is not ideal if thousands of attendees are trying to verify themselves at an event.
 
-First, run the development server:
+## Proposal
+We propose to build a solution which tackles these issues head-on. TicketChain is a decentralised website which allows users to browse upcoming events, and book tickets for these events through verifiable, immutable blockchain transactions. This allows users to purchase tickets. Functionality also exists for users to transfer their tickets to other users.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This is made possible through the use of smart contracts deployed on the blockchain which expose several public read and write methods, which can be invoked through our front-end user interface. A record of transactions are kept secure on the blockchain, and no central entity can tamper with these transactions.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Because the main application logic is on the blockchain, this means we can exploit the blockchains' scalability and durability during high levels of demand. The workload of execution is split between nodes and transaction gas fees pay for the compute required during levels of high demand for the service, solving the issue of central services being unscalable and avoiding us from having a single point of failure.
