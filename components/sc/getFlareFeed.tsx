@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { getContract } from '@/lib/ethers'; // Adjust the path to your ethers helper
+import { getContract } from '@/lib/ethers';
 
 const FlareFeed = () => {
   const [feedValue, setFeedValue] = useState<string | null>(null);
@@ -13,13 +13,10 @@ const FlareFeed = () => {
     try {
       const contract = getContract();
       const feedData = await contract.getFlareFeed();
-
-      // Assuming feedData[0] is BigNumber and needs conversion
       const _feedValue = ethers.utils.formatEther(feedData[0].toString());
 
-      // feedData[1] and feedData[2] may be regular numbers (int8 and uint64), so no .toNumber() needed
-      const _decimals = feedData[1]; // No need to convert if it's already an integer
-      const _timestamp = new Date(feedData[2] * 1000).toLocaleString(); // Convert Unix timestamp to readable format
+      const _decimals = feedData[1];
+      const _timestamp = new Date(feedData[2] * 1000).toLocaleString();
 
       setFeedValue(_feedValue);
       setDecimals(_decimals);

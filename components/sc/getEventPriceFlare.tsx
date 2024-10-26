@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { getContract } from '@/lib/ethers'; // Adjust the path to your ethers helper
+import { getContract } from '@/lib/ethers';
 
 const GetEventPrice = () => {
   const [eventId, setEventId] = useState<number | null>(null);

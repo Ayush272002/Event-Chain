@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
-import { getContract } from '@/lib/ethers'; // Adjust the path to your ethers helper
+import { getContract } from '@/lib/ethers';
 
 const GetEventTickets = () => {
   const [eventId, setEventId] = useState<number | null>(null);
@@ -19,13 +19,8 @@ const GetEventTickets = () => {
     }
 
     try {
-      // Get the contract instance
       const contract = getContract();
-
-      // Fetch tickets for the given event ID
       const eventTickets = await contract.getEventTickets(eventId);
-
-      // Convert BigNumbers to plain numbers for display
       setTickets(
         eventTickets.map((ticket: ethers.BigNumber) => ticket.toNumber())
       );

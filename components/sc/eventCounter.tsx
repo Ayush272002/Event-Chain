@@ -1,4 +1,4 @@
-'use client'; // Add this at the top to make this a Client Component
+'use client';
 
 import { useEffect, useState } from 'react';
 import { getContract } from '@/lib/ethers';
