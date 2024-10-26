@@ -62,7 +62,7 @@ const fetchEvents = (): Event[] => {
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [hoveredEventId, setHoveredEventId] = useState<number | null>(null);
   const [sortOption, setSortOption] = useState<string>('');
   const [filterOptions, setFilterOptions] = useState<string[]>([]);
@@ -81,14 +81,16 @@ const EventsPage: React.FC = () => {
   }, []);
 
   const SearchBox = () => {
-    setSearchQuery(useSearchParams().get("q") || "");
-    return <input
-      type="text"
-      placeholder="Search events..."
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
-    />
+    setSearchQuery(useSearchParams().get('q') || '');
+    return (
+      <input
+        type="text"
+        placeholder="Search events..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
+      />
+    );
   };
 
   useEffect(() => {
@@ -177,16 +179,18 @@ const EventsPage: React.FC = () => {
 
       <div className="relative z-20 container mx-auto p-4 pt-16">
         <div className="mb-6">
-          <Suspense fallback={
-            <input
-              type="text"
-              placeholder="Search events..."
-              disabled={true}
-              value="loading..."
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
-            />
-          }>
+          <Suspense
+            fallback={
+              <input
+                type="text"
+                placeholder="Search events..."
+                disabled={true}
+                value="loading..."
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
+              />
+            }
+          >
             <SearchBox />
           </Suspense>
           <div className="flex mt-4 space-x-4">
