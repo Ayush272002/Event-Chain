@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import MetaMask from '../scripts/MetaMask';
 
 const Header = () => {
   const [mouseX, setMouseX] = useState(-1);
@@ -59,9 +60,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <button className="bg-gradient-to-r from-blue-500 to-indigo-700 text-white px-4 py-1 rounded-full transform transition-transform duration-300 hover:scale-105 shadow-lg hover:shadow-2xl">
-                Login
-              </button>
+              <MetaMask />
             </li>
           </ul>
         </nav>
