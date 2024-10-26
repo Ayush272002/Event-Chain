@@ -40,21 +40,30 @@ const Header = () => {
           <ul className="flex space-x-6">
             <li>
               <Link href="/" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-blue-500 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Home
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/TicketListings" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-blue-500 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Events
                 </a>
               </Link>
             </li>
             <li>
               <Link href="/contact" legacyBehavior>
-                <a className="text-white hover:text-blue-500 transition-colors duration-300">
+                <a
+                  className="text-white hover:text-blue-500 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
                   Contact
                 </a>
               </Link>
