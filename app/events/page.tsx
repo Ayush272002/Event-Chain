@@ -18,7 +18,6 @@ interface Event {
   host: string;
 }
 
-// Dummy function to fetch events
 const fetchEvents = (): Event[] => {
   return [
     {
@@ -159,7 +158,7 @@ const EventsPage: React.FC = () => {
   }, []);
 
   const handleEventClick = (eventID: number) => {
-    router.push(`/events/${eventID}`); // You may replace this with a Link from Next.js
+    router.push(`/events/${eventID}`); // Route to the specific event page
   };
 
   return (
