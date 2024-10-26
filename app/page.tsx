@@ -6,6 +6,7 @@ import FlareFeed from '@/components/sc/getFlareFeed';
 import GetEventImages from '@/components/sc/getEventImages';
 import GetEventTickets from '@/components/sc/getEventTickets';
 import BuyTicket from '@/components/sc/buyTicket';
+import TransferTicket from '@/components/sc/transferTicket';
 
 export default function Home() {
   return (
@@ -43,6 +44,8 @@ export default function Home() {
         <GetEventTickets />
 
         <BuyTicket />
+
+        <TransferTicket />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
