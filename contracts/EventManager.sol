@@ -159,9 +159,10 @@ contract EventManager {
         require(found, "Ticket not found in sender's inventory");
 
         // Remove ticket from holder's array
-        for (; i < userTickets[prevHolder].length; i++) {
+        for (; i < userTickets[prevHolder].length-1; i++) {
             userTickets[prevHolder][i] = userTickets[prevHolder][i+1];
         }
+        userTickets[prevHolder].pop();
 
         // Add ticket to _to's array
         userTickets[_to].push(_ticketId);
