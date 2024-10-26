@@ -7,6 +7,7 @@ import GetEventImages from '@/components/sc/getEventImages';
 import GetEventTickets from '@/components/sc/getEventTickets';
 import BuyTicket from '@/components/sc/buyTicket';
 import TransferTicket from '@/components/sc/transferTicket';
+import CentsToFlare from '@/components/sc/centsToFlare';
 
 export default function Home() {
   return (
@@ -46,6 +47,8 @@ export default function Home() {
         <BuyTicket />
 
         <TransferTicket />
+
+        <CentsToFlare />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
