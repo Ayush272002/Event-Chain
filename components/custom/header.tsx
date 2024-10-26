@@ -35,7 +35,7 @@ const Header = () => {
         }}
       ></div>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-Ariel-bold text-white">TicketChain</h1>
+        <h1 className="text-2xl font-semibold text-white">TicketChain</h1>
         <nav className="nav">
           <ul className="flex space-x-6">
             <li>
