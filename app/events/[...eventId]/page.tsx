@@ -40,7 +40,7 @@ const ListingPage: React.FC = () => {
   return (
     <>
       <Header />
-      <EventDescription />
+      <EventDescription eventId={eventID!} />
       <Footer />
     </>
   );
