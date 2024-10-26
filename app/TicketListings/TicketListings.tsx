@@ -57,12 +57,29 @@ const fetchEvents = (): Event[] => {
 
 const TicketListing: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [hoveredEventId, setHoveredEventId] = useState<number | null>(null);
 
   useEffect(() => {
     const eventsData = fetchEvents();
     setEvents(eventsData);
+    setFilteredEvents(eventsData);
   }, []);
+
+  useEffect(() => {
+    // Filter events based on search query
+    const lowercasedQuery = searchQuery.toLowerCase();
+    const filtered = events.filter((event) =>
+      ['name', 'date', 'location', 'description'].some((key) =>
+        event[key as keyof Event]
+          .toString()
+          .toLowerCase()
+          .includes(lowercasedQuery)
+      )
+    );
+    setFilteredEvents(filtered);
+  }, [searchQuery, events]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
@@ -86,6 +103,8 @@ const TicketListing: React.FC = () => {
           <input
             type="text"
             placeholder="Search events..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
           />
           <div className="flex mt-4 space-x-4">
@@ -103,7 +122,7 @@ const TicketListing: React.FC = () => {
               Available Events
             </h2>
             <div className="grid grid-cols-1 gap-6">
-              {events.map((event) => (
+              {filteredEvents.map((event) => (
                 <div
                   key={event.EventID}
                   className="relative flex bg-white p-4 rounded-lg shadow-lg"
