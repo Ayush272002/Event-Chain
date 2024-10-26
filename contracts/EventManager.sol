@@ -129,6 +129,7 @@ contract EventManager {
         ticketCounter++;
 
         // Update number of tickets sold
+        events[_eventId].tickets.push(ticketCounter - 1);
         events[_eventId].ticketsSold++;
 
         // Transfer FLR to event host

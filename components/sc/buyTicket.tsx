@@ -38,9 +38,11 @@ const BuyTicket = () => {
 
   // Handle buying a ticket for the event
   const handleBuyTicket = async () => {
-    if (!eventId) {
-      alert('Please enter a valid Event ID.');
-      return;
+    if (eventId !== null) {
+      if (eventId < 0) {
+        alert('Please enter a valid Event ID.');
+        return;
+      }
     }
 
     try {
