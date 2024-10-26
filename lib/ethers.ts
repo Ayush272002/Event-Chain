@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 
 const FLARE_TESTNET_RPC_URL = 'https://coston2.enosys.global/ext/C/rpc';
 
-const CONTRACT_ADDRESS = '0xa67f64937a0a4daf3b5f5Eea7903d1E81d375b7b';
+const CONTRACT_ADDRESS = '0xA4E90EF8f5846C568515e9120635edb1f2776842';
 
 export function getFlareProvider() {
   const flareRpcUrl = FLARE_TESTNET_RPC_URL;
@@ -101,6 +101,117 @@ export function getContract() {
       type: 'function',
     },
     {
+      inputs: [],
+      stateMutability: 'nonpayable',
+      type: 'constructor',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'eventId',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          internalType: 'string',
+          name: 'name',
+          type: 'string',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'eventDate',
+          type: 'uint256',
+        },
+      ],
+      name: 'EventCreated',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'ticketId',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'eventId',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'buyer',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'price',
+          type: 'uint256',
+        },
+      ],
+      name: 'TicketPurchased',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'ticketId',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'owner',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'trustee',
+          type: 'address',
+        },
+      ],
+      name: 'TicketTransferApproved',
+      type: 'event',
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: false,
+          internalType: 'uint256',
+          name: 'ticketId',
+          type: 'uint256',
+        },
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'from',
+          type: 'address',
+        },
+        {
+          indexed: false,
+          internalType: 'address',
+          name: 'to',
+          type: 'address',
+        },
+      ],
+      name: 'TicketTransferred',
+      type: 'event',
+    },
+    {
       inputs: [
         {
           internalType: 'uint256',
@@ -119,9 +230,22 @@ export function getContract() {
       type: 'function',
     },
     {
-      inputs: [],
+      inputs: [
+        {
+          internalType: 'uint256',
+          name: '_ticketId',
+          type: 'uint256',
+        },
+        {
+          internalType: 'address',
+          name: '_to',
+          type: 'address',
+        },
+      ],
+      name: 'transferTicketFrom',
+      outputs: [],
       stateMutability: 'nonpayable',
-      type: 'constructor',
+      type: 'function',
     },
     {
       inputs: [
