@@ -13,168 +13,236 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
+} from 'ethers';
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
 import type {
   TypedEventFilter,
   TypedEvent,
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from '../common';
 
 export interface EventManagerInterface extends utils.Interface {
   functions: {
-    "approveTicket(uint256,address,bool)": FunctionFragment;
-    "buyTicket(uint256)": FunctionFragment;
-    "centsToFlare(uint256)": FunctionFragment;
-    "createEvent(string,string,uint256,uint256,uint256,string[])": FunctionFragment;
-    "eventCounter()": FunctionFragment;
-    "events(uint256)": FunctionFragment;
-    "getEventImages(uint256)": FunctionFragment;
-    "getEventPriceFlare(uint256)": FunctionFragment;
-    "getEventTickets(uint256)": FunctionFragment;
-    "power(uint256,int8)": FunctionFragment;
-    "ticketCounter()": FunctionFragment;
-    "tickets(uint256)": FunctionFragment;
-    "transferTicket(uint256,address)": FunctionFragment;
-    "userTickets(address,uint256)": FunctionFragment;
+    'approveTicket(uint256,address,bool)': FunctionFragment;
+    'buyTicket(uint256)': FunctionFragment;
+    'centsToFlare(uint256)': FunctionFragment;
+    'createEvent(string,string,uint256,uint256,uint256,string[])': FunctionFragment;
+    'eventCounter()': FunctionFragment;
+    'events(uint256)': FunctionFragment;
+    'getEventImages(uint256)': FunctionFragment;
+    'getEventPriceFlare(uint256)': FunctionFragment;
+    'getEventTickets(uint256)': FunctionFragment;
+    'ticketCounter()': FunctionFragment;
+    'tickets(uint256)': FunctionFragment;
+    'transferTicket(uint256,address)': FunctionFragment;
+    'transferTicketFrom(uint256,address)': FunctionFragment;
+    'userTickets(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "approveTicket"
-      | "buyTicket"
-      | "centsToFlare"
-      | "createEvent"
-      | "eventCounter"
-      | "events"
-      | "getEventImages"
-      | "getEventPriceFlare"
-      | "getEventTickets"
-      | "power"
-      | "ticketCounter"
-      | "tickets"
-      | "transferTicket"
-      | "userTickets"
+      | 'approveTicket'
+      | 'buyTicket'
+      | 'centsToFlare'
+      | 'createEvent'
+      | 'eventCounter'
+      | 'events'
+      | 'getEventImages'
+      | 'getEventPriceFlare'
+      | 'getEventTickets'
+      | 'ticketCounter'
+      | 'tickets'
+      | 'transferTicket'
+      | 'transferTicketFrom'
+      | 'userTickets'
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "approveTicket",
+    functionFragment: 'approveTicket',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<boolean>
+      PromiseOrValue<boolean>,
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "buyTicket",
+    functionFragment: 'buyTicket',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "centsToFlare",
+    functionFragment: 'centsToFlare',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "createEvent",
+    functionFragment: 'createEvent',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>[]
+      PromiseOrValue<string>[],
     ]
   ): string;
   encodeFunctionData(
-    functionFragment: "eventCounter",
+    functionFragment: 'eventCounter',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "events",
+    functionFragment: 'events',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEventImages",
+    functionFragment: 'getEventImages',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEventPriceFlare",
+    functionFragment: 'getEventPriceFlare',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "getEventTickets",
+    functionFragment: 'getEventTickets',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "power",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "ticketCounter",
+    functionFragment: 'ticketCounter',
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "tickets",
+    functionFragment: 'tickets',
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferTicket",
+    functionFragment: 'transferTicket',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "userTickets",
+    functionFragment: 'transferTicketFrom',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userTickets',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "approveTicket",
+    functionFragment: 'approveTicket',
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "buyTicket", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'buyTicket', data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "centsToFlare",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "createEvent",
+    functionFragment: 'centsToFlare',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "eventCounter",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "events", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getEventImages",
+    functionFragment: 'createEvent',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getEventPriceFlare",
+    functionFragment: 'eventCounter',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'events', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'getEventImages',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getEventTickets",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "power", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "ticketCounter",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "tickets", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferTicket",
+    functionFragment: 'getEventPriceFlare',
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "userTickets",
+    functionFragment: 'getEventTickets',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'ticketCounter',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: 'tickets', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferTicket',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'transferTicketFrom',
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: 'userTickets',
     data: BytesLike
   ): Result;
 
-  events: {};
+  events: {
+    'EventCreated(uint256,string,uint256)': EventFragment;
+    'TicketPurchased(uint256,uint256,address,uint256)': EventFragment;
+    'TicketTransferApproved(uint256,address,address)': EventFragment;
+    'TicketTransferred(uint256,address,address)': EventFragment;
+  };
+
+  getEvent(nameOrSignatureOrTopic: 'EventCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TicketPurchased'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TicketTransferApproved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'TicketTransferred'): EventFragment;
 }
+
+export interface EventCreatedEventObject {
+  eventId: BigNumber;
+  name: string;
+  eventDate: BigNumber;
+}
+export type EventCreatedEvent = TypedEvent<
+  [BigNumber, string, BigNumber],
+  EventCreatedEventObject
+>;
+
+export type EventCreatedEventFilter = TypedEventFilter<EventCreatedEvent>;
+
+export interface TicketPurchasedEventObject {
+  ticketId: BigNumber;
+  eventId: BigNumber;
+  buyer: string;
+  price: BigNumber;
+}
+export type TicketPurchasedEvent = TypedEvent<
+  [BigNumber, BigNumber, string, BigNumber],
+  TicketPurchasedEventObject
+>;
+
+export type TicketPurchasedEventFilter = TypedEventFilter<TicketPurchasedEvent>;
+
+export interface TicketTransferApprovedEventObject {
+  ticketId: BigNumber;
+  owner: string;
+  trustee: string;
+}
+export type TicketTransferApprovedEvent = TypedEvent<
+  [BigNumber, string, string],
+  TicketTransferApprovedEventObject
+>;
+
+export type TicketTransferApprovedEventFilter =
+  TypedEventFilter<TicketTransferApprovedEvent>;
+
+export interface TicketTransferredEventObject {
+  ticketId: BigNumber;
+  from: string;
+  to: string;
+}
+export type TicketTransferredEvent = TypedEvent<
+  [BigNumber, string, string],
+  TicketTransferredEventObject
+>;
+
+export type TicketTransferredEventFilter =
+  TypedEventFilter<TicketTransferredEvent>;
 
 export interface EventManager extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -262,12 +330,6 @@ export interface EventManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    power(
-      base: PromiseOrValue<BigNumberish>,
-      exponent: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
-
     ticketCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tickets(
@@ -282,6 +344,12 @@ export interface EventManager extends BaseContract {
     >;
 
     transferTicket(
+      _ticketId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transferTicketFrom(
       _ticketId: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -353,12 +421,6 @@ export interface EventManager extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  power(
-    base: PromiseOrValue<BigNumberish>,
-    exponent: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
-
   ticketCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   tickets(
@@ -373,6 +435,12 @@ export interface EventManager extends BaseContract {
   >;
 
   transferTicket(
+    _ticketId: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transferTicketFrom(
     _ticketId: PromiseOrValue<BigNumberish>,
     _to: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -395,7 +463,7 @@ export interface EventManager extends BaseContract {
     buyTicket(
       _eventId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     centsToFlare(
       _cents: PromiseOrValue<BigNumberish>,
@@ -410,7 +478,7 @@ export interface EventManager extends BaseContract {
       _eventDate: PromiseOrValue<BigNumberish>,
       _images: PromiseOrValue<string>[],
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
     eventCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -444,12 +512,6 @@ export interface EventManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    power(
-      base: PromiseOrValue<BigNumberish>,
-      exponent: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     ticketCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     tickets(
@@ -469,6 +531,12 @@ export interface EventManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    transferTicketFrom(
+      _ticketId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     userTickets(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<BigNumberish>,
@@ -476,7 +544,53 @@ export interface EventManager extends BaseContract {
     ): Promise<BigNumber>;
   };
 
-  filters: {};
+  filters: {
+    'EventCreated(uint256,string,uint256)'(
+      eventId?: null,
+      name?: null,
+      eventDate?: null
+    ): EventCreatedEventFilter;
+    EventCreated(
+      eventId?: null,
+      name?: null,
+      eventDate?: null
+    ): EventCreatedEventFilter;
+
+    'TicketPurchased(uint256,uint256,address,uint256)'(
+      ticketId?: null,
+      eventId?: null,
+      buyer?: null,
+      price?: null
+    ): TicketPurchasedEventFilter;
+    TicketPurchased(
+      ticketId?: null,
+      eventId?: null,
+      buyer?: null,
+      price?: null
+    ): TicketPurchasedEventFilter;
+
+    'TicketTransferApproved(uint256,address,address)'(
+      ticketId?: null,
+      owner?: null,
+      trustee?: null
+    ): TicketTransferApprovedEventFilter;
+    TicketTransferApproved(
+      ticketId?: null,
+      owner?: null,
+      trustee?: null
+    ): TicketTransferApprovedEventFilter;
+
+    'TicketTransferred(uint256,address,address)'(
+      ticketId?: null,
+      from?: null,
+      to?: null
+    ): TicketTransferredEventFilter;
+    TicketTransferred(
+      ticketId?: null,
+      from?: null,
+      to?: null
+    ): TicketTransferredEventFilter;
+  };
 
   estimateGas: {
     approveTicket(
@@ -528,12 +642,6 @@ export interface EventManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    power(
-      base: PromiseOrValue<BigNumberish>,
-      exponent: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     ticketCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     tickets(
@@ -542,6 +650,12 @@ export interface EventManager extends BaseContract {
     ): Promise<BigNumber>;
 
     transferTicket(
+      _ticketId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transferTicketFrom(
       _ticketId: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -604,12 +718,6 @@ export interface EventManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    power(
-      base: PromiseOrValue<BigNumberish>,
-      exponent: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     ticketCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tickets(
@@ -618,6 +726,12 @@ export interface EventManager extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     transferTicket(
+      _ticketId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferTicketFrom(
       _ticketId: PromiseOrValue<BigNumberish>,
       _to: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

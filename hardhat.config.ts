@@ -1,14 +1,13 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "@nomiclabs/hardhat-ethers";
+import { HardhatUserConfig } from 'hardhat/config';
+import '@nomiclabs/hardhat-waffle';
+import '@nomiclabs/hardhat-ethers';
 
 const config: HardhatUserConfig = {
-  solidity: "0.8.19",
-  paths: {
-    sources: "./contracts",
-    tests: "./test",
-    cache: "./cache",
-    artifacts: "./artifacts"
+  solidity: '0.8.17',
+  networks: {
+    hardhat: {
+      chainId: 1337,
+    },
   },
 };
 
