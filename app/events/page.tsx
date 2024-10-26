@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
+import { useSearchParams } from 'next/navigation';
 
 // Define the Event interface including new fields
 interface Event {
@@ -69,6 +70,8 @@ const EventsPage: React.FC = () => {
   const [selectedHost, setSelectedHost] = useState<string>(''); // For host filtering
   const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
+
+  const searchParams = useSearchParams();
 
   const sortRef = useRef<HTMLDivElement>(null);
   const filterRef = useRef<HTMLDivElement>(null);
@@ -140,6 +143,9 @@ const EventsPage: React.FC = () => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
+    if (searchParams.get("q")) {
+      setSearchQuery(searchParams.get("q")!);
+    };
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
