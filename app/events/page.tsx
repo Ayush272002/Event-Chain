@@ -149,7 +149,7 @@ const EventsPage: React.FC = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">

@@ -13,19 +13,17 @@ interface props {
     name: string;
     description: string;
     location: string;
-    capacity: number;
-    ticketsSold: number;
     eventStartDate: number;
     eventHost: string;
     imageURL: string | null;
 }
 
 const FeaturedEvent = ({
-    name, description, location, capacity, ticketsSold, eventStartDate, eventHost, imageURL
+    name, description, location, eventStartDate, eventHost, imageURL
 }: props) => {
     return <Card>
         <CardHeader>
-            {imageURL && <img src={imageURL}></img>}
+            {imageURL && <img src={imageURL} alt={name}></img>}
             <CardTitle>
             {name}
             </CardTitle>
