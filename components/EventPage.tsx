@@ -16,3 +16,10 @@ const EventPage = () => {
 };
 
 export default EventPage;
+
+// profile page
+
+// EventForm to Register Events
+// on submit form
+// fix ui to match ticketchain initial ui
+//
