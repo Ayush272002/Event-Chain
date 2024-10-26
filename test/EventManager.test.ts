@@ -11,6 +11,7 @@ describe('EventManager', function () {
 
   const EVENT_NAME = 'Test Event';
   const EVENT_DESCRIPTION = 'This is a test event';
+  const EVENT_LOCATION = 'London, UK';
   const EVENT_CAPACITY = 100;
   const EVENT_TICKET_PRICE = 1000; // 10 USD in cents
   const EVENT_DATE = Math.floor(Date.now() / 1000) + 86400; // 1 day from now
@@ -28,6 +29,7 @@ describe('EventManager', function () {
     await eventManager.createEvent(
       EVENT_NAME,
       EVENT_DESCRIPTION,
+      EVENT_LOCATION,
       EVENT_CAPACITY,
       EVENT_TICKET_PRICE,
       EVENT_DATE,
@@ -35,25 +37,26 @@ describe('EventManager', function () {
     );
   }
 
-  // describe("Event Creation", function () {
-  //   it("Should create an event with correct details", async function () {
-  //     await createTestEvent();
+  describe("Event Creation", function () {
+    it("Should create an event with correct details", async function () {
+      await createTestEvent();
 
-  //     const event = await eventManager.events(0);
-  //     expect(event.name).to.equal(EVENT_NAME);
-  //     expect(event.description).to.equal(EVENT_DESCRIPTION);
-  //     expect(event.capacity).to.equal(EVENT_CAPACITY);
-  //     expect(event.ticketPrice).to.equal(EVENT_TICKET_PRICE);
-  //     expect(event.eventDate).to.equal(EVENT_DATE);
-  //     expect(event.eventHost).to.equal(owner.address);
-  //   });
+      const event = await eventManager.events(0);
+      expect(event.name).to.equal(EVENT_NAME);
+      expect(event.description).to.equal(EVENT_DESCRIPTION);
+      expect(event.location).to.equal(EVENT_LOCATION);
+      expect(event.capacity).to.equal(EVENT_CAPACITY);
+      expect(event.ticketPrice).to.equal(EVENT_TICKET_PRICE);
+      expect(event.eventDate).to.equal(EVENT_DATE);
+      expect(event.eventHost).to.equal(owner.address);
+    });
 
-  //   it("Should emit EventCreated event", async function () {
-  //     await expect(await createTestEvent())
-  //       .to.emit(eventManager, "EventCreated")
-  //       .withArgs(0, EVENT_NAME, EVENT_DATE);
-  //   });
-  // });
+    // it("Should emit EventCreated event", async function () {
+    //   await expect(await createTestEvent())
+    //     .to.emit(eventManager, "EventCreated")
+    //     .withArgs(0, EVENT_NAME, EVENT_DATE);
+    // });
+  });
 
   describe('Ticket Purchase', function () {
     beforeEach(async function () {
