@@ -8,11 +8,14 @@ import PreviousTickets from '@/components/PreviousTickets';
 export default function Page() {
   // Define the handleSubmit function
 
+
   return (
     <>
       {/* <Home /> */}
       {/* <EventForm onSubmit={(data) => handleSubmit(data)} /> */}
-      {/* <PreviousTickets/> */}
+      {/* <PreviousTickets/> */}      
     </>
   );
 }
+
+
