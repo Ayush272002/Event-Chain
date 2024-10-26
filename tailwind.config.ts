@@ -14,6 +14,12 @@ const config: Config = {
           DEFAULT: '#000',
           100: '#000319',
         },
+        'darkest-purple': '#240046',
+        'darker-purple': '#3C096C',
+        'dark-purple': '#5A189A',
+        purple: '#7B2CBF',
+        'light-purple': '#9D4EDD',
+
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
