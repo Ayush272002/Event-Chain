@@ -11,9 +11,8 @@ export default function Page() {
     description: string;
     capacity: number;
     ticketPrice: number;
-    eventDate: Date;
-    eventStartTime?: string;
-    eventEndTime?: string;
+    eventStartTime: Date; // event day
+    eventEndTime?: Date;
     images?: string[];
   }) => {
     try {
@@ -21,7 +20,7 @@ export default function Page() {
       console.log('Form Submitted:', data);
 
       // You can format the eventDate if needed (e.g., to a specific date format)
-      const formattedDate = new Date(data.eventDate).toISOString();
+      const formattedDate = new Date(data.eventStartTime).toISOString();
       console.log('Formatted Event Date:', formattedDate);
 
       // Example: Post data to an API endpoint

@@ -2,6 +2,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,69 +16,41 @@ const eventSchema = z
     capacity: z
       .number({ invalid_type_error: 'Capacity must be a number' })
       .min(1, { message: 'Capacity must be at least 1' })
-      .refine((val) => Number.isInteger(val), {
-        message: 'Capacity must be an integer',
-      }),
+      .refine(Number.isInteger, { message: 'Capacity must be an integer' }),
     ticketPrice: z
       .number({ invalid_type_error: 'Ticket price must be a number' })
       .min(0, { message: 'Ticket price must be at least 0' })
-      .refine((val) => Number.isInteger(val), {
-        message: 'Ticket price must be in cents',
-      }),
-    eventDate: z.coerce.date({ message: 'Event date is required' }).refine(
-      (date) => {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Remove time component
-        return date >= today;
-      },
-      {
-        message: 'Event date must be today or in the future',
-      }
+      .refine(Number.isInteger, { message: 'Ticket price must be in cents' }),
+    location: z.string().min(1, { message: 'Location is required' }),
+    eventStartTime: z.preprocess(
+      (val) =>
+        typeof val === 'string' && val !== '' ? new Date(val) : undefined,
+      z
+        .date({ required_error: 'Event start time is required' })
+        .min(new Date(), { message: 'Event start time must be in the future' })
     ),
-    eventStartTime: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/, {
-      message: 'Invalid start time format',
-    }),
-    eventEndTime: z.string().regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/, {
-      message: 'Invalid end time format',
-    }),
-    images: z
-      .array(
-        z
-          .string()
-          .url()
-          .regex(
-            /https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-            { message: 'Invalid image URL format' }
-          )
-      )
-      .optional(),
+    eventEndTime: z.preprocess(
+      (val) =>
+        typeof val === 'string' && val !== '' ? new Date(val) : undefined,
+      z.date().optional()
+    ),
+    images: z.preprocess(
+      (val) => {
+        if (Array.isArray(val)) {
+          // Filter out empty strings
+          return val.filter((v) => v !== '');
+        }
+        return [];
+      },
+      z
+        .array(z.string().url({ message: 'Invalid image URL format' }))
+        .optional()
+    ),
   })
-  .superRefine((d, ctx) => {
-    // Parse event start time
-    const startTime = new Date(d.eventDate);
-    const [startHours, startMinutes] = d.eventStartTime.split(':').map(Number);
-    startTime.setHours(startHours, startMinutes, 0, 0);
-
-    // Parse event end time
-    const endTime = new Date(d.eventDate);
-    const [endHours, endMinutes] = d.eventEndTime.split(':').map(Number);
-    endTime.setHours(endHours, endMinutes, 0, 0);
-
-    const currentDateTime = new Date();
-
-    // Check if event start time is in the future
-    if (startTime <= currentDateTime) {
+  .superRefine((data, ctx) => {
+    if (data.eventEndTime && data.eventEndTime <= data.eventStartTime) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Event start time must be in the future',
-        path: ['eventStartTime'],
-      });
-    }
-
-    // Check if event end time is after start time
-    if (endTime <= startTime) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Event end time must be after the start time',
         path: ['eventEndTime'],
       });
@@ -92,6 +65,8 @@ interface EventFormProps {
 }
 
 const EventForm = ({ onSubmit }: EventFormProps) => {
+  const [imageFields, setImageFields] = useState<string[]>(['']);
+
   const {
     register,
     handleSubmit,
@@ -101,27 +76,35 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
   } = useForm<EventFormData>({
     resolver: zodResolver(eventSchema),
     mode: 'onChange',
+    defaultValues: {
+      images: [''],
+    },
   });
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const filesArray = Array.from(e.target.files).map((file) =>
-        URL.createObjectURL(file)
-      );
-      setValue('images', filesArray, { shouldValidate: true });
-    }
-  };
 
   const images = watch('images') || [];
 
+  const handleAddImageField = () => {
+    setImageFields((prev) => [...prev, '']);
+  };
+
+  const handleRemoveImageField = (index: number) => {
+    const updatedImages = [...imageFields];
+    updatedImages.splice(index, 1);
+    setImageFields(updatedImages);
+    // Also update the form values
+    setValue('images', updatedImages);
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      {/* Name Field */}
       <div>
         <Label htmlFor="name">Event Name</Label>
         <Input id="name" {...register('name')} />
         {errors.name && <p className="text-red-500">{errors.name.message}</p>}
       </div>
 
+      {/* Description Field */}
       <div>
         <Label htmlFor="description">Description</Label>
         <Textarea id="description" {...register('description')} />
@@ -130,46 +113,46 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
         )}
       </div>
 
+      {/* Capacity Field */}
       <div>
         <Label htmlFor="capacity">Capacity</Label>
         <Input
           type="number"
           id="capacity"
-          {...register('capacity', {
-            valueAsNumber: true,
-          })}
+          {...register('capacity', { valueAsNumber: true })}
         />
         {errors.capacity && (
           <p className="text-red-500">{errors.capacity.message}</p>
         )}
       </div>
 
+      {/* Ticket Price Field */}
       <div>
         <Label htmlFor="ticketPrice">Ticket Price (in USD cents)</Label>
         <Input
           type="number"
           id="ticketPrice"
-          {...register('ticketPrice', {
-            valueAsNumber: true,
-          })}
+          {...register('ticketPrice', { valueAsNumber: true })}
         />
         {errors.ticketPrice && (
           <p className="text-red-500">{errors.ticketPrice.message}</p>
         )}
       </div>
 
+      {/* Location Field */}
       <div>
-        <Label htmlFor="eventDate">Event Date</Label>
-        <Input type="date" id="eventDate" {...register('eventDate')} />
-        {errors.eventDate && (
-          <p className="text-red-500">{errors.eventDate.message}</p>
+        <Label htmlFor="description">Location</Label>
+        <Textarea id="description" {...register('location')} />
+        {errors.description && (
+          <p className="text-red-500">{errors.description.message}</p>
         )}
       </div>
 
+      {/* Event Start Time Field */}
       <div>
-        <Label htmlFor="eventStartTime">Event Start Time</Label>
+        <Label htmlFor="eventStartTime">Event Start Date & Time</Label>
         <Input
-          type="time"
+          type="datetime-local"
           id="eventStartTime"
           {...register('eventStartTime')}
         />
@@ -178,39 +161,60 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
         )}
       </div>
 
+      {/* Event End Time Field */}
       <div>
-        <Label htmlFor="eventEndTime">Event End Time</Label>
-        <Input type="time" id="eventEndTime" {...register('eventEndTime')} />
+        <Label htmlFor="eventEndTime">Event End Date & Time (Optional)</Label>
+        <Input
+          type="datetime-local"
+          id="eventEndTime"
+          {...register('eventEndTime')}
+        />
         {errors.eventEndTime && (
           <p className="text-red-500">{errors.eventEndTime.message}</p>
         )}
       </div>
 
+      {/* Images Field */}
       <div>
-        <Label htmlFor="images">Event Images</Label>
-        <input
-          type="file"
-          id="images"
-          multiple
-          accept="image/*"
-          onChange={handleFileChange}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-        />
-        {errors.images && (
-          <p className="text-red-500">{errors.images.message}</p>
-        )}
-        <div className="mt-2 flex flex-wrap gap-2">
-          {images.map((url, index) => (
-            <img
-              key={index}
-              src={url}
-              alt={`Event Image ${index + 1}`}
-              className="w-24 h-24 object-cover rounded"
+        <Label>Event Images (Optional)</Label>
+        {imageFields.map((_, index) => (
+          <div key={index} className="flex items-center space-x-2 mt-2">
+            <Input
+              type="text"
+              placeholder="Enter image URL"
+              {...register(`images.${index}`)}
             />
-          ))}
-        </div>
+            {imageFields.length > 1 && (
+              <Button
+                type="button"
+                variant="destructive"
+                onClick={() => handleRemoveImageField(index)}
+              >
+                Remove
+              </Button>
+            )}
+          </div>
+        ))}
+        <Button type="button" onClick={handleAddImageField}>
+          Add URL
+        </Button>
+        {/* Display individual image URL errors */}
+        {errors.images &&
+          Array.isArray(errors.images) &&
+          errors.images.map((imgError, index) => {
+            if (imgError) {
+              const message = imgError.message || 'Invalid image URL';
+              return (
+                <p key={index} className="text-red-500">
+                  Image {index + 1}: {message}
+                </p>
+              );
+            }
+            return null;
+          })}
       </div>
 
+      {/* Submit Button */}
       <Button type="submit">Create Event</Button>
     </form>
   );
