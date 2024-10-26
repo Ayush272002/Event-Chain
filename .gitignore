@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 artifacts
 typechain-types
+cache
