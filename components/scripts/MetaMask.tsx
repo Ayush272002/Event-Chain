@@ -1,21 +1,46 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
+import { useSDK, MetaMaskProvider } from '@metamask/sdk-react';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
-declare global {
-  interface Window {
-    ethereum: ethers.providers.ExternalProvider;
-  }
+function WalletIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+      <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+      <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
+    </svg>
+  );
 }
 
-const MetaMask = () => {
+function formatAddress(address: string | undefined): string {
+  if (!address) return '';
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+
+function MetaMaskConnect() {
+  const { sdk, connected, connecting, account } = useSDK();
   const [metaMaskInstalled, setMetaMaskInstalled] = useState(false);
-  const [account, setAccount] = useState<string | null>(null);
 
   const isMetaMaskInstalled = () =>
-    typeof window !== 'undefined' &&
-    typeof (window as { ethereum?: unknown }).ethereum !== 'undefined';
+    typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 
   useEffect(() => {
     if (isMetaMaskInstalled()) {
@@ -23,54 +48,70 @@ const MetaMask = () => {
     }
   }, []);
 
-  const handleConnectWallet = async () => {
-    if (window.ethereum && window.ethereum.request) {
-      try {
-        // Request account access
-        const accounts = await window.ethereum.request({
-          method: 'eth_requestAccounts',
-        });
-        setAccount(accounts[0]); // Set the first account
-      } catch (error) {
-        console.error('Error connecting to MetaMask:', error);
-      }
-    } else {
-      alert(
-        'MetaMask is not installed. Please install MetaMask and try again.'
-      );
+  const connect = async () => {
+    try {
+      await sdk?.connect();
+    } catch (err) {
+      console.warn(`No accounts found`, err);
     }
   };
 
+  const disconnect = () => {
+    if (sdk) {
+      sdk.terminate();
+    }
+  };
+
+  if (!metaMaskInstalled) {
+    return (
+      <Button
+        onClick={() =>
+          window.open('https://metamask.io/download.html', '_blank')
+        }
+        className="bg-gradient-to-r from-blue-500 to-indigo-700"
+      >
+        Install MetaMask
+      </Button>
+    );
+  }
+
   return (
-    <div className="">
-      {metaMaskInstalled ? (
-        <div>
-          {account ? (
-            <p className="text-green-500">
-              Connected: 0x{account.slice(2, 5)}...{account.slice(-3)}
-            </p>
-          ) : (
+    <div className="relative">
+      {connected ? (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button>{formatAddress(account)}</Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-44">
             <button
-              onClick={handleConnectWallet}
-              className="bg-gradient-to-r from-blue-500 to-indigo-700 text-white px-4 py-1 rounded-full transform transition-transform duration-300 hover:scale-105 shadow-lg hover:shadow-2xl"
+              onClick={disconnect}
+              className="w-full px-4 py-2 text-left text-destructive hover:bg-muted"
             >
-              Connect Wallet
+              Disconnect
             </button>
-          )}
-        </div>
+          </PopoverContent>
+        </Popover>
       ) : (
-        <button
-          // Install Metamask extension if not already installed
-          onClick={() =>
-            window.open('https://metamask.io/download.html', '_blank')
-          }
-          className="bg-gradient-to-r from-blue-500 to-indigo-700 text-white px-4 py-1 rounded-full transform transition-transform duration-300 hover:scale-105 shadow-lg hover:shadow-2xl"
-        >
-          Install MetaMask to connect wallet
-        </button>
+        <Button disabled={connecting} onClick={connect}>
+          <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
+        </Button>
       )}
     </div>
   );
-};
+}
 
-export default MetaMask;
+export default function MetaMaskConnectWrapper() {
+  return (
+    <MetaMaskProvider
+      debug={false}
+      sdkOptions={{
+        dappMetadata: {
+          name: 'My dApp',
+          url: typeof window !== 'undefined' ? window.location.href : '',
+        },
+      }}
+    >
+      <MetaMaskConnect />
+    </MetaMaskProvider>
+  );
+}
