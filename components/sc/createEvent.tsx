@@ -14,11 +14,13 @@ const CreateEvent = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [capacity, setCapacity] = useState(0);
-  const [ticketPrice, setTicketPrice] = useState(0); // Price in FLR
+  const [ticketPrice, setTicketPrice] = useState(0);
   const [eventDate, setEventDate] = useState('');
   const [images, setImages] = useState<string[]>([]);
   const [transactionHash, setTransactionHash] = useState('');
   const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null); // Store the connected wallet address
+  const [eventId, setEventId] = useState<number | null>(null); // Store the created event ID
 
   // Check if the wallet is connected on component mount
   useEffect(() => {
@@ -29,6 +31,7 @@ const CreateEvent = () => {
         });
         if (accounts && accounts.length > 0) {
           setIsWalletConnected(true); // Wallet is connected
+          setWalletAddress(accounts[0]); // Store the connected wallet address
         } else {
           setIsWalletConnected(false); // Wallet is not connected
         }
@@ -48,6 +51,7 @@ const CreateEvent = () => {
         });
         if (accounts.length > 0) {
           setIsWalletConnected(true);
+          setWalletAddress(accounts[0]); // Store the connected wallet address
           console.log('Wallet connected:', accounts[0]);
         }
       }
@@ -75,19 +79,37 @@ const CreateEvent = () => {
       const contract = getContract().connect(signer);
 
       const unixEventDate = Math.floor(new Date(eventDate).getTime() / 1000); // Convert to Unix timestamp
-      const weiTicketPrice = ethers.utils.parseEther(ticketPrice.toString()); // Convert FLR to Wei
 
+      // Convert ticket price from dollars to cents
+      const centsTicketPrice = Math.round(ticketPrice * 100); // Assuming ticketPrice is entered in USD cents
+
+      // Call the `createEvent` function, which submits the transaction
       const tx = await contract.createEvent(
         name,
         description,
         capacity,
-        weiTicketPrice,
+        centsTicketPrice, // Now this is in cents, e.g storing as 500 cents == 5.00 usd
         unixEventDate,
         images
       );
+
+      console.log('Transaction Submitted:', tx);
+
+      // Wait for the transaction to be mined
       const receipt = await tx.wait();
       setTransactionHash(receipt.transactionHash);
-      console.log('Event created successfully!');
+
+      // Extract the `eventId` from the event logs in the receipt
+      const eventId = receipt.events?.find(
+        (event: ethers.Event) => event.event === 'EventCreated'
+      )?.args?.[0];
+
+      if (eventId) {
+        setEventId(eventId.toNumber()); // Store the event ID if found
+        console.log('Event created successfully with ID:', eventId.toNumber());
+      } else {
+        console.log('Event ID not found in the logs.');
+      }
     } catch (error) {
       console.error('Error creating event:', error);
     }
@@ -100,6 +122,8 @@ const CreateEvent = () => {
       ) : (
         <div>
           <h2>Create Event</h2>
+          <p>Connected Wallet: {walletAddress}</p>{' '}
+          {/* Display connected wallet address */}
           <input
             type="text"
             placeholder="Event Name"
@@ -137,10 +161,10 @@ const CreateEvent = () => {
             onChange={(e) => setImages(e.target.value.split(','))}
           />
           <button onClick={handleCreateEvent}>Create Event</button>
-
           {transactionHash && (
             <p>Transaction successful! Hash: {transactionHash}</p>
           )}
+          {eventId !== null && <p>Event ID: {eventId}</p>}
         </div>
       )}
     </div>

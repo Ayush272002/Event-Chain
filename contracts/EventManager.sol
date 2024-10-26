@@ -29,7 +29,7 @@ contract EventManager {
         uint256 eventDate;
         string[] images; // array of image URLs
         uint256[] tickets;
-        address eventHost;
+        address payable eventHost;
     }
 
     struct Ticket {
@@ -71,7 +71,7 @@ contract EventManager {
         return _cents * power(10, decimals) * 1 ether / 100 / feedValue;
     }
 
-    function power(uint base, int8 exponent) public pure returns (uint) {
+    function power(uint base, int8 exponent) private pure returns (uint) {
         require(exponent >= 0, "Exponent must be non-negative");
         uint result = 1;
         for (int8 i = 0; i < exponent; i++) {
@@ -85,9 +85,10 @@ contract EventManager {
         return centsToFlare(events[_eventId].ticketPrice);
     }
 
-    function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public {
-        events[eventCounter] = Event(_name, _description, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), msg.sender);
+    function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
+        events[eventCounter] = Event(_name, _description, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), payable(msg.sender));
         eventCounter++;
+        return eventCounter - 1;
     }
 
     function getEventImages(uint256 _eventId) public view returns (string[] memory) {
@@ -100,12 +101,18 @@ contract EventManager {
         return events[_eventId].tickets;
     }
 
-    //TODO: ADD CURRENCY CONVERSION + CHECK
-    function buyTicket(uint256 _eventId) public payable {
+    function buyTicket(uint256 _eventId) public payable returns (uint256 _ticketId) {
         require(_eventId < eventCounter, "Invalid event ID");
         require(events[_eventId].eventDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
-        require(msg.value == events[_eventId].ticketPrice, "Invalid ticket price");
+
+        uint256 ticketCost = getEventPriceFlare(_eventId); // Get ticket price in FLR
+        require(msg.value >= ticketCost, "Insufficient value provided"); // Ensure user has paid >= ticket price
+        if (msg.value > ticketCost) {
+            // Pay any excess the user paid
+            (bool sentExcess, ) = msg.sender.call{value: msg.value - ticketCost}("");
+            require(sentExcess, "Failed to send FLR excess back to buyer");
+        }
 
         // Create new ticket
         tickets[ticketCounter] = Ticket(msg.sender, block.timestamp, _eventId);
@@ -119,8 +126,10 @@ contract EventManager {
         events[_eventId].ticketsSold++;
 
         // Transfer FLR to event host
-        (bool sent, ) = events[_eventId].eventHost.call{value: msg.value}("");
-        require(sent, "Failed to send FLR to event host");
+        (bool sentToHost, ) = events[_eventId].eventHost.call{value: ticketCost}("");
+        require(sentToHost, "Failed to send FLR to event host");
+
+        return ticketCounter - 1;
     }
 
     function transferTicketForce(uint256 _ticketId, address _to) private {

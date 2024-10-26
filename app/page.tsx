@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import EventCounter from '@/components/sc/eventCounter';
 import CreateEvent from '@/components/sc/createEvent';
-import GetEventPrice from '@/components/sc/getEventPrice';
+import GetEventPrice from '@/components/sc/getEventPriceFlare';
 import FlareFeed from '@/components/sc/getFlareFeed';
 import GetEventImages from '@/components/sc/getEventImages';
 import GetEventTickets from '@/components/sc/getEventTickets';
+import BuyTicket from '@/components/sc/buyTicket';
 
 export default function Home() {
   return (
@@ -40,6 +41,8 @@ export default function Home() {
         <GetEventImages />
 
         <GetEventTickets />
+
+        <BuyTicket />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a

@@ -13,7 +13,7 @@ const GetEventPrice = () => {
       if (eventId === null) return;
 
       const contract = getContract();
-      const flrPrice = await contract.getEventPriceFlare(eventId);
+      const flrPrice = await contract.getEventPriceFlare(eventId); // flr price in usd cents e.g. return 36856 meaning 500 usd cents
       setPriceInFlr(ethers.utils.formatEther(flrPrice.toString()));
     } catch (error) {
       console.error('Error fetching event price:', error);

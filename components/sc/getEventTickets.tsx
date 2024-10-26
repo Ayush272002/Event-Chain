@@ -1,22 +1,39 @@
 'use client';
 
 import React, { useState } from 'react';
+import { ethers } from 'ethers';
 import { getContract } from '@/lib/ethers'; // Adjust the path to your ethers helper
 
 const GetEventTickets = () => {
   const [eventId, setEventId] = useState<number | null>(null);
   const [tickets, setTickets] = useState<number[] | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleGetTickets = async () => {
+    setErrorMessage(null);
+    setTickets(null);
+
+    if (eventId === null) {
+      setErrorMessage('Please enter a valid Event ID.');
+      return;
+    }
+
     try {
+      // Get the contract instance
       const contract = getContract();
 
-      if (eventId === null) return;
-
+      // Fetch tickets for the given event ID
       const eventTickets = await contract.getEventTickets(eventId);
-      setTickets(eventTickets);
+
+      // Convert BigNumbers to plain numbers for display
+      setTickets(
+        eventTickets.map((ticket: ethers.BigNumber) => ticket.toNumber())
+      );
     } catch (error) {
       console.error('Error fetching event tickets:', error);
+      setErrorMessage(
+        'Failed to fetch tickets. Please check the Event ID and try again.'
+      );
     }
   };
 
@@ -36,6 +53,8 @@ const GetEventTickets = () => {
       >
         Get Tickets
       </button>
+
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
       {tickets && (
         <div className="mt-4">

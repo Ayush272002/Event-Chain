@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 
 const FLARE_TESTNET_RPC_URL = 'https://coston2.enosys.global/ext/C/rpc';
 
-const CONTRACT_ADDRESS = '0x0B236423274D36C32fb2362cc177756a21A025A3';
+const CONTRACT_ADDRESS = '0xa67f64937a0a4daf3b5f5Eea7903d1E81d375b7b';
 
 export function getFlareProvider() {
   const flareRpcUrl = FLARE_TESTNET_RPC_URL;
@@ -46,7 +46,13 @@ export function getContract() {
         },
       ],
       name: 'buyTicket',
-      outputs: [],
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '_ticketId',
+          type: 'uint256',
+        },
+      ],
       stateMutability: 'payable',
       type: 'function',
     },
@@ -84,7 +90,13 @@ export function getContract() {
         },
       ],
       name: 'createEvent',
-      outputs: [],
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: '_eventId',
+          type: 'uint256',
+        },
+      ],
       stateMutability: 'nonpayable',
       type: 'function',
     },
@@ -184,7 +196,7 @@ export function getContract() {
           type: 'uint256',
         },
         {
-          internalType: 'address',
+          internalType: 'address payable',
           name: 'eventHost',
           type: 'address',
         },
@@ -312,30 +324,6 @@ export function getContract() {
         },
       ],
       stateMutability: 'view',
-      type: 'function',
-    },
-    {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: 'base',
-          type: 'uint256',
-        },
-        {
-          internalType: 'int8',
-          name: 'exponent',
-          type: 'int8',
-        },
-      ],
-      name: 'power',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'pure',
       type: 'function',
     },
     {
