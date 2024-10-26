@@ -7,6 +7,9 @@ import { Input } from '@/components/ui/input';
 import FeaturedEvent from '@/components/custom/FeaturedEvent';
 import { Button } from '@/components/ui/button';
 
+import React from 'react';
+import { FlipWords } from '@/components/ui/flip-words';
+
 export default function Home() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
@@ -17,9 +20,18 @@ export default function Home() {
   }, []);
 
   function searchForEvents() {
-    if (inputRef.current.value == "") return;
-    router.replace("/events?q=" + encodeURIComponent(inputRef.current.value));
+    if (inputRef.current.value == '') return;
+    router.replace('/events?q=' + encodeURIComponent(inputRef.current.value));
   }
+
+  const words = [
+    'adventure',
+    'concert',
+    'outing',
+    'journey',
+    'hackathon',
+    'conference',
+  ];
 
   return (
     <>
@@ -44,9 +56,17 @@ export default function Home() {
         {/* Page Content Over the Video */}
         <div className="relative z-20 min-h-screen bg-gradient-to-b from-transparent to-gray-900 pt-20">
           <div className="container mx-auto p-4">
-            <h1 className="text-4xl font-bold text-white text-shadow-lg">
-              Book your next adventure <div className="inline bg-white p-2 rounded-lg shadow-lg text-black">on the <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-pink-600">Flare</span> blockchain</div>
-            </h1>
+            <div className="container mx-auto justify-center items-center p-4">
+              <div className="text-4xl font-bold text-white text-shadow-lg">
+                Book your next
+                <FlipWords
+                  words={words}
+                  className="text-light-purple text-opacity-75"
+                />
+                on the Flare blockchain.
+              </div>
+            </div>
+
             <div className="flex items-center justify-center mt-6 flex-col gap-4">
               <Input
                 type="text"
@@ -57,7 +77,9 @@ export default function Home() {
               <Button
                 className="bg-pink-600 bg-opacity-50 text-white px-4 py-6 text-lg w-full hover:bg-pink-500"
                 onClick={searchForEvents}
-              >Search for events</Button>
+              >
+                Search for events
+              </Button>
             </div>
             <main>
               <section className="mb-8 mt-4 mx-auto grid grid-cols-4 gap-4">
@@ -67,7 +89,9 @@ export default function Home() {
                   location="Birmingham, UK"
                   eventStartDate={1729980000}
                   eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL={"https://www.guildofstudents.com/asset/Event/7572/Halloween-Fab-XO-Web-Event.jpg"}
+                  imageURL={
+                    'https://www.guildofstudents.com/asset/Event/7572/Halloween-Fab-XO-Web-Event.jpg'
+                  }
                 />
                 <FeaturedEvent
                   name="Halls Halloween Spooktacular"
@@ -75,7 +99,9 @@ export default function Home() {
                   location="Birmingham, UK"
                   eventStartDate={1730307600}
                   eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL={"https://www.guildofstudents.com/asset/Event/41187/Spooktacular-Web-Event-2024.png"}
+                  imageURL={
+                    'https://www.guildofstudents.com/asset/Event/41187/Spooktacular-Web-Event-2024.png'
+                  }
                 />
                 <FeaturedEvent
                   name="Housing Fair"
@@ -83,7 +109,9 @@ export default function Home() {
                   location="Birmingham, UK"
                   eventStartDate={1730804400}
                   eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL={"https://www.guildofstudents.com/asset/Event/41111/Housing-Fair-Web-Event.png"}
+                  imageURL={
+                    'https://www.guildofstudents.com/asset/Event/41111/Housing-Fair-Web-Event.png'
+                  }
                 />
               </section>
             </main>
