@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Button } from '../ui/button'; // Adjust import path to where your shadcn Button component is located
 

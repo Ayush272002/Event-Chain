@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const WalletAdapter = () => {
-  return (
-    <div>WalletAdapter</div>
-  )
-}
+  return <div>WalletAdapter</div>;
+};
 
-export default WalletAdapter
+export default WalletAdapter;
