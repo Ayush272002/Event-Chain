@@ -37,20 +37,16 @@ function formatAddress(address: string | undefined): string {
 
 function MetaMaskConnect() {
   const { sdk, connected, connecting, account } = useSDK();
-  const [metaMaskInstalled, setMetaMaskInstalled] = useState(false);
-
-  const isMetaMaskInstalled = () =>
-    typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
+  const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    if (isMetaMaskInstalled()) {
-      setMetaMaskInstalled(true);
-    }
-  }, []);
+    setIsConnected(connected);
+  }, [connected]);
 
   const connect = async () => {
     try {
       await sdk?.connect();
+      setIsConnected(true);
     } catch (err) {
       console.warn(`No accounts found`, err);
     }
@@ -59,40 +55,35 @@ function MetaMaskConnect() {
   const disconnect = () => {
     if (sdk) {
       sdk.terminate();
+      setIsConnected(false);
     }
   };
 
-  if (!metaMaskInstalled) {
-    return (
-      <Button
-        onClick={() =>
-          window.open('https://metamask.io/download.html', '_blank')
-        }
-        className="bg-gradient-to-r from-blue-500 to-indigo-700"
-      >
-        Install MetaMask
-      </Button>
-    );
-  }
-
   return (
     <div className="relative">
-      {connected ? (
+      {isConnected ? (
         <Popover>
           <PopoverTrigger asChild>
-            <Button>{formatAddress(account)}</Button>
+            <Button variant="link" className="text-white">
+              {formatAddress(account)}
+            </Button>
           </PopoverTrigger>
           <PopoverContent className="w-44">
-            <button
+            <Button
+              variant="destructive"
               onClick={disconnect}
-              className="w-full px-4 py-2 text-left text-destructive hover:bg-muted"
+              className="w-full px-4 py-2 text-left hover:bg-muted hover:text-destructive"
             >
               Disconnect
-            </button>
+            </Button>
           </PopoverContent>
         </Popover>
       ) : (
-        <Button disabled={connecting} onClick={connect}>
+        <Button
+          disabled={connecting}
+          onClick={connect}
+          className="bg-light-purple bg-opacity-75 hover:bg-purple border-0 hover:border-0"
+        >
           <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
         </Button>
       )}
