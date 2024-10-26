@@ -1,6 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { WalletIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 declare global {
   interface Window {
@@ -88,24 +95,29 @@ function MetaMaskConnect() {
   return (
     <div className="relative">
       {isConnected ? (
-        <div>
-          <button
-            onClick={disconnect}
-            className="bg-red-500 text-white px-4 py-2 rounded"
-          >
-            Disconnect
-          </button>
-          <span>
-            {account && `${account.slice(0, 6)}...${account.slice(-4)}`}
-          </span>
-        </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="link" className="text-white">
+              {account && `${account.slice(0, 6)}...${account.slice(-4)}`}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-44">
+            <Button
+              variant="destructive"
+              onClick={disconnect}
+              className="w-full px-4 py-2 text-left hover:bg-muted hover:text-destructive"
+            >
+              Disconnect
+            </Button>
+          </PopoverContent>
+        </Popover>
       ) : (
-        <button
+        <Button
           onClick={connect}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-light-purple bg-opacity-75 hover:bg-purple border-0 hover:border-0"
         >
-          Connect Wallet
-        </button>
+          <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
+        </Button>
       )}
     </div>
   );
