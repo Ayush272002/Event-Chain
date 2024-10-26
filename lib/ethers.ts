@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 
 const FLARE_TESTNET_RPC_URL = 'https://coston2.enosys.global/ext/C/rpc';
 
-const CONTRACT_ADDRESS = '0xA171873976afaf4b1442c959C2e03b7d52656340';
+const CONTRACT_ADDRESS = '0xa12B3168e8FC621493c9db2dc1Db31e75cCA00bb';
 
 export function getFlareProvider() {
   const flareRpcUrl = FLARE_TESTNET_RPC_URL;

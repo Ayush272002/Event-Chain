@@ -17,6 +17,7 @@ const TransferTicket = () => {
   const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isApprovedTransfer, setIsApprovedTransfer] = useState<boolean>(false);
 
   // Connect Wallet
   const handleConnectWallet = async () => {
@@ -40,11 +41,9 @@ const TransferTicket = () => {
 
   // Handle transferring the ticket
   const handleTransferTicket = async () => {
-    if (ticketId !== null) {
-      if (ticketId < 0) {
-        alert('Please enter a valid Ticket ID.');
-        return;
-      }
+    if (!ticketId) {
+      alert('Please enter a valid Ticket ID.');
+      return;
     }
     if (!ethers.utils.isAddress(recipientAddress)) {
       alert('Please enter a valid recipient address.');
@@ -57,10 +56,16 @@ const TransferTicket = () => {
       const signer = provider.getSigner();
       const contract = getContract().connect(signer);
 
-      // Call `transferTicket` function
-      const tx = await contract.transferTicket(ticketId, recipientAddress);
-      const receipt = await tx.wait();
+      let tx;
+      if (isApprovedTransfer) {
+        // Transfer using `transferTicketFrom` for approved users
+        tx = await contract.transferTicketFrom(ticketId, recipientAddress);
+      } else {
+        // Direct transfer by the owner using `transferTicket`
+        tx = await contract.transferTicket(ticketId, recipientAddress);
+      }
 
+      const receipt = await tx.wait();
       setTransactionHash(receipt.transactionHash);
       console.log(
         'Ticket transferred successfully, transaction hash:',
@@ -72,6 +77,40 @@ const TransferTicket = () => {
         'Error transferring ticket. Please check ticket ID or recipient address.'
       );
       console.error('Error transferring ticket:', error);
+    }
+  };
+
+  // Handle ticket approval for transfer
+  const handleApproveTransfer = async () => {
+    if (ticketId !== null) {
+      if (ticketId < 0) {
+        alert('Please enter a valid Ticket ID.');
+        return;
+      }
+    }
+
+    if (!ethers.utils.isAddress(recipientAddress)) {
+      alert('Please enter a valid recipient address.');
+      return;
+    }
+
+    try {
+      // Get the provider and signer
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = getContract().connect(signer);
+
+      // Approve recipient to transfer the ticket
+      const tx = await contract.approveTicket(ticketId, recipientAddress, true);
+      const receipt = await tx.wait();
+
+      console.log(
+        'Ticket transfer approved, transaction hash:',
+        receipt.transactionHash
+      );
+      alert(`Approved ${recipientAddress} to transfer ticket ID ${ticketId}`);
+    } catch (error) {
+      console.error('Error approving transfer:', error);
     }
   };
 
@@ -103,12 +142,33 @@ const TransferTicket = () => {
             className="border p-2 mb-2"
           />
 
+          {/* Toggle for approved transfer */}
+          <label className="flex items-center space-x-2 mb-4">
+            <input
+              type="checkbox"
+              checked={isApprovedTransfer}
+              onChange={() => setIsApprovedTransfer(!isApprovedTransfer)}
+            />
+            <span>Use Approved Transfer</span>
+          </label>
+
+          {/* Transfer Ticket Button */}
           <button
             onClick={handleTransferTicket}
-            className="bg-purple-500 text-white px-4 py-2 rounded"
+            className="bg-purple-500 text-white px-4 py-2 rounded mr-2"
           >
             Transfer Ticket
           </button>
+
+          {/* Approve Transfer Button */}
+          {!isApprovedTransfer && (
+            <button
+              onClick={handleApproveTransfer}
+              className="bg-green-500 text-white px-4 py-2 rounded"
+            >
+              Approve Transfer
+            </button>
+          )}
 
           {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
           {transactionHash && (
