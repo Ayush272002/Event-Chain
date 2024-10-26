@@ -39,8 +39,8 @@ describe('EventManager', function () {
     );
   }
 
-  describe("Event Creation", function () {
-    it("Should create an event with correct details", async function () {
+  describe('Event Creation', function () {
+    it('Should create an event with correct details', async function () {
       await createTestEvent();
 
       const event = await eventManager.events(0);

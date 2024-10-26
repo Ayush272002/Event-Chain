@@ -42,7 +42,6 @@ export const buyHandler = async (
       return;
     }
 
-    // @ts-expect-error: window.ethereum might not match ExternalProvider exactly
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const contract = getContract().connect(signer);
