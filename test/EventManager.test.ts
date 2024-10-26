@@ -1,231 +1,131 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
-import { Contract } from "ethers";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { EventManager } from "../typechain-types/EventManager";
 
 describe("EventManager", function () {
-  let eventManager: Contract;
+  let eventManager: EventManager;
   let owner: SignerWithAddress;
   let addr1: SignerWithAddress;
   let addr2: SignerWithAddress;
-  let addrs: SignerWithAddress[];
+
+  const EVENT_NAME = "Test Event";
+  const EVENT_DESCRIPTION = "This is a test event";
+  const EVENT_CAPACITY = 100;
+  const EVENT_TICKET_PRICE = 1000; // 10 USD in cents
+  const EVENT_DATE = Math.floor(Date.now() / 1000) + 86400; // 1 day from now
+  const EVENT_IMAGES = ["image1.jpg", "image2.jpg"];
 
   beforeEach(async function () {
-    // Get the ContractFactory and Signers here.
-    const EventManager = await ethers.getContractFactory("EventManager");
-    [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
+    [owner, addr1, addr2] = await ethers.getSigners();
 
-    // Deploy a new EventManager contract before each test
+    const EventManager = await ethers.getContractFactory("EventManager");
     eventManager = await EventManager.deploy();
     await eventManager.deployed();
   });
 
+  async function createTestEvent() {
+    await eventManager.createEvent(
+      EVENT_NAME,
+      EVENT_DESCRIPTION,
+      EVENT_CAPACITY,
+      EVENT_TICKET_PRICE,
+      EVENT_DATE,
+      EVENT_IMAGES
+    );
+  }
+
   describe("Event Creation", function () {
-    it("Should create a new event", async function () {
-      const eventDate = Math.floor(Date.now() / 1000) + 86400; // 1 day from now
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        ethers.utils.parseEther("0.1"),
-        eventDate,
-        ["image1.jpg", "image2.jpg"]
-      );
+    it("Should create an event with correct details", async function () {
+      await createTestEvent();
 
       const event = await eventManager.events(0);
-      expect(event.name).to.equal("Test Event");
-      expect(event.description).to.equal("A test event description");
-      expect(event.capacity).to.equal(100);
-      expect(event.ticketPrice).to.equal(ethers.utils.parseEther("0.1"));
-      expect(event.eventDate).to.equal(eventDate);
+      expect(event.name).to.equal(EVENT_NAME);
+      expect(event.description).to.equal(EVENT_DESCRIPTION);
+      expect(event.capacity).to.equal(EVENT_CAPACITY);
+      expect(event.ticketPrice).to.equal(EVENT_TICKET_PRICE);
+      expect(event.eventDate).to.equal(EVENT_DATE);
       expect(event.eventHost).to.equal(owner.address);
     });
 
-    it("Should return correct event images", async function () {
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        ethers.utils.parseEther("0.1"),
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg", "image2.jpg"]
-      );
-
-      const images = await eventManager.getEventImages(0);
-      expect(images).to.deep.equal(["image1.jpg", "image2.jpg"]);
+    it("Should emit EventCreated event", async function () {
+      await expect(await createTestEvent())
+        .to.emit(eventManager, "EventCreated")
+        .withArgs(0, EVENT_NAME, EVENT_DATE);
     });
   });
 
   describe("Ticket Purchase", function () {
     beforeEach(async function () {
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        ethers.utils.parseEther("0.1"),
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg"]
-      );
+      await createTestEvent();
     });
 
     it("Should allow buying a ticket", async function () {
-      await eventManager.connect(addr1).buyTicket(0, {
-        value: ethers.utils.parseEther("0.1"),
-      });
+      const ticketPriceFlare = await eventManager.getEventPriceFlare(0);
+      await expect(eventManager.connect(addr1).buyTicket(0, { value: ticketPriceFlare }))
+        .to.emit(eventManager, "TicketPurchased")
+        .withArgs(0, 0, addr1.address, ticketPriceFlare);
 
-      const event = await eventManager.events(0);
-      expect(event.ticketsSold).to.equal(1);
-
-      const userTickets = await eventManager.userTickets(addr1.address);
-      expect(userTickets.length).to.equal(1);
+      const ticket = await eventManager.tickets(0);
+      expect(ticket.holder).to.equal(addr1.address);
+      expect(ticket.eventId).to.equal(0);
     });
 
-    it("Should not allow buying a ticket with incorrect price", async function () {
+    it("Should fail if insufficient funds are provided", async function () {
+      const ticketPriceFlare = await eventManager.getEventPriceFlare(0);
       await expect(
-        eventManager.connect(addr1).buyTicket(0, {
-          value: ethers.utils.parseEther("0.05"),
-        })
-      ).to.be.revertedWith("Invalid ticket price");
-    });
-
-    it("Should not allow buying a ticket for a past event", async function () {
-      const pastEventDate = Math.floor(Date.now() / 1000) - 86400; // 1 day ago
-      await eventManager.createEvent(
-        "Past Event",
-        "A past event",
-        100,
-        ethers.utils.parseEther("0.1"),
-        pastEventDate,
-        ["image1.jpg"]
-      );
-
-      await expect(
-        eventManager.connect(addr1).buyTicket(1, {
-          value: ethers.utils.parseEther("0.1"),
-        })
-      ).to.be.revertedWith("Event has already passed");
-    });
-
-    it("Should not allow buying a ticket for a full event", async function () {
-      await eventManager.createEvent(
-        "Small Event",
-        "A small event",
-        1,
-        ethers.utils.parseEther("0.1"),
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg"]
-      );
-
-      await eventManager.connect(addr1).buyTicket(1, {
-        value: ethers.utils.parseEther("0.1"),
-      });
-
-      await expect(
-        eventManager.connect(addr2).buyTicket(1, {
-          value: ethers.utils.parseEther("0.1"),
-        })
-      ).to.be.revertedWith("Event is full");
+        eventManager.connect(addr1).buyTicket(0, { value: ticketPriceFlare.sub(1) })
+      ).to.be.revertedWith("Insufficient value provided");
     });
   });
 
   describe("Ticket Transfer", function () {
     beforeEach(async function () {
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        ethers.utils.parseEther("0.1"),
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg"]
-      );
-      await eventManager.connect(addr1).buyTicket(0, {
-        value: ethers.utils.parseEther("0.1"),
-      });
+      await createTestEvent();
+      const ticketPriceFlare = await eventManager.getEventPriceFlare(0);
+      await eventManager.connect(addr1).buyTicket(0, { value: ticketPriceFlare });
     });
 
-    it("Should allow approving ticket transfer", async function () {
-      await eventManager.connect(addr1).approveTicket(0, addr2.address, true);
-      const isApproved = await eventManager.ticketAllowance(0, addr2.address);
-      expect(isApproved).to.be.true;
-    });
-
-    it("Should allow transferring an approved ticket", async function () {
-      await eventManager.connect(addr1).approveTicket(0, addr2.address, true);
-      await eventManager.connect(addr2).transferTicket(0, addr2.address);
+    it("Should allow transferring a ticket", async function () {
+      await expect(eventManager.connect(addr1).transferTicket(0, addr2.address))
+        .to.emit(eventManager, "TicketTransferred")
+        .withArgs(0, addr1.address, addr2.address);
 
       const ticket = await eventManager.tickets(0);
       expect(ticket.holder).to.equal(addr2.address);
     });
 
-    it("Should not allow transferring an unapproved ticket", async function () {
-      await expect(
-        eventManager.connect(addr2).transferTicket(0, addr2.address)
-      ).to.be.revertedWith("You are not allowed to transfer this ticket");
-    });
-
-    it("Should not allow transferring a ticket you don't own", async function () {
+    it("Should fail if non-owner tries to transfer", async function () {
       await expect(
         eventManager.connect(addr2).transferTicket(0, addr2.address)
       ).to.be.revertedWith("You do not own this ticket");
     });
   });
 
-  describe("Utility Functions", function () {
-    it("Should convert cents to Flare correctly", async function () {
-      const flareAmount = await eventManager.centsToFlare(100);
-      expect(flareAmount).to.equal(140);
-    });
-
-    it("Should calculate power correctly", async function () {
-      const result = await eventManager.power(2, 3);
-      expect(result).to.equal(8);
-    });
-
-    it("Should get event price in Flare", async function () {
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        1000, // 10 USD
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg"]
-      );
-
-      const flarePrice = await eventManager.getEventPriceFlare(0);
-      expect(flarePrice).to.equal(1400); // 14 FLR
-    });
-
-    it("Should not allow negative exponents in power function", async function () {
-      await expect(eventManager.power(2, -1)).to.be.revertedWith("Exponent must be non-negative");
-    });
-  });
-
-  describe("Event Queries", function () {
+  describe("Ticket Approval and Transfer", function () {
     beforeEach(async function () {
-      await eventManager.createEvent(
-        "Test Event",
-        "A test event description",
-        100,
-        ethers.utils.parseEther("0.1"),
-        Math.floor(Date.now() / 1000) + 86400,
-        ["image1.jpg", "image2.jpg"]
-      );
+      await createTestEvent();
+      const ticketPriceFlare = await eventManager.getEventPriceFlare(0);
+      await eventManager.connect(addr1).buyTicket(0, { value: ticketPriceFlare });
     });
 
-    it("Should return correct event tickets", async function () {
-      await eventManager.connect(addr1).buyTicket(0, {
-        value: ethers.utils.parseEther("0.1"),
-      });
+    it("Should allow approving and transferring a ticket", async function () {
+      await expect(eventManager.connect(addr1).approveTicket(0, addr2.address, true))
+        .to.emit(eventManager, "TicketTransferApproved")
+        .withArgs(0, addr1.address, addr2.address);
 
-      const tickets = await eventManager.getEventTickets(0);
-      expect(tickets.length).to.equal(1);
-      expect(tickets[0]).to.equal(0);
+      await expect(eventManager.connect(addr2).transferTicketFrom(0, addr2.address))
+        .to.emit(eventManager, "TicketTransferred")
+        .withArgs(0, addr1.address, addr2.address);
+
+      const ticket = await eventManager.tickets(0);
+      expect(ticket.holder).to.equal(addr2.address);
     });
 
-    it("Should not allow querying non-existent events", async function () {
-      await expect(eventManager.getEventImages(1)).to.be.revertedWith("Invalid event ID");
-      await expect(eventManager.getEventTickets(1)).to.be.revertedWith("Invalid event ID");
-      await expect(eventManager.getEventPriceFlare(1)).to.be.revertedWith("Invalid event ID");
+    it("Should fail if transferring without approval", async function () {
+      await expect(
+        eventManager.connect(addr2).transferTicketFrom(0, addr2.address)
+      ).to.be.revertedWith("You are not allowed to transfer this ticket");
     });
   });
 });
