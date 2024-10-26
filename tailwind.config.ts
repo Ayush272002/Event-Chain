@@ -1,4 +1,10 @@
 import type { Config } from 'tailwindcss';
+import tailwindcssAnimate from 'tailwindcss-animate';
+
+type ColorValue = string | ColorDictionary;
+interface ColorDictionary {
+  [colorName: string]: ColorValue;
+}
 
 const config: Config = {
   darkMode: ['class'],
@@ -14,6 +20,12 @@ const config: Config = {
           DEFAULT: '#000',
           100: '#000319',
         },
+        'darkest-purple': '#240046',
+        'darker-purple': '#3C096C',
+        'dark-purple': '#5A189A',
+        purple: '#7B2CBF',
+        'light-purple': '#9D4EDD',
+
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -70,6 +82,44 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [tailwindcssAnimate, addVariablesForColors],
 };
+
 export default config;
+
+// Plugin to add each Tailwind color as a CSS variable
+function addVariablesForColors({
+  addBase,
+  theme,
+}: {
+  addBase: (styles: Record<string, Record<string, string>>) => void;
+  theme: (path: string) => unknown;
+}) {
+  const colors = theme('colors') as ColorDictionary;
+  const flattenedColors = flattenColors(colors);
+  const newVars = Object.fromEntries(
+    Object.entries(flattenedColors).map(([key, val]) => [`--${key}`, val])
+  );
+
+  addBase({
+    ':root': newVars,
+  });
+}
+
+// Recursive function to flatten nested color objects
+function flattenColors(
+  colors: ColorDictionary,
+  prefix = ''
+): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [key, value] of Object.entries(colors)) {
+    if (typeof value === 'string') {
+      // If the value is a string, add it to the result
+      result[prefix + key] = value;
+    } else if (typeof value === 'object' && value !== null) {
+      // If the value is an object, recursively flatten it
+      Object.assign(result, flattenColors(value, `${prefix}${key}-`));
+    }
+  }
+  return result;
+}
