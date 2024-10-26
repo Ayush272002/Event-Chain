@@ -1,0 +1,1 @@
+@flarenetwork/flare-periphery-contracts/=node_modules/@flarenetwork/flare-periphery-contracts/
