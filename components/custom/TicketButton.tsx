@@ -1,3 +1,4 @@
+'use client';
 import React, { useState } from 'react';
 import { Button } from '../ui/button'; // Adjust import path to where your shadcn Button component is located
 
@@ -20,7 +21,9 @@ const NumberPicker: React.FC<NumberPickerProps> = ({
     if (count < max) {
       const newCount = count + 1;
       setCount(newCount);
-      onChange && onChange(newCount);
+      if (onChange) {
+        onChange(newCount);
+      }
     }
   };
 
@@ -28,7 +31,9 @@ const NumberPicker: React.FC<NumberPickerProps> = ({
     if (count > min) {
       const newCount = count - 1;
       setCount(newCount);
-      onChange && onChange(newCount);
+      if (onChange) {
+        onChange(newCount);
+      }
     }
   };
 

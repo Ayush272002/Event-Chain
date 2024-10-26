@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import ImageCarousel from './ImageCarousel';
-import BuyTicket from './BuyTicket';
+// import BuyTicket from './BuyTicket';
 import TicketButton from './TicketButton';
 
 const EventDescription = () => {

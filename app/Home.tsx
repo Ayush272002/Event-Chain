@@ -1,23 +1,33 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Header from '../components/custom/header';
 import Footer from '../components/custom/footer';
 import Test from '../components/scripts/Test';
 import MetaMask from '../components/scripts/MetaMask';
 
 export default function Home() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <>
       <Header />
       <div className="relative min-h-screen overflow-hidden">
         {/* Video Background */}
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          src="BGVid2.mp4"
-        >
-          Your browser does not support the video tag.
-        </video>
+        {isClient && (
+          <video
+            autoPlay
+            loop
+            muted
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            src="BGVid2.mp4"
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
 
         {/* Dark Overlay for Enhanced Readability */}
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
@@ -54,19 +64,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <main>
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Featured Events</h2>
-          <p className="text-gray-600">No events available at the moment.</p>
-        </section>
-        <section>
-          <h2 className="text-2xl font-semibold mb-4">Upcoming Events</h2>
-          <ul className="list-disc list-inside">
-            <li>Event 1 - Date</li>
-            <li>Event 2 - Date</li>
-            <li>Event 3 - Date</li>
-          </ul>
-        </section>
         <section className="mb-8">
           <Test />
         </section>
@@ -75,6 +74,6 @@ export default function Home() {
         </section>
         <Footer />
       </main>
-    </div>
+    </>
   );
 }
