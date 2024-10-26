@@ -23,6 +23,7 @@ contract EventManager {
     struct Event {
         string name;
         string description;
+        string location;
         uint256 capacity;
         uint256 ticketsSold;
         uint256 ticketPrice; // in USD cents
@@ -90,8 +91,8 @@ contract EventManager {
         return centsToFlare(events[_eventId].ticketPrice);
     }
 
-    function createEvent(string memory _name, string memory _description, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
-        events[eventCounter] = Event(_name, _description, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), payable(msg.sender));
+    function createEvent(string memory _name, string memory _description, string memory _location, uint256 _capacity, uint256 _ticketPrice, uint256 _eventDate, string[] memory _images) public returns (uint256 _eventId) {
+        events[eventCounter] = Event(_name, _description, _location, _capacity, 0, _ticketPrice, _eventDate, _images, new uint256[](0), payable(msg.sender));
         eventCounter++;
         emit EventCreated(eventCounter - 1, _name, _eventDate);
         return eventCounter - 1;
