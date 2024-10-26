@@ -37,7 +37,8 @@ export const buyHandler = async (
     const signer = provider.getSigner();
     const contract = getContract().connect(signer);
 
-    const ticketCost = await contract.getEventPriceFlare(eventId);
+    let ticketCost = await contract.getEventPriceFlare(eventId);
+    ticketCost = ticketCost.mul(105).div(100);
     const balance = await provider.getBalance(await signer.getAddress());
 
     if (balance.lt(ticketCost)) {
