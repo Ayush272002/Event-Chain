@@ -35,7 +35,9 @@ const Header = () => {
         }}
       ></div>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 className="text-2xl font-semibold text-white">TicketChain</h1>
+        <Link href="/" legacyBehavior>
+          <a className="text-2xl font-semibold text-white">TicketChain</a>
+        </Link>
         <nav className="nav">
           <ul className="flex space-x-6">
             <li>
