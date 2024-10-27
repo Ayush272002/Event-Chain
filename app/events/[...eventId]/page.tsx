@@ -9,6 +9,7 @@ import { fetchEventDetails } from '@/lib/fetchEventDetails';
 const ListingPage: React.FC = () => {
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState<any>(null);
+  const [eventNotFound, setEventNotFound] = useState<boolean>(false);
 
   useEffect(() => {
     const getEventDetails = async () => {
@@ -21,7 +22,10 @@ const ListingPage: React.FC = () => {
       }
     };
 
-    getEventDetails();
+    getEventDetails().catch((err) => {
+      setEventNotFound(true);
+      console.log(eventNotFound);
+    });
   }, [eventId]);
 
   return (
@@ -46,11 +50,13 @@ const ListingPage: React.FC = () => {
       </div>
 
       <div className="relative z-10">
-        {eventDetails ? (
-          <EventDescription eventDetails={eventDetails} />
-        ) : (
-          <p>Loading...</p>
-        )}
+        {eventNotFound ? <p className="text-2xl text-white pt-20 text-center">Event not found</p> :
+          (eventDetails ? (
+            <EventDescription eventDetails={eventDetails} />
+          ) : (
+            <p>Loading...</p>
+          ))
+        }
       </div>
 
       <div className="relative z-20">
