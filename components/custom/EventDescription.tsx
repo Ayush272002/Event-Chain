@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
@@ -13,7 +13,7 @@ import { buyHandler } from '@/lib/buyHandler';
 import { useToast } from '@/hooks/use-toast';
 import NumberPicker from './TicketButton';
 
-interface EventDescriptionProps {
+export interface EventDescriptionProps {
   eventDetails: {
     EventID: number;
     name: string;
@@ -32,8 +32,10 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
   eventDetails,
 }) => {
   const { toast } = useToast();
+  const [numTickets, setNumTickets] = useState(1);
+
   const handleBuyNow = () => {
-    buyHandler(eventDetails.EventID, toast);
+    buyHandler(eventDetails.EventID, numTickets, toast);
   };
 
   return (
@@ -79,7 +81,10 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
         </Button>
         <div className="relative md:left-5">
           <NumberPicker
+            initialCount={numTickets}
+            min={1}
             max={eventDetails.capacity - eventDetails.ticketsSold}
+            onChange={setNumTickets}
           />
         </div>
       </CardFooter>

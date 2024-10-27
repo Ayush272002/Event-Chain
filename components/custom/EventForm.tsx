@@ -58,7 +58,7 @@ const eventSchema = z
   });
 
 // Define the TypeScript type based on the Zod schema
-type EventFormData = z.infer<typeof eventSchema>;
+export type EventFormData = z.infer<typeof eventSchema>;
 
 interface EventFormProps {
   onSubmit: (data: EventFormData) => void;

@@ -66,6 +66,16 @@ const Header = () => {
               </Link>
             </li>
             <li>
+              <Link href="/host" legacyBehavior>
+                <a
+                  className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
+                  style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+                >
+                  Host Event
+                </a>
+              </Link>
+            </li>
+            <li>
               <Link href="/contact" legacyBehavior>
                 <a
                   className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
