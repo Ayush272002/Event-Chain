@@ -1,64 +1,27 @@
 'use client';
+
 import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
+import { ethers } from 'ethers';
+import { getContract } from '@/lib/ethers';
 
 export const dynamic = 'force-dynamic';
 
 interface Event {
-  EventID: number;
+  eventId: number;
   name: string;
-  date: string;
-  location: string;
-  ticketPrice: number;
   description: string;
+  location: string;
   capacity: number;
   ticketsSold: number;
-  imageUrl: string;
-  host: string;
+  ticketPrice: number;
+  eventStartDate: number;
+  eventEndDate: number;
+  images: string[];
+  eventHost: string;
 }
-
-const fetchEvents = (): Event[] => {
-  return [
-    {
-      EventID: 1,
-      name: 'Rock Concert',
-      date: '2023-12-01',
-      location: 'New York City',
-      ticketPrice: 99,
-      description: 'An exhilarating rock concert featuring famous bands.',
-      capacity: 5000,
-      ticketsSold: 4500,
-      imageUrl: 'https://via.placeholder.com/150',
-      host: 'Music Mania',
-    },
-    {
-      EventID: 2,
-      name: 'Art Expo',
-      date: '2023-11-15',
-      location: 'San Francisco',
-      ticketPrice: 55,
-      description: 'A showcase of modern art from around the world.',
-      capacity: 300,
-      ticketsSold: 260,
-      imageUrl: 'https://via.placeholder.com/150',
-      host: 'Art Lovers',
-    },
-    {
-      EventID: 3,
-      name: 'Tech Summit 2023',
-      date: '2023-12-10',
-      location: 'Chicago',
-      ticketPrice: 250,
-      description: 'The leading tech summit with top industry speakers.',
-      capacity: 2000,
-      ticketsSold: 1800,
-      imageUrl: 'https://via.placeholder.com/150',
-      host: 'Tech Alliance',
-    },
-  ];
-};
 
 const EventsPage: React.FC = () => {
   const router = useRouter();
@@ -77,27 +40,59 @@ const EventsPage: React.FC = () => {
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
 
   useEffect(() => {
-    const eventsData = fetchEvents();
-    setEvents(eventsData);
-    setFilteredEvents(eventsData);
+    const fetchEvents = async () => {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum!);
+        const contract = getContract().connect(provider);
+        const eventCount = await contract.eventCounter();
+        const eventsData: Event[] = [];
 
-    if (initialQuery) {
-      setFilteredEvents(
-        eventsData.filter((event) =>
-          ['name', 'date', 'location', 'description', 'host'].some((key) =>
-            event[key as keyof Event]
-              .toString()
-              .toLowerCase()
-              .includes(initialQuery.toLowerCase())
-          )
-        )
-      );
-    }
+        for (let i = 0; i < eventCount; i++) {
+          const event = await contract.events(i);
+          const images = await contract.getEventImages(i);
+          eventsData.push({
+            eventId: i,
+            name: event.name,
+            description: event.description,
+            location: event.location,
+            capacity: event.capacity.toNumber(),
+            ticketsSold: event.ticketsSold.toNumber(),
+            ticketPrice: parseFloat(
+              ethers.utils.formatEther(event.ticketPrice)
+            ),
+            eventStartDate: event.eventStartDate.toNumber(),
+            eventEndDate: event.eventEndDate.toNumber(),
+            images: images,
+            eventHost: event.eventHost,
+          });
+        }
+
+        setEvents(eventsData);
+        setFilteredEvents(eventsData);
+
+        if (initialQuery) {
+          setFilteredEvents(
+            eventsData.filter((event) =>
+              ['name', 'description', 'location', 'eventHost'].some((key) =>
+                event[key as keyof Event]
+                  .toString()
+                  .toLowerCase()
+                  .includes(initialQuery.toLowerCase())
+              )
+            )
+          );
+        }
+      } catch (error) {
+        console.error('Failed to fetch events:', error);
+      }
+    };
+
+    fetchEvents();
   }, [initialQuery]);
 
   useEffect(() => {
     let filtered = events.filter((event) =>
-      ['name', 'date', 'location', 'description', 'host'].some((key) =>
+      ['name', 'description', 'location', 'eventHost'].some((key) =>
         event[key as keyof Event]
           .toString()
           .toLowerCase()
@@ -112,17 +107,17 @@ const EventsPage: React.FC = () => {
     }
 
     if (filterOptions.includes('future')) {
-      const now = new Date();
-      filtered = filtered.filter((event) => new Date(event.date) > now);
+      const now = Math.floor(Date.now() / 1000);
+      filtered = filtered.filter((event) => event.eventStartDate > now);
     }
 
     if (filterOptions.includes('past')) {
-      const now = new Date();
-      filtered = filtered.filter((event) => new Date(event.date) < now);
+      const now = Math.floor(Date.now() / 1000);
+      filtered = filtered.filter((event) => event.eventEndDate < now);
     }
 
     if (selectedHost) {
-      filtered = filtered.filter((event) => event.host === selectedHost);
+      filtered = filtered.filter((event) => event.eventHost === selectedHost);
     }
 
     if (sortOption === 'price-asc') {
@@ -130,13 +125,9 @@ const EventsPage: React.FC = () => {
     } else if (sortOption === 'price-desc') {
       filtered = filtered.sort((a, b) => b.ticketPrice - a.ticketPrice);
     } else if (sortOption === 'date-asc') {
-      filtered = filtered.sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      );
+      filtered = filtered.sort((a, b) => a.eventStartDate - b.eventStartDate);
     } else if (sortOption === 'date-desc') {
-      filtered = filtered.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
+      filtered = filtered.sort((a, b) => b.eventStartDate - a.eventStartDate);
     }
 
     setFilteredEvents(filtered);
@@ -161,8 +152,8 @@ const EventsPage: React.FC = () => {
     };
   }, []);
 
-  const handleEventClick = (eventID: number) => {
-    router.push(`/events/${eventID}`);
+  const handleEventClick = (eventId: number) => {
+    router.push(`/events/${eventId}`);
   };
 
   return (
@@ -280,25 +271,29 @@ const EventsPage: React.FC = () => {
               <div className="grid grid-cols-1 gap-6">
                 {filteredEvents.map((event) => (
                   <button
-                    key={event.EventID}
+                    key={event.eventId}
                     className="relative flex bg-white p-4 rounded-lg shadow-lg text-left"
-                    onClick={() => handleEventClick(event.EventID)}
-                    onMouseEnter={() => setHoveredEventId(event.EventID)}
+                    onClick={() => handleEventClick(event.eventId)}
+                    onMouseEnter={() => setHoveredEventId(event.eventId)}
                     onMouseLeave={() => setHoveredEventId(null)}
                   >
                     <img
-                      src={event.imageUrl}
+                      src={event.images[0] || '/placeholder.svg'}
                       alt={event.name}
                       className="w-1/4 rounded-lg"
                     />
                     <div className="ml-4 relative">
                       <h3 className="text-xl font-bold">{event.name}</h3>
-                      <p className="text-gray-600">{event.date}</p>
+                      <p className="text-gray-600">
+                        {new Date(
+                          event.eventStartDate * 1000
+                        ).toLocaleDateString()}
+                      </p>
                       <p className="text-gray-600">{event.location}</p>
                       <p className="text-gray-800 font-semibold">
-                        ${event.ticketPrice.toFixed(2)}
+                        ${event.ticketPrice} FLR
                       </p>
-                      <p className="text-gray-600">Host: {event.host}</p>
+                      <p className="text-gray-600">Host: {event.eventHost}</p>
                     </div>
                   </button>
                 ))}
