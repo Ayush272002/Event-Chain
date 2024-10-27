@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import FeaturedEvent from '@/components/custom/FeaturedEvent';
 import { Button } from '@/components/ui/button';
 import { FlipWords } from '@/components/ui/flip-words';
+import { fetchEvents } from '@/lib/fetchEvents';
 
 // profile
 // profile props
@@ -15,11 +16,21 @@ import { FlipWords } from '@/components/ui/flip-words';
 export default function Home() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
+  const [events, setEvents] = useState<any>([]);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setIsClient(true);
+    fetchEvents().then(eventsData => {
+      eventsData = eventsData?.sort((a, b) => (a.ticketsSold - b.ticketsSold));
+      setEvents(eventsData || []);
+    })
   }, []);
+
+  useEffect(() => {
+    console.log("events updated");
+    console.log(events);
+  }, [events])
 
   function searchForEvents() {
     if (inputRef.current?.value === '') {
@@ -53,6 +64,10 @@ export default function Home() {
     'activity',
     'gathering',
   ];
+
+  const handleEventClick = (eventId: number) => {
+    router.push(`/events/${eventId}`);
+  };
 
   return (
     <>
@@ -102,46 +117,21 @@ export default function Home() {
             </div>
             <main>
               <section className="mb-8 mt-4 mx-auto grid grid-cols-4 col-span-4 gap-4 place-content-center">
-                <FeaturedEvent
-                  name="FAB XO Halloween"
-                  description="Halloween is upon us and is one of the biggest nights of the FAB XO calendar. Fancy dress is encouraged! So have your fancy dress ready and we look forward to seeing who have the best fancy dress on the night! As a special treat we will be serving our very own witches brew!!!"
-                  location="Birmingham, UK"
-                  eventStartDate={1729980000}
-                  eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL="https://www.guildofstudents.com/asset/Event/7572/Halloween-Fab-XO-Web-Event.jpg"
-                />
-                <FeaturedEvent
-                  name="Halls Halloween Spooktacular"
-                  description="Put on your spookiest costume and head on down to Pritchatts Park and join your Event Activators for our ResLife SPOOKTACULAR on Wednesday 30th October 5-8pm."
-                  location="Birmingham, UK"
-                  eventStartDate={1730307600}
-                  eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL="https://www.guildofstudents.com/asset/Event/41187/Spooktacular-Web-Event-2024.png"
-                />
-                <FeaturedEvent
-                  name="Halls Halloween Spooktacular"
-                  description="Put on your spookiest costume and head on down to Pritchatts Park and join your Event Activators for our ResLife SPOOKTACULAR on Wednesday 30th October 5-8pm."
-                  location="Birmingham, UK"
-                  eventStartDate={1730307600}
-                  eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL="https://www.guildofstudents.com/asset/Event/41187/Spooktacular-Web-Event-2024.png"
-                />
-                <FeaturedEvent
-                  name="Halls Halloween Spooktacular"
-                  description="Put on your spookiest costume and head on down to Pritchatts Park and join your Event Activators for our ResLife SPOOKTACULAR on Wednesday 30th October 5-8pm."
-                  location="Birmingham, UK"
-                  eventStartDate={1730307600}
-                  eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL="https://www.guildofstudents.com/asset/Event/41187/Spooktacular-Web-Event-2024.png"
-                />
-                <FeaturedEvent
-                  name="Housing Fair"
-                  description="We’re hosting a Housing Fair, so make sure you save the date! Whether you’re living in student accommodation or the local community, this will be a great place to start as you begin thinking about where you’ll be living next year."
-                  location="Birmingham, UK"
-                  eventStartDate={1730804400}
-                  eventHost="0x225C73C8c536C4F5335a2C1abECa95b0f221eeF6"
-                  imageURL="https://www.guildofstudents.com/asset/Event/41111/Housing-Fair-Web-Event.png"
-                />
+                { events.map((ev: any, index: number) => {
+                  return <>
+                    <a onClick={() => { handleEventClick(ev.eventId) }}>
+                      <FeaturedEvent
+                        key={ev.eventId}
+                        name={ev.name}
+                        description={ev.description}
+                        location={ev.location}
+                        eventStartDate={ev.eventStartDate}
+                        eventHost={ev.eventHost}
+                        imageURL={ev.images[0] || ""}
+                      />
+                    </a>
+                  </>
+                }) }
               </section>
             </main>
             <Footer />

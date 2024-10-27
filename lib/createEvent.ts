@@ -60,7 +60,7 @@ export const createEvent = async ({
       description,
       location,
       capacity,
-      ethers.utils.parseEther(ticketPrice.toString()),
+      Math.floor(ticketPrice * 100),
       Math.floor(startDate.getTime() / 1000),
       Math.floor(endDate.getTime() / 1000),
       images

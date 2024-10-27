@@ -53,7 +53,7 @@ export const fetchEventDetails = async ({
       name: eventData.name,
       date: eventData.eventStartDate.toNumber(),
       location: eventData.location,
-      ticketPrice: eventData.ticketPrice.div(ethers.BigNumber.from("1000000000000000000")).toNumber() / 100,
+      ticketPrice: eventData.ticketPrice.toNumber() / 100,
       description: eventData.description,
       capacity: eventData.capacity.toNumber(),
       ticketsSold: eventData.ticketsSold.toNumber(),

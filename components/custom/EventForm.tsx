@@ -19,8 +19,7 @@ const eventSchema = z
       .refine(Number.isInteger, { message: 'Capacity must be an integer' }),
     ticketPrice: z
       .number({ invalid_type_error: 'Ticket price must be a number' })
-      .min(0, { message: 'Ticket price must be at least 0' })
-      .refine(Number.isInteger, { message: 'Ticket price must be in cents' }),
+      .min(0, { message: 'Ticket price must be at least 0' }),
     location: z.string().min(1, { message: 'Location is required' }),
     eventStartTime: z.preprocess(
       (val) =>
@@ -128,9 +127,8 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
 
       {/* Ticket Price Field */}
       <div>
-        <Label htmlFor="ticketPrice">Ticket Price (in USD cents)</Label>
+        <Label htmlFor="ticketPrice">Ticket Price (in USD)</Label>
         <Input
-          type="number"
           id="ticketPrice"
           {...register('ticketPrice', { valueAsNumber: true })}
         />
