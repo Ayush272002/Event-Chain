@@ -73,12 +73,12 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link href="/contact" legacyBehavior>
+              <Link href="/profile" legacyBehavior>
                 <a
                   className="text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
                   style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
                 >
-                  Contact
+                  Profile
                 </a>
               </Link>
             </li>

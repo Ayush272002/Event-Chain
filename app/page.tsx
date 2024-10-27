@@ -10,6 +10,10 @@ import { Button } from '@/components/ui/button';
 import React from 'react';
 import { FlipWords } from '@/components/ui/flip-words';
 
+// profile
+// profile props
+// profile hanle
+
 export default function Home() {
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
