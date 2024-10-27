@@ -7,6 +7,7 @@ import Footer from '../../components/custom/footer';
 import { ethers } from 'ethers';
 import { getContract } from '@/lib/ethers';
 import { fetchEvents } from '@/lib/fetchEvents';
+import { Button } from '@/components/ui/button';
 
 export const dynamic = 'force-dynamic';
 
@@ -148,6 +149,7 @@ const EventsPage: React.FC = () => {
           Your browser does not support the video tag.
         </video>
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+        <br></br>
 
         <div className="relative z-20 container mx-auto p-4 pt-16">
           <Suspense fallback={<div className="mt-4 text-2xl text-white">Loading...</div>}>
@@ -161,37 +163,37 @@ const EventsPage: React.FC = () => {
           </Suspense>
           <div className="flex mt-4 space-x-4">
             <div className="relative" ref={sortRef}>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+              <Button
+                className="bg-light-purple bg-opacity-75 rounded"
                 onClick={() => setShowSortMenu(!showSortMenu)}
               >
                 Sort
-              </button>
+              </Button>
               {showSortMenu && (
                 <div className="absolute left-0 mt-2 p-2 bg-white shadow-lg rounded border border-gray-300 z-30">
-                  <button onClick={() => setSortOption('price-asc')}>
+                  <Button variant="ghost" onClick={() => setSortOption('price-asc')}>
                     Price Ascending
-                  </button>
-                  <button onClick={() => setSortOption('price-desc')}>
+                  </Button>
+                  <Button variant="ghost" onClick={() => setSortOption('price-desc')}>
                     Price Descending
-                  </button>
-                  <button onClick={() => setSortOption('date-asc')}>
+                  </Button>
+                  <Button variant="ghost" onClick={() => setSortOption('date-asc')}>
                     Date Ascending
-                  </button>
-                  <button onClick={() => setSortOption('date-desc')}>
+                  </Button>
+                  <Button variant="ghost" onClick={() => setSortOption('date-desc')}>
                     Date Descending
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>
 
             <div className="relative" ref={filterRef}>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+              <Button
+                className="bg-light-purple bg-opacity-75 rounded"
                 onClick={() => setShowFilterMenu(!showFilterMenu)}
               >
                 Filters
-              </button>
+              </Button>
               {showFilterMenu && (
                 <div className="absolute left-0 mt-2 p-2 bg-white shadow-lg rounded border border-gray-300 z-30">
                   <label className="flex items-center">
@@ -244,6 +246,7 @@ const EventsPage: React.FC = () => {
           <main>
             <section>
               <h2 className="text-2xl font-semibold text-white mb-4">
+                <br></br>
                 Available Events
               </h2>
               <div className="grid grid-cols-1 gap-6">
