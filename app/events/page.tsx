@@ -272,7 +272,7 @@ const EventsPage: React.FC = () => {
                       </p>
                       <p className="text-gray-600">{event.location}</p>
                       <p className="text-gray-800 font-semibold">
-                        ${event.ticketPrice}
+                        ${event.ticketPrice.toFixed(2)}
                       </p>
                       <p className="text-gray-600">Host: {event.eventHost}</p>
                     </div>
