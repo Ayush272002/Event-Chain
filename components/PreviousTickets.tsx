@@ -1,7 +1,8 @@
 import React from 'react';
 import { PreviousTicketComponent } from '@/components/custom/previousTicket';
+import { PreviousTicket } from '@/components/custom/previousTicket';
 
-const PreviousTickets = () => {
+const PreviousTickets = ({}: PreviousTicket) => {
   return (
     <div className="flex flex-col space-y-4">
       <PreviousTicketComponent
