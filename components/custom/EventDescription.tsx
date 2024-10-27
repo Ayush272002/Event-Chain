@@ -48,21 +48,21 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
           variant="outline"
           className="text-blue-600 bg-blue-100 px-3 py-1 rounded-full"
         >
-          Price: ${eventDetails.ticketPrice}
+          Price: ${eventDetails.ticketPrice.toFixed(2)}
         </Badge>
       </CardHeader>
 
       <CardContent className="flex flex-col md:flex-row items-start space-y-8 md:space-y-0 md:space-x-10">
         <div className="md:w-1/2 flex justify-center">
-          <ImageCarousel images={eventDetails.imageUrl} />
+          <ImageCarousel images={eventDetails.imageUrl || []} />
         </div>
         <div className="md:w-1/2 text-gray-700">
           <Separator className="my-4" />
           <p className="leading-relaxed">{eventDetails.description}</p>
           <Separator className="my-4" />
-          <p>Location: {eventDetails.location}</p>
-          <p>Date: {eventDetails.date}</p>
-          <p>Host: {eventDetails.host}</p>
+          <p><b>Location:</b><br />{eventDetails.location}</p><br />
+          <p><b>Date:</b><br />{eventDetails.date}</p><br />
+          <p><b>Host:</b><br />{eventDetails.host}</p>
           {eventDetails.ticketsSold / eventDetails.capacity >= 0.9 && (
             <div className="mt-2 p-2 bg-yellow-300 text-black rounded">
               Limited Tickets Remaining!

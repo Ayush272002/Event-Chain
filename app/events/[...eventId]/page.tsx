@@ -4,42 +4,28 @@ import { useParams } from 'next/navigation';
 import Header from '../../../components/custom/header';
 import Footer from '../../../components/custom/footer';
 import EventDescription from '../../../components/custom/EventDescription';
+import { fetchEventDetails } from '@/lib/fetchEventDetails';
 
 const ListingPage: React.FC = () => {
   const { eventId } = useParams();
   const [eventDetails, setEventDetails] = useState<any>(null);
+  const [eventNotFound, setEventNotFound] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchEventDetails = async (id: number) => {
-      alert(`Fetching details for event ID: ${id}`);
-      // Dummy Response
-      const details = {
-        EventID: id,
-        name: 'Example Event Name',
-        date: '2023-12-01',
-        location: 'Example Location',
-        ticketPrice: 100,
-        description: 'Detailed description of the event.',
-        capacity: 300,
-        ticketsSold: 295,
-        imageUrl: [
-          'https://via.placeholder.com/150',
-          'https://via.placeholder.com/150',
-        ],
-        host: 'Example Host',
-        tickets: [1, 2, 3, 4],
-      };
-      return details;
-    };
-
     const getEventDetails = async () => {
       if (eventId) {
-        const details = await fetchEventDetails(Number(eventId));
+        const details = await fetchEventDetails({
+          eventID: Number(eventId),
+          toast: ({ title, variant }: any) => {alert(title);}});
+        console.log(details)
         setEventDetails(details);
       }
     };
 
-    getEventDetails();
+    getEventDetails().catch((err) => {
+      setEventNotFound(true);
+      console.log(eventNotFound);
+    });
   }, [eventId]);
 
   return (
@@ -64,11 +50,13 @@ const ListingPage: React.FC = () => {
       </div>
 
       <div className="relative z-10">
-        {eventDetails ? (
-          <EventDescription eventDetails={eventDetails} />
-        ) : (
-          <p>Loading...</p>
-        )}
+        {eventNotFound ? <p className="text-2xl text-white pt-20 text-center">Event not found</p> :
+          (eventDetails ? (
+            <EventDescription eventDetails={eventDetails} />
+          ) : (
+            <p>Loading...</p>
+          ))
+        }
       </div>
 
       <div className="relative z-20">
