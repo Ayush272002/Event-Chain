@@ -6,6 +6,7 @@ import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
 import { ethers } from 'ethers';
 import { getContract } from '@/lib/ethers';
+import { fetchEvents } from '@/lib/fetchEvents';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,32 +41,9 @@ const EventsPage: React.FC = () => {
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const getEvents = async () => {
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum!);
-        const contract = getContract().connect(provider);
-        const eventCount = await contract.eventCounter();
-        const eventsData: Event[] = [];
-
-        for (let i = 0; i < eventCount; i++) {
-          const event = await contract.events(i);
-          const images = await contract.getEventImages(i);
-          eventsData.push({
-            eventId: i,
-            name: event.name,
-            description: event.description,
-            location: event.location,
-            capacity: event.capacity.toNumber(),
-            ticketsSold: event.ticketsSold.toNumber(),
-            ticketPrice: parseFloat(
-              ethers.utils.formatEther(event.ticketPrice)
-            ),
-            eventStartDate: event.eventStartDate.toNumber(),
-            eventEndDate: event.eventEndDate.toNumber(),
-            images: images,
-            eventHost: event.eventHost,
-          });
-        }
+        const eventsData: Event[] = (await fetchEvents())!;
 
         setEvents(eventsData);
         setFilteredEvents(eventsData);
@@ -87,7 +65,7 @@ const EventsPage: React.FC = () => {
       }
     };
 
-    fetchEvents();
+    getEvents();
   }, [initialQuery]);
 
   useEffect(() => {
@@ -172,7 +150,7 @@ const EventsPage: React.FC = () => {
         <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 
         <div className="relative z-20 container mx-auto p-4 pt-16">
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<div className="mt-4 text-2xl text-white">Loading...</div>}>
             <input
               type="text"
               placeholder="Search events..."
@@ -291,7 +269,7 @@ const EventsPage: React.FC = () => {
                       </p>
                       <p className="text-gray-600">{event.location}</p>
                       <p className="text-gray-800 font-semibold">
-                        ${event.ticketPrice} FLR
+                        ${event.ticketPrice}
                       </p>
                       <p className="text-gray-600">Host: {event.eventHost}</p>
                     </div>
