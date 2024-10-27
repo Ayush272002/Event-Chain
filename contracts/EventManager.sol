@@ -9,10 +9,8 @@ import {TestFtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/costo
 contract EventManager {
     
     TestFtsoV2Interface internal ftsoV2;
-    bytes21[] public feedIds = [
+    bytes21[] private feedIds = [
         bytes21(0x01464c522f55534400000000000000000000000000) // FLR/USD
-        // bytes21(0x014254432f55534400000000000000000000000000), // BTC/USD
-        // bytes21(0x014554482f55534400000000000000000000000000) // ETH/USD
     ];
 
     constructor() {
@@ -55,15 +53,7 @@ contract EventManager {
     uint256 public eventCounter;
     uint256 public ticketCounter;
 
-    function getFtsoV2CurrentFeedValues() public view returns (
-        uint256[] memory _feedValues,
-        int8[] memory _decimals,
-        uint64 _timestamp
-    ) {
-        return ftsoV2.getFeedsById(feedIds);
-    }
-
-    function getFlareFeed() public view returns (uint256 _feedValue, int8 _decimals, uint64 _timestamp) {
+    function getFlareFeed() private view returns (uint256 _feedValue, int8 _decimals, uint64 _timestamp) {
         uint256[] memory feedValues;
         int8[] memory decimals;
         uint64 timestamp;
@@ -71,7 +61,7 @@ contract EventManager {
         return (feedValues[0], decimals[0], timestamp);
     }
 
-    function centsToFlare(uint256 _cents) public view returns (uint256 _flr) {
+    function centsToFlare(uint256 _cents) private view returns (uint256 _flr) {
         uint256 feedValue;
         int8 decimals;
         (feedValue, decimals, ) = getFlareFeed();
