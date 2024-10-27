@@ -83,9 +83,6 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
             <br />
             {eventDetails.host}
           </p>
-          <p><b>Location:</b><br />{eventDetails.location}</p><br />
-          <p><b>Date:</b><br />{eventDate}</p><br />
-          <p><b>Host:</b><br />{eventDetails.host}</p>
           {eventDetails.ticketsSold / eventDetails.capacity >= 0.9 && (
             <div className="mt-2 p-2 bg-yellow-300 text-black rounded">
               Limited Tickets Remaining!
