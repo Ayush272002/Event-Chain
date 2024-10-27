@@ -102,7 +102,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
       <div>
         <Label htmlFor="name">Event Name</Label>
         <Input id="name" {...register('name')} />
-        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+        {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
       </div>
 
       {/* Description Field */}
@@ -110,7 +110,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
         <Label htmlFor="description">Description</Label>
         <Textarea id="description" {...register('description')} />
         {errors.description && (
-          <p className="text-red-500">{errors.description.message}</p>
+          <p className="text-red-500 text-sm">{errors.description.message}</p>
         )}
       </div>
 
@@ -123,7 +123,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           {...register('capacity', { valueAsNumber: true })}
         />
         {errors.capacity && (
-          <p className="text-red-500">{errors.capacity.message}</p>
+          <p className="text-red-500 text-sm">{errors.capacity.message}</p>
         )}
       </div>
 
@@ -135,7 +135,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           {...register('ticketPrice', { valueAsNumber: true })}
         />
         {errors.ticketPrice && (
-          <p className="text-red-500">{errors.ticketPrice.message}</p>
+          <p className="text-red-500 text-sm">{errors.ticketPrice.message}</p>
         )}
       </div>
 
@@ -144,7 +144,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
         <Label htmlFor="description">Location</Label>
         <Textarea id="description" {...register('location')} />
         {errors.description && (
-          <p className="text-red-500">{errors.description.message}</p>
+          <p className="text-red-500 text-sm">{errors.description.message}</p>
         )}
       </div>
 
@@ -159,7 +159,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           max="2100-12-31T23:59"
         />
         {errors.eventStartTime && (
-          <p className="text-red-500">{errors.eventStartTime.message}</p>
+          <p className="text-red-500 text-sm">{errors.eventStartTime.message}</p>
         )}
       </div>
 
@@ -174,7 +174,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           max="2100-12-31T23:59"
         />
         {errors.eventEndTime && (
-          <p className="text-red-500">{errors.eventEndTime.message}</p>
+          <p className="text-red-500 text-sm">{errors.eventEndTime.message}</p>
         )}
       </div>
 
@@ -209,7 +209,7 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
             if (imgError) {
               const message = imgError.message || 'Invalid image URL';
               return (
-                <p key={index} className="text-red-500">
+                <p key={index} className="text-red-500 text-sm">
                   Image {index + 1}: {message}
                 </p>
               );
