@@ -33,6 +33,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
 }) => {
   const { toast } = useToast();
   const [numTickets, setNumTickets] = useState(1);
+  const eventDate = new Date(Number(eventDetails.date) * 1000).toLocaleString();
 
   const handleBuyNow = () => {
     buyHandler(eventDetails.EventID, numTickets, toast);
@@ -61,7 +62,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
           <p className="leading-relaxed">{eventDetails.description}</p>
           <Separator className="my-4" />
           <p><b>Location:</b><br />{eventDetails.location}</p><br />
-          <p><b>Date:</b><br />{eventDetails.date}</p><br />
+          <p><b>Date:</b><br />{eventDate}</p><br />
           <p><b>Host:</b><br />{eventDetails.host}</p>
           {eventDetails.ticketsSold / eventDetails.capacity >= 0.9 && (
             <div className="mt-2 p-2 bg-yellow-300 text-black rounded">
