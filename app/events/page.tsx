@@ -3,7 +3,6 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
-import { p } from 'framer-motion/client';
 
 export const dynamic = 'force-dynamic';
 
