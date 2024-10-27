@@ -16,15 +16,17 @@ const ListingPage: React.FC = () => {
       if (eventId) {
         const details = await fetchEventDetails({
           eventID: Number(eventId),
-          toast: ({ title, variant }: any) => {alert(title);}});
-        console.log(details)
+          toast: ({ title, variant }: any) => {
+            alert(title);
+          },
+        });
+        console.log(details);
         setEventDetails(details);
       }
     };
 
     getEventDetails().catch((err) => {
       setEventNotFound(true);
-      console.log(eventNotFound);
     });
   }, [eventId]);
 
@@ -50,13 +52,15 @@ const ListingPage: React.FC = () => {
       </div>
 
       <div className="relative z-10">
-        {eventNotFound ? <p className="text-2xl text-white pt-20 text-center">Event not found</p> :
-          (eventDetails ? (
-            <EventDescription eventDetails={eventDetails} />
-          ) : (
-            <p>Loading...</p>
-          ))
-        }
+        {eventNotFound ? (
+          <p className="text-2xl text-white pt-20 text-center">
+            Event not found
+          </p>
+        ) : eventDetails ? (
+          <EventDescription eventDetails={eventDetails} />
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
 
       <div className="relative z-20">

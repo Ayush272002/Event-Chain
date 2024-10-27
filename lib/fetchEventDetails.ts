@@ -58,8 +58,8 @@ export const fetchEventDetails = async ({
       capacity: eventData.capacity.toNumber(),
       ticketsSold: eventData.ticketsSold.toNumber(),
       imageUrl: eventImages,
-      host: eventData.eventHost
-    }
+      host: eventData.eventHost,
+    };
   } catch (error) {
     console.error('Error in createEvent:', error);
     // if (error instanceof Error) {
