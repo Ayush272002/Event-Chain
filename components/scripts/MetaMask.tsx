@@ -97,7 +97,11 @@ function MetaMaskConnect() {
       {isConnected ? (
         <Popover>
           <PopoverTrigger asChild>
-            <Button variant="link" className="text-white">
+            <Button
+              variant="link"
+              className="text-white"
+              style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+            >
               {account && `${account.slice(0, 6)}...${account.slice(-4)}`}
             </Button>
           </PopoverTrigger>
@@ -116,7 +120,11 @@ function MetaMaskConnect() {
           onClick={connect}
           className="bg-light-purple bg-opacity-75 hover:bg-purple border-0 hover:border-0"
         >
-          <WalletIcon className="mr-2 h-4 w-4" /> Connect Wallet
+          <WalletIcon
+            className="mr-2 h-4 w-4"
+            style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+          />{' '}
+          Connect Wallet
         </Button>
       )}
     </div>

@@ -37,7 +37,7 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
   };
 
   return (
-    <Card className="pt-10 pb-16 px-6 bg-gradient-to-r from-blue-50 to-gray-50 rounded-xl shadow-lg max-w-4xl mx-auto">
+    <Card className="pt-5 px-6 bg-gradient-to-r from-slate-400 to-slate-200 rounded-xl shadow-lg max-w-4xl mt-20 mx-auto">
       <CardHeader className="flex flex-col items-start space-y-4">
         <h1 className="text-3xl font-semibold text-gray-800">
           {eventDetails.name}
