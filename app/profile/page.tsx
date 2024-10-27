@@ -79,72 +79,49 @@ export default function Component() {
   };
 
   const fetchUserTickets = async (address: string) => {
-    if (!RPC_URL || !CONTRACT_ADDRESS) {
-      setError('Missing configuration. Please contact support.');
-      return;
-    }
-
     try {
       const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
       const contract = new ethers.Contract(
-        CONTRACT_ADDRESS,
+        CONTRACT_ADDRESS!,
         EventManagerABI,
         provider
       );
 
-      console.log('Fetching tickets for address:', address);
-
       const ticketIds = await contract.getUserTickets(address);
       console.log('Raw tickets data:', ticketIds);
 
-      if (!ticketIds || ticketIds.length === 0) {
-        console.log('No tickets found for this user');
-        setUserTickets([]);
-        return;
-      }
-
       const ticketDetailsPromises = ticketIds.map(
         async (ticketId: ethers.BigNumber) => {
-          try {
-            const ticketNumber = ticketId.toNumber();
-            const ticket = await contract.tickets(ticketNumber);
-            const event = await contract.events(ticket.eventId);
+          const ticketNumber = ticketId.toNumber();
+          const ticket = await contract.tickets(ticketNumber);
+          const event = await contract.events(ticket.eventId);
 
-            // Convert event start date from Unix timestamp to JavaScript Date
-            const eventDate = new Date(event.eventStartDate.toNumber() * 1000);
+          console.log(`Ticket ${ticketNumber} data:`, ticket);
+          console.log(`Event ${ticket.eventId} data:`, event);
 
-            const eventDetails: TicketDetails = {
-              ticketId: ticketNumber,
-              eventName: event.name,
-              eventLocation: event.location,
-              eventDate: eventDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
-              imageUrl:
-                event.images && event.images.length > 0
-                  ? event.images[0]
-                  : 'https://via.placeholder.com/150', // Use first image or placeholder
-            };
-            return eventDetails;
-          } catch (error) {
-            console.error(
-              `Error fetching details for ticket ${ticketId}:`,
-              error
-            );
-            return null;
-          }
+          // Process event data to ensure it has all necessary fields
+          const eventDate = new Date(event.eventStartDate.toNumber() * 1000);
+          return {
+            ticketId: ticketNumber,
+            eventName: event.name || 'Unnamed Event',
+            eventLocation: event.location || 'No location specified',
+            eventDate: eventDate.toISOString().split('T')[0],
+            imageUrl:
+              event.images && event.images.length > 0
+                ? event.images[0]
+                : 'https://via.placeholder.com/150',
+          };
         }
       );
 
       const details = (await Promise.all(ticketDetailsPromises)).filter(
-        (detail): detail is TicketDetails => detail !== null
+        Boolean
       );
       setUserTickets(details);
-
-      if (details.length === 0) {
-        setError('Failed to fetch ticket details. Please try again.');
-      }
     } catch (error) {
       console.error('Failed to fetch user tickets:', error);
-      setError(`Failed to fetch user tickets: ${(error as Error).message}`);
+      // @ts-ignore
+      setError(`Failed to fetch user tickets: ${error.message}`);
     }
   };
 
