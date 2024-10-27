@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { EventFormData } from '@/components/custom/EventForm';
+import { createEvent } from '@/lib/createEvent';
 
 const Page = () => {
   const router = useRouter();
@@ -37,9 +38,19 @@ const Page = () => {
     eventEndTime?: Date | undefined;
     images?: string[] | undefined;
   }) {
-    // Logic for handling the form submission
-    console.log('Event data submitted:', data);
-    // You can replace the console log with an API call or any other handling logic
+    createEvent({
+      name: data.name,
+      description: data.description,
+      location: data.location,
+      capacity: data.capacity,
+      ticketPrice: data.ticketPrice,
+      startDate: data.eventStartTime,
+      endDate: data.eventEndTime || new Date(),
+      images: data.images || [],
+      toast: ({ title, variant }) => {
+        alert(title);
+      },
+    });
     router.push('/events');
   }
 
