@@ -23,9 +23,17 @@ if (!RPC_URL || !CONTRACT_ADDRESS) {
   );
 }
 
+interface TicketDetails {
+  ticketId: number;
+  eventName: string;
+  eventLocation: string;
+  eventDate: string;
+  imageUrl: string;
+}
+
 export default function ProfilePage() {
   const [isClient, setIsClient] = useState(false);
-  const [userTickets, setUserTickets] = useState<number[]>([]);
+  const [userTickets, setUserTickets] = useState<TicketDetails[]>([]);
   const [userAddress, setUserAddress] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -86,17 +94,27 @@ export default function ProfilePage() {
 
       console.log('Fetching tickets for address:', address);
 
-      const tickets = await contract.getUserTickets(address);
-      console.log('Raw tickets data:', tickets);
+      const ticketIds = await contract.getUserTickets(address);
+      console.log('Raw tickets data:', ticketIds);
 
-      if (Array.isArray(tickets)) {
-        const ticketNumbers = tickets.map((ticket: ethers.BigNumber) =>
-          ticket.toNumber()
-        );
-        console.log('Processed ticket numbers:', ticketNumbers);
-        setUserTickets(ticketNumbers);
+      if (Array.isArray(ticketIds)) {
+        const ticketDetailsPromises = ticketIds.map(async (ticketId) => {
+          const ticketNumber = ticketId.toNumber();
+          // Simulate fetching event details with dummy data
+          const eventDetails: TicketDetails = {
+            ticketId: ticketNumber,
+            eventName: `Event #${ticketNumber}`,
+            eventLocation: 'Location XYZ',
+            eventDate: '2023-12-01',
+            imageUrl: 'https://via.placeholder.com/150',
+          };
+          return eventDetails;
+        });
+
+        const details = await Promise.all(ticketDetailsPromises);
+        setUserTickets(details);
       } else {
-        console.error('Unexpected response from getUserTickets:', tickets);
+        console.error('Unexpected response from getUserTickets:', ticketIds);
         setError('Unexpected response from contract. Please try again.');
       }
     } catch (error) {
@@ -108,69 +126,73 @@ export default function ProfilePage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black">
       <Header />
+      <div className="absolute inset-0">
+        {isClient && (
+          <video
+            autoPlay
+            loop
+            muted
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            src="/BGVid3.mp4"
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
+        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+      </div>
       <div className="relative z-20 container mx-auto p-4 pt-16">
-        <div className="relative min-h-screen overflow-hidden">
-          {isClient && (
-            <video
-              autoPlay
-              loop
-              muted
-              className="absolute inset-0 w-full h-full object-cover z-0"
-              src="/BGVid2.mp4"
-            >
-              Your browser does not support the video tag.
-            </video>
+        <div className="relative text-white">
+          <h1 className="text-4xl font-bold mb-4">Your Profile</h1>
+          {userAddress ? (
+            <p className="mb-4">Connected Address: {userAddress}</p>
+          ) : (
+            <p className="mb-4">Not connected</p>
           )}
 
-          <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+          {error && (
+            <div className="bg-red-500 text-white p-2 rounded mb-4">
+              {error}
+            </div>
+          )}
 
-          <div className="relative z-20 text-white">
-            <h1 className="text-4xl font-bold mb-4">Your Profile</h1>
-            {userAddress ? (
-              <p className="mb-4">Connected Address: {userAddress}</p>
-            ) : (
-              <p className="mb-4">Not connected</p>
-            )}
-            <p className="mb-4">Current Network: {networkName}</p>
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {userTickets.length > 0 ? (
+                userTickets.map((details) => (
+                  <Card
+                    key={details.ticketId}
+                    className="bg-gray-800 text-white"
+                  >
+                    <CardHeader>
+                      <img
+                        src={details.imageUrl}
+                        alt={details.eventName}
+                        className="w-full h-36 object-cover rounded-t-lg"
+                      />
+                      <CardTitle>{details.eventName}</CardTitle>
+                      <CardDescription>{details.eventLocation}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p>Ticket ID: {details.ticketId}</p>
+                      <p>Date: {details.eventDate}</p>
+                    </CardContent>
+                  </Card>
+                ))
+              ) : (
+                <p>You don&apos;t have any tickets yet.</p>
+              )}
+            </div>
+          )}
 
-            {error && (
-              <div className="bg-red-500 text-white p-2 rounded mb-4">
-                {error}
-              </div>
-            )}
-
-            <Card className="bg-gray-800 text-white">
-              <CardHeader>
-                <CardTitle>Your Tickets</CardTitle>
-                <CardDescription>
-                  Here are the tickets associated with your wallet
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                {loading ? (
-                  <p>Loading...</p>
-                ) : userTickets.length > 0 ? (
-                  <ul>
-                    {userTickets.map((ticketId) => (
-                      <li key={ticketId} className="mb-2">
-                        Ticket ID: {ticketId}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>You don&apos;t have any tickets yet.</p>
-                )}
-              </CardContent>
-            </Card>
-
-            <Button className="mt-4" onClick={connectWallet} disabled={loading}>
-              {loading
-                ? 'Connecting...'
-                : userAddress
-                  ? 'Refresh Tickets'
-                  : 'Connect Wallet'}
-            </Button>
-          </div>
+          <Button className="mt-4" onClick={connectWallet} disabled={loading}>
+            {loading
+              ? 'Connecting...'
+              : userAddress
+                ? 'Refresh Tickets'
+                : 'Connect Wallet'}
+          </Button>
         </div>
       </div>
       <Footer />
