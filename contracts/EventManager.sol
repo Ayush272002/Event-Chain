@@ -24,9 +24,9 @@ contract EventManager {
         string name;
         string description;
         string location;
-        uint256 capacity;
-        uint256 ticketsSold;
-        uint256 ticketPrice; // in USD cents
+        uint64 capacity;
+        uint64 ticketsSold;
+        uint64 ticketPrice; // in USD cents
         uint256 eventStartDate;
         uint256 eventEndDate;
         string[] images; // array of image URLs
@@ -92,7 +92,7 @@ contract EventManager {
         return centsToFlare(events[_eventId].ticketPrice);
     }
 
-    function createEvent(string memory _name, string memory _description, string memory _location, uint256 _capacity, uint256 _ticketPrice, uint256 _eventStartDate, uint256 _eventEndDate, string[] memory _images) public returns (uint256 _eventId) {
+    function createEvent(string memory _name, string memory _description, string memory _location, uint64 _capacity, uint64 _ticketPrice, uint256 _eventStartDate, uint256 _eventEndDate, string[] memory _images) public returns (uint256 _eventId) {
         events[eventCounter] = Event(_name, _description, _location, _capacity, 0, _ticketPrice, _eventStartDate, _eventEndDate, _images, new uint256[](0), payable(msg.sender));
         eventCounter++;
         emit EventCreated(eventCounter - 1, _name, _eventStartDate);
