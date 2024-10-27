@@ -49,7 +49,12 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
           variant="outline"
           className="text-light-purple bg-blue-100 px-3 py-1 rounded-full"
         >
-          Price: ${eventDetails.ticketPrice.toFixed(2)}
+          {/*Show price and format by separating triplets of digits*/}
+          Price: $
+          {eventDetails.ticketPrice.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}
         </Badge>
       </CardHeader>
 
@@ -61,6 +66,23 @@ const EventDescription: React.FC<EventDescriptionProps> = ({
           <Separator className="my-4" />
           <p className="leading-relaxed">{eventDetails.description}</p>
           <Separator className="my-4" />
+          <p>
+            <b>Location:</b>
+            <br />
+            {eventDetails.location}
+          </p>
+          <br />
+          <p>
+            <b>Date:</b>
+            <br />
+            {eventDate}
+          </p>
+          <br />
+          <p>
+            <b>Host:</b>
+            <br />
+            {eventDetails.host}
+          </p>
           <p><b>Location:</b><br />{eventDetails.location}</p><br />
           <p><b>Date:</b><br />{eventDate}</p><br />
           <p><b>Host:</b><br />{eventDetails.host}</p>
