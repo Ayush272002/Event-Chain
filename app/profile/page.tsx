@@ -31,7 +31,7 @@ interface TicketDetails {
   imageUrl: string;
 }
 
-export default function ProfilePage() {
+export default function Component() {
   const [isClient, setIsClient] = useState(false);
   const [userTickets, setUserTickets] = useState<TicketDetails[]>([]);
   const [userAddress, setUserAddress] = useState('');
@@ -97,25 +97,50 @@ export default function ProfilePage() {
       const ticketIds = await contract.getUserTickets(address);
       console.log('Raw tickets data:', ticketIds);
 
-      if (Array.isArray(ticketIds)) {
-        const ticketDetailsPromises = ticketIds.map(async (ticketId) => {
-          const ticketNumber = ticketId.toNumber();
-          // Simulate fetching event details with dummy data
-          const eventDetails: TicketDetails = {
-            ticketId: ticketNumber,
-            eventName: `Event #${ticketNumber}`,
-            eventLocation: 'Location XYZ',
-            eventDate: '2023-12-01',
-            imageUrl: 'https://via.placeholder.com/150',
-          };
-          return eventDetails;
-        });
+      if (!ticketIds || ticketIds.length === 0) {
+        console.log('No tickets found for this user');
+        setUserTickets([]);
+        return;
+      }
 
-        const details = await Promise.all(ticketDetailsPromises);
-        setUserTickets(details);
-      } else {
-        console.error('Unexpected response from getUserTickets:', ticketIds);
-        setError('Unexpected response from contract. Please try again.');
+      const ticketDetailsPromises = ticketIds.map(
+        async (ticketId: ethers.BigNumber) => {
+          try {
+            const ticketNumber = ticketId.toNumber();
+            const ticket = await contract.tickets(ticketNumber);
+            const event = await contract.events(ticket.eventId);
+
+            // Convert event start date from Unix timestamp to JavaScript Date
+            const eventDate = new Date(event.eventStartDate.toNumber() * 1000);
+
+            const eventDetails: TicketDetails = {
+              ticketId: ticketNumber,
+              eventName: event.name,
+              eventLocation: event.location,
+              eventDate: eventDate.toISOString().split('T')[0], // Format as YYYY-MM-DD
+              imageUrl:
+                event.images && event.images.length > 0
+                  ? event.images[0]
+                  : 'https://via.placeholder.com/150', // Use first image or placeholder
+            };
+            return eventDetails;
+          } catch (error) {
+            console.error(
+              `Error fetching details for ticket ${ticketId}:`,
+              error
+            );
+            return null;
+          }
+        }
+      );
+
+      const details = (await Promise.all(ticketDetailsPromises)).filter(
+        (detail): detail is TicketDetails => detail !== null
+      );
+      setUserTickets(details);
+
+      if (details.length === 0) {
+        setError('Failed to fetch ticket details. Please try again.');
       }
     } catch (error) {
       console.error('Failed to fetch user tickets:', error);
