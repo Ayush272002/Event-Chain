@@ -12,10 +12,13 @@ Many popular ticket sites exist, that allow customers to browse different upcomi
   - When popular events are released, many of these websites can slow down or sometimes even crash, worsening the experience for the end user.
 - Single point of failure
   - These central services consolidate all of the data and compute for their services in one spot. One possible risk to consider is a cyberattack - if the central organisation is compromised, all customer data is at risk of being stolen and leaked. Another possible risk is the central server going down, meaning ticket services would go down, which is not ideal if thousands of attendees are trying to verify themselves at an event.
+  - Hidden booking fees
+    -  Centralised platforms often impose high service fees which aren't visible when viewing events. This is a lack of privacy issue because it is unclear how ticket prices are determined, leading to mistrust in customers.
+- 
 
 ## Proposal
 
-We propose to build a solution which tackles these issues head-on. TicketChain is a decentralised website which allows users to browse upcoming events, and book tickets for these events through verifiable, immutable blockchain transactions. This allows users to purchase tickets. Functionality also exists for users to transfer their tickets to other users.
+We propose to build a solution which tackles these issues head-on. TicketChain is a decentralised website which allows users to browse upcoming events, and book tickets for these events through verifiable, immutable blockchain transactions. This allows users to purchase tickets, even during higher volumes without performance degradation, all over the world. Functionality also exists for users to transfer their tickets to other users.
 
 This is made possible through the use of smart contracts deployed on the blockchain which expose several public read and write methods, which can be invoked through our front-end user interface. A record of transactions are kept secure on the blockchain, and no central entity can tamper with these transactions.
 
