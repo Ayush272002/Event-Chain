@@ -1,5 +1,7 @@
 # TicketChain
 
+![image](https://github.com/user-attachments/assets/1d08dc23-4b3b-4f26-a944-af2fa34d4055)
+
 ## Problem
 
 Many popular ticket sites exist, that allow customers to browse different upcoming events in their area and book tickets, however we identified several issues with these centralised service model:
