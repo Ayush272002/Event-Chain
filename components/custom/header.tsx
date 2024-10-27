@@ -36,7 +36,10 @@ const Header = () => {
       ></div>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link href="/" legacyBehavior>
-          <a className="text-2xl font-semibold text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300">
+          <a
+            className="text-2xl font-semibold text-white hover:text-light-purple hover:text-opacity-75 transition-colors duration-300"
+            style={{ textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)' }}
+          >
             TicketChain
           </a>
         </Link>
@@ -82,7 +85,7 @@ const Header = () => {
                 </a>
               </Link>
             </li>
-            <li>
+            <li className="relative bottom-1">
               <MetaMask />
             </li>
           </ul>

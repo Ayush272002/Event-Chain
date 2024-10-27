@@ -1,9 +1,10 @@
 'use client';
-import React, { useEffect, useState, useRef, Suspense } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter for routing
+import React, { Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Header from '../../components/custom/header';
 import Footer from '../../components/custom/footer';
-import { useSearchParams } from 'next/navigation';
+
+export const dynamic = 'force-dynamic';
 
 interface Event {
   EventID: number;
@@ -60,9 +61,14 @@ const fetchEvents = (): Event[] => {
 };
 
 const EventsPage: React.FC = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get('q') || '';
+  const sortRef = React.useRef<HTMLDivElement>(null);
+  const filterRef = React.useRef<HTMLDivElement>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [filteredEvents, setFilteredEvents] = useState<Event[]>([]);
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
   const [hoveredEventId, setHoveredEventId] = useState<number | null>(null);
   const [sortOption, setSortOption] = useState<string>('');
   const [filterOptions, setFilterOptions] = useState<string[]>([]);
@@ -70,28 +76,24 @@ const EventsPage: React.FC = () => {
   const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
   const [showFilterMenu, setShowFilterMenu] = useState<boolean>(false);
 
-  const sortRef = useRef<HTMLDivElement>(null);
-  const filterRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-
   useEffect(() => {
     const eventsData = fetchEvents();
     setEvents(eventsData);
     setFilteredEvents(eventsData);
-  }, []);
 
-  const SearchBox = () => {
-    setSearchQuery(useSearchParams().get('q') || '');
-    return (
-      <input
-        type="text"
-        placeholder="Search events..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
-      />
-    );
-  };
+    if (initialQuery) {
+      setFilteredEvents(
+        eventsData.filter((event) =>
+          ['name', 'date', 'location', 'description', 'host'].some((key) =>
+            event[key as keyof Event]
+              .toString()
+              .toLowerCase()
+              .includes(initialQuery.toLowerCase())
+          )
+        )
+      );
+    }
+  }, [initialQuery]);
 
   useEffect(() => {
     let filtered = events.filter((event) =>
@@ -160,41 +162,35 @@ const EventsPage: React.FC = () => {
   }, []);
 
   const handleEventClick = (eventID: number) => {
-    router.push(`/events/${eventID}`); // Route to the specific event page
+    router.push(`/events/${eventID}`);
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      <Header />
-      <video
-        autoPlay
-        loop
-        muted
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="BGVid1.mp4"
-      >
-        Your browser does not support the video tag.
-      </video>
-      <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+    <Suspense fallback={<p>Loading...</p>}>
+      <div className="relative min-h-screen overflow-hidden">
+        <Header />
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          src="BGVid1.mp4"
+        >
+          Your browser does not support the video tag.
+        </video>
+        <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
 
-      <div className="relative z-20 container mx-auto p-4 pt-16">
-        <div className="mb-6">
-          <Suspense
-            fallback={
-              <input
-                type="text"
-                placeholder="Search events..."
-                disabled={true}
-                value="loading..."
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
-              />
-            }
-          >
-            <SearchBox />
+        <div className="relative z-20 container mx-auto p-4 pt-16">
+          <Suspense fallback={<p>Loading...</p>}>
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-bar mt-4 p-2 border border-gray-300 rounded w-full max-w-md"
+            />
           </Suspense>
           <div className="flex mt-4 space-x-4">
-            {/* Sort Button and Dropdown */}
             <div className="relative" ref={sortRef}>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -204,43 +200,22 @@ const EventsPage: React.FC = () => {
               </button>
               {showSortMenu && (
                 <div className="absolute left-0 mt-2 p-2 bg-white shadow-lg rounded border border-gray-300 z-30">
-                  <button
-                    onClick={() => {
-                      setSortOption('price-asc');
-                      setShowSortMenu(false);
-                    }}
-                  >
+                  <button onClick={() => setSortOption('price-asc')}>
                     Price Ascending
                   </button>
-                  <button
-                    onClick={() => {
-                      setSortOption('price-desc');
-                      setShowSortMenu(false);
-                    }}
-                  >
+                  <button onClick={() => setSortOption('price-desc')}>
                     Price Descending
                   </button>
-                  <button
-                    onClick={() => {
-                      setSortOption('date-asc');
-                      setShowSortMenu(false);
-                    }}
-                  >
+                  <button onClick={() => setSortOption('date-asc')}>
                     Date Ascending
                   </button>
-                  <button
-                    onClick={() => {
-                      setSortOption('date-desc');
-                      setShowSortMenu(false);
-                    }}
-                  >
+                  <button onClick={() => setSortOption('date-desc')}>
                     Date Descending
                   </button>
                 </div>
               )}
             </div>
 
-            {/* Filter Button and Dropdown */}
             <div className="relative" ref={filterRef}>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded"
@@ -254,14 +229,13 @@ const EventsPage: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={filterOptions.includes('limited')}
-                      onChange={(e) => {
-                        const newFilters = e.target.checked
-                          ? [...filterOptions, 'limited']
-                          : filterOptions.filter(
-                              (filter) => filter !== 'limited'
-                            );
-                        setFilterOptions(newFilters);
-                      }}
+                      onChange={(e) =>
+                        setFilterOptions(
+                          e.target.checked
+                            ? [...filterOptions, 'limited']
+                            : filterOptions.filter((opt) => opt !== 'limited')
+                        )
+                      }
                     />
                     <span className="ml-2">Limited Tickets</span>
                   </label>
@@ -269,14 +243,13 @@ const EventsPage: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={filterOptions.includes('future')}
-                      onChange={(e) => {
-                        const newFilters = e.target.checked
-                          ? [...filterOptions, 'future']
-                          : filterOptions.filter(
-                              (filter) => filter !== 'future'
-                            );
-                        setFilterOptions(newFilters);
-                      }}
+                      onChange={(e) =>
+                        setFilterOptions(
+                          e.target.checked
+                            ? [...filterOptions, 'future']
+                            : filterOptions.filter((opt) => opt !== 'future')
+                        )
+                      }
                     />
                     <span className="ml-2">Future Events</span>
                   </label>
@@ -284,85 +257,58 @@ const EventsPage: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={filterOptions.includes('past')}
-                      onChange={(e) => {
-                        const newFilters = e.target.checked
-                          ? [...filterOptions, 'past']
-                          : filterOptions.filter((filter) => filter !== 'past');
-                        setFilterOptions(newFilters);
-                      }}
+                      onChange={(e) =>
+                        setFilterOptions(
+                          e.target.checked
+                            ? [...filterOptions, 'past']
+                            : filterOptions.filter((opt) => opt !== 'past')
+                        )
+                      }
                     />
                     <span className="ml-2">Past Events</span>
                   </label>
-
-                  {/* Filter by Host */}
-                  <select
-                    value={selectedHost}
-                    onChange={(e) => setSelectedHost(e.target.value)}
-                    className="mt-1 block w-full border-gray-300 rounded"
-                  >
-                    <option value="">All Hosts</option>
-                    {Array.from(new Set(events.map((event) => event.host))).map(
-                      (host) => (
-                        <option key={host} value={host}>
-                          {host}
-                        </option>
-                      )
-                    )}
-                  </select>
                 </div>
               )}
             </div>
           </div>
-        </div>
 
-        <main>
-          <section>
-            <h2 className="text-2xl font-semibold text-white mb-4">
-              Available Events
-            </h2>
-            <div className="grid grid-cols-1 gap-6">
-              {filteredEvents.map((event) => (
-                <button
-                  key={event.EventID}
-                  className="relative flex bg-white p-4 rounded-lg shadow-lg text-left"
-                  onClick={() => handleEventClick(event.EventID)}
-                  onMouseEnter={() => setHoveredEventId(event.EventID)}
-                  onMouseLeave={() => setHoveredEventId(null)}
-                >
-                  <img
-                    src={event.imageUrl}
-                    alt={event.name}
-                    className="w-1/4 rounded-lg"
-                  />
-                  <div className="ml-4 relative">
-                    <h3 className="text-xl font-bold">{event.name}</h3>
-                    <p className="text-gray-600">{event.date}</p>
-                    <p className="text-gray-600">{event.location}</p>
-                    <p className="text-gray-800 font-semibold">
-                      ${event.ticketPrice.toFixed(2)}
-                    </p>
-                    <p className="text-gray-600">Host: {event.host}</p>
-                    {event.ticketsSold / event.capacity >= 0.9 && (
-                      <div className="mt-2 p-2 bg-yellow-300 text-black rounded">
-                        Limited Tickets Remaining!
-                      </div>
-                    )}
-                  </div>
-                  <div className="absolute top-0 right-0 flex items-center space-x-2">
-                    {hoveredEventId === event.EventID && (
-                      <div className="top-0 left-4 w-full bg-white p-4 shadow-lg rounded-lg z-10">
-                        <p>{event.description}</p>
-                      </div>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </section>
-        </main>
+          <main>
+            <section>
+              <h2 className="text-2xl font-semibold text-white mb-4">
+                Available Events
+              </h2>
+              <div className="grid grid-cols-1 gap-6">
+                {filteredEvents.map((event) => (
+                  <button
+                    key={event.EventID}
+                    className="relative flex bg-white p-4 rounded-lg shadow-lg text-left"
+                    onClick={() => handleEventClick(event.EventID)}
+                    onMouseEnter={() => setHoveredEventId(event.EventID)}
+                    onMouseLeave={() => setHoveredEventId(null)}
+                  >
+                    <img
+                      src={event.imageUrl}
+                      alt={event.name}
+                      className="w-1/4 rounded-lg"
+                    />
+                    <div className="ml-4 relative">
+                      <h3 className="text-xl font-bold">{event.name}</h3>
+                      <p className="text-gray-600">{event.date}</p>
+                      <p className="text-gray-600">{event.location}</p>
+                      <p className="text-gray-800 font-semibold">
+                        ${event.ticketPrice.toFixed(2)}
+                      </p>
+                      <p className="text-gray-600">Host: {event.host}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </section>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Suspense>
   );
 };
 
