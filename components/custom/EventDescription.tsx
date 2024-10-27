@@ -13,7 +13,7 @@ import { buyHandler } from '@/lib/buyHandler';
 import { useToast } from '@/hooks/use-toast';
 import NumberPicker from './TicketButton';
 
-interface EventDescriptionProps {
+export interface EventDescriptionProps {
   eventDetails: {
     EventID: number;
     name: string;
