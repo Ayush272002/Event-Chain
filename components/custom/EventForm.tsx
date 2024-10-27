@@ -95,6 +95,8 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
     setValue('images', updatedImages);
   };
 
+  const currentDateTime = new Date().toISOString().slice(0, 16);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {/* Name Field */}
@@ -155,6 +157,8 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           type="datetime-local"
           id="eventStartTime"
           {...register('eventStartTime')}
+          min={currentDateTime}
+          max="2100-12-31T23:59"
         />
         {errors.eventStartTime && (
           <p className="text-red-500">{errors.eventStartTime.message}</p>
@@ -168,6 +172,8 @@ const EventForm = ({ onSubmit }: EventFormProps) => {
           type="datetime-local"
           id="eventEndTime"
           {...register('eventEndTime')}
+          min={currentDateTime}
+          max="2100-12-31T23:59"
         />
         {errors.eventEndTime && (
           <p className="text-red-500">{errors.eventEndTime.message}</p>
