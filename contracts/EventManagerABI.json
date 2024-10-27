@@ -54,6 +54,11 @@
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "_location",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "_capacity",
         "type": "uint256"
@@ -65,7 +70,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "_eventDate",
+        "name": "_eventStartDate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_eventEndDate",
         "type": "uint256"
       },
       {
@@ -108,7 +118,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "eventDate",
+        "name": "eventStartDate",
         "type": "uint256"
       }
     ],
@@ -285,6 +295,11 @@
         "type": "string"
       },
       {
+        "internalType": "string",
+        "name": "location",
+        "type": "string"
+      },
+      {
         "internalType": "uint256",
         "name": "capacity",
         "type": "uint256"
@@ -301,7 +316,12 @@
       },
       {
         "internalType": "uint256",
-        "name": "eventDate",
+        "name": "eventStartDate",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "eventEndDate",
         "type": "uint256"
       },
       {
