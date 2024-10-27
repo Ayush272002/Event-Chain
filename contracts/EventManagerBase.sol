@@ -2,29 +2,15 @@
 
 pragma solidity >=0.8.2 <0.9.0;
 
-import {ContractRegistry} from "@flarenetwork/flare-periphery-contracts/coston2/ContractRegistry.sol";
-/* THIS IS A TEST IMPORT, in production use: import {FtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/coston2/FtsoV2Interface.sol"; */
-import {TestFtsoV2Interface} from "@flarenetwork/flare-periphery-contracts/coston2/TestFtsoV2Interface.sol";
-
 contract EventManager {
     
-    TestFtsoV2Interface internal ftsoV2;
-    bytes21[] private feedIds = [
-        bytes21(0x01464c522f55534400000000000000000000000000) // FLR/USD
-    ];
-
-    constructor() {
-        /* THIS IS A TEST METHOD, in production use: ftsoV2 = ContractRegistry.getFtsoV2(); */
-        ftsoV2 = ContractRegistry.getTestFtsoV2();
-    }
-
     struct Event {
         string name;
         string description;
         string location;
         uint64 capacity;
         uint64 ticketsSold;
-        uint64 ticketPrice; // in USD cents
+        uint64 ticketPrice; // in raw ETH units
         uint256 eventStartDate;
         uint256 eventEndDate;
         string[] images; // array of image URLs
@@ -53,21 +39,6 @@ contract EventManager {
     uint256 public eventCounter;
     uint256 public ticketCounter;
 
-    function getFlareFeed() private view returns (uint256 _feedValue, int8 _decimals, uint64 _timestamp) {
-        uint256[] memory feedValues;
-        int8[] memory decimals;
-        uint64 timestamp;
-        (feedValues, decimals, timestamp) = ftsoV2.getFeedsById(feedIds);
-        return (feedValues[0], decimals[0], timestamp);
-    }
-
-    function centsToFlare(uint256 _cents) private view returns (uint256 _flr) {
-        uint256 feedValue;
-        int8 decimals;
-        (feedValue, decimals, ) = getFlareFeed();
-        return _cents * power(10, decimals) * 1 ether / 100 / feedValue;
-    }
-
     function power(uint base, int8 exponent) private pure returns (uint) {
         require(exponent >= 0, "Exponent must be non-negative");
         uint result = 1;
@@ -77,9 +48,8 @@ contract EventManager {
         return result;
     }
 
-    function getEventPriceFlare(uint256 _eventId) public view returns (uint256 _flr) {
-        require(_eventId < eventCounter, "Invalid event ID");
-        return centsToFlare(events[_eventId].ticketPrice);
+    function getEventPriceFlare(uint256 _eventId) public view returns (uint256 _eth) {
+        return events[_eventId].ticketPrice;
     }
 
     function createEvent(string memory _name, string memory _description, string memory _location, uint64 _capacity, uint64 _ticketPrice, uint256 _eventStartDate, uint256 _eventEndDate, string[] memory _images) public returns (uint256 _eventId) {
@@ -104,12 +74,12 @@ contract EventManager {
         require(events[_eventId].eventStartDate > block.timestamp, "Event has already passed");
         require(events[_eventId].tickets.length < events[_eventId].capacity, "Event is full");
 
-        uint256 ticketCost = getEventPriceFlare(_eventId); // Get ticket price in FLR
+        uint256 ticketCost = getEventPriceFlare(_eventId); // Get ticket price in ETH
         require(msg.value >= ticketCost, "Insufficient value provided"); // Ensure user has paid >= ticket price
         if (msg.value > ticketCost) {
             // Pay any excess the user paid
             (bool sentExcess, ) = msg.sender.call{value: msg.value - ticketCost}("");
-            require(sentExcess, "Failed to send FLR excess back to buyer");
+            require(sentExcess, "Failed to send ETH excess back to buyer");
         }
 
         // Create new ticket
@@ -124,9 +94,9 @@ contract EventManager {
         events[_eventId].tickets.push(ticketCounter - 1);
         events[_eventId].ticketsSold++;
 
-        // Transfer FLR to event host
+        // Transfer ETH to event host
         (bool sentToHost, ) = events[_eventId].eventHost.call{value: ticketCost}("");
-        require(sentToHost, "Failed to send FLR to event host");
+        require(sentToHost, "Failed to send ETH to event host");
 
         emit TicketPurchased(ticketCounter - 1, _eventId, msg.sender, ticketCost);
         return ticketCounter - 1;
