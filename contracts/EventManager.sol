@@ -194,4 +194,8 @@ contract EventManager {
         transferTicketForce(_ticketId, _to);
     }
 
+    function getUserTickets(address _user) public view returns (uint256[] memory _ticketIds) {
+        return userTickets[_user];
+    }
+
 }
