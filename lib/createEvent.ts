@@ -58,9 +58,11 @@ export const createEvent = async ({
     const tx = await contract.createEvent(
       name,
       description,
+      location,
       capacity,
       ethers.utils.parseEther(ticketPrice.toString()),
       Math.floor(startDate.getTime() / 1000),
+      Math.floor(endDate.getTime() / 1000),
       images
     );
 
