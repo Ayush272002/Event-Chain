@@ -74,7 +74,7 @@ const Page = () => {
             loop
             muted
             className="absolute inset-0 w-full h-full object-cover z-0"
-            src="BGVid2.mp4"
+            src="BGVid3.mp4"
           >
             Your browser does not support the video tag.
           </video>

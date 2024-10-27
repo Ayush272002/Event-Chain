@@ -152,7 +152,11 @@ const EventsPage: React.FC = () => {
         <br></br>
 
         <div className="relative z-20 container mx-auto p-4 pt-16">
-          <Suspense fallback={<div className="mt-4 text-2xl text-white">Loading...</div>}>
+          <Suspense
+            fallback={
+              <div className="mt-4 text-2xl text-white">Loading...</div>
+            }
+          >
             <input
               type="text"
               placeholder="Search events..."
@@ -171,16 +175,28 @@ const EventsPage: React.FC = () => {
               </Button>
               {showSortMenu && (
                 <div className="absolute left-0 mt-2 p-2 bg-white shadow-lg rounded border border-gray-300 z-30">
-                  <Button variant="ghost" onClick={() => setSortOption('price-asc')}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setSortOption('price-asc')}
+                  >
                     Price Ascending
                   </Button>
-                  <Button variant="ghost" onClick={() => setSortOption('price-desc')}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setSortOption('price-desc')}
+                  >
                     Price Descending
                   </Button>
-                  <Button variant="ghost" onClick={() => setSortOption('date-asc')}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setSortOption('date-asc')}
+                  >
                     Date Ascending
                   </Button>
-                  <Button variant="ghost" onClick={() => setSortOption('date-desc')}>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setSortOption('date-desc')}
+                  >
                     Date Descending
                   </Button>
                 </div>
@@ -238,6 +254,22 @@ const EventsPage: React.FC = () => {
                     />
                     <span className="ml-2">Past Events</span>
                   </label>
+
+                  {/* Filter by Host */}
+                  <select
+                    value={selectedHost}
+                    onChange={(e) => setSelectedHost(e.target.value)}
+                    className="mt-1 block w-full border-gray-300 rounded"
+                  >
+                    <option value="">All Hosts</option>
+                    {Array.from(
+                      new Set(events.map((event) => event.eventHost))
+                    ).map((host) => (
+                      <option key={host} value={host}>
+                        {host}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               )}
             </div>
@@ -246,7 +278,7 @@ const EventsPage: React.FC = () => {
           <main>
             <section>
               <h2 className="text-2xl font-semibold text-white mb-4">
-                <br></br>
+                <br />
                 Available Events
               </h2>
               <div className="grid grid-cols-1 gap-6">
