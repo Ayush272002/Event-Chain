@@ -16,7 +16,6 @@ Many popular ticket sites exist, that allow customers to browse different upcomi
   - These central services consolidate all of the data and compute for their services in one spot. One possible risk to consider is a cyberattack - if the central organisation is compromised, all customer data is at risk of being stolen and leaked. Another possible risk is the central server going down, meaning ticket services would go down, which is not ideal if thousands of attendees are trying to verify themselves at an event.
   - Hidden booking fees
     -  Centralised platforms often impose high service fees which aren't visible when viewing events. This is a lack of privacy issue because it is unclear how ticket prices are determined, leading to mistrust in customers.
-- 
 
 ## Proposal
 
